@@ -1,0 +1,6 @@
+@pontoFacilApi_HostAddress = http://localhost:5083
+
+GET {{pontoFacilApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
