@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using pontoFacilApi.source.Infraestructure.Data;
 
 #nullable disable
 
-namespace pontoFacilApi.Migrations
+namespace pontoFacilApi.Migrations.UsuarioDb
 {
     [DbContext(typeof(UsuarioDbContext))]
-    partial class UsuarioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250930185349_adicionandoCargoSetor")]
+    partial class adicionandoCargoSetor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,28 @@ namespace pontoFacilApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Cargo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SetorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SetorId");
+
+                    b.ToTable("Cargo");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -155,12 +180,32 @@ namespace pontoFacilApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Setor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Setor");
+                });
+
             modelBuilder.Entity("pontoFacilApi.source.Domain.Models.Usuario", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CargoId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -209,6 +254,8 @@ namespace pontoFacilApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CargoId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -218,6 +265,17 @@ namespace pontoFacilApi.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Cargo", b =>
+                {
+                    b.HasOne("Setor", "Setor")
+                        .WithMany("Cargos")
+                        .HasForeignKey("SetorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Setor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -269,6 +327,27 @@ namespace pontoFacilApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("pontoFacilApi.source.Domain.Models.Usuario", b =>
+                {
+                    b.HasOne("Cargo", "Cargo")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("CargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cargo");
+                });
+
+            modelBuilder.Entity("Cargo", b =>
+                {
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("Setor", b =>
+                {
+                    b.Navigation("Cargos");
                 });
 #pragma warning restore 612, 618
         }

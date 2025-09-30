@@ -40,7 +40,7 @@ public class UsuariosController : ControllerBase
     }
 
     [Authorize(Roles = "Admin")]
-    [HttpPut("{idUsuario}")]
+    [HttpPut("permissoes/{idUsuario}")]
     public async Task<ActionResult<ResponseBase<Usuario>>> EditarPermissoesUsuario(string idUsuario, [FromBody] EditarPermissoesUsuarioDTO dto)
     {
         ResponseBase<Usuario> response = await _editarPermissoesUsuarioUsecase.Executar(idUsuario, dto.novaRole);
