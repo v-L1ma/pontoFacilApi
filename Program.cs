@@ -55,14 +55,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(ConnectionString);
 });
 
-builder.Services.AddDbContext<UsuarioDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(ConnectionString);
 });
 
 builder.Services
         .AddIdentity<Usuario, IdentityRole>()
-        .AddEntityFrameworkStores<UsuarioDbContext>()
+        .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<ICadastrarUsuarioUseCase, CadastrarUsuarioUseCase>();

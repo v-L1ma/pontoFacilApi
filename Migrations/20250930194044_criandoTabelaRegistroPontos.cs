@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace pontoFacilApi.Migrations.UsuarioDb
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace pontoFacilApi.Migrations
 {
     /// <inheritdoc />
-    public partial class adicionandoCargoSetor : Migration
+    public partial class criandoTabelaRegistroPontos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,7 +28,7 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Setor",
+                name: "Setores",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -35,7 +37,7 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Setor", x => x.Id);
+                    table.PrimaryKey("PK_Setores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +62,7 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cargo",
+                name: "Cargos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -70,11 +72,11 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cargo", x => x.Id);
+                    table.PrimaryKey("PK_Cargos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cargo_Setor_SetorId",
+                        name: "FK_Cargos_Setores_SetorId",
                         column: x => x.SetorId,
-                        principalTable: "Setor",
+                        principalTable: "Setores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -104,9 +106,9 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Cargo_CargoId",
+                        name: "FK_AspNetUsers_Cargos_CargoId",
                         column: x => x.CargoId,
-                        principalTable: "Cargo",
+                        principalTable: "Cargos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -196,6 +198,78 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RegistroPonto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DataHora = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RegistroPonto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RegistroPonto_AspNetUsers_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Setores",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { 1, "Administrativo" },
+                    { 2, "Financeiro" },
+                    { 3, "Recursos Humanos" },
+                    { 4, "Comercial" },
+                    { 5, "Tecnologia da Informação" },
+                    { 6, "Logística" },
+                    { 7, "Jurídico" },
+                    { 8, "Marketing" },
+                    { 9, "Produção" },
+                    { 10, "Atendimento ao Cliente" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cargos",
+                columns: new[] { "Id", "Nome", "SetorId" },
+                values: new object[,]
+                {
+                    { 1, "Estagiário", 1 },
+                    { 2, "Assistente Administrativo", 1 },
+                    { 3, "Analista Administrativo", 1 },
+                    { 4, "Coordenador Administrativo", 1 },
+                    { 5, "Assistente Financeiro", 2 },
+                    { 6, "Analista Financeiro", 2 },
+                    { 7, "Gerente Financeiro", 2 },
+                    { 8, "Analista de RH", 3 },
+                    { 9, "Coordenador de RH", 3 },
+                    { 10, "Recrutador", 3 },
+                    { 11, "Vendedor", 4 },
+                    { 12, "Representante Comercial", 4 },
+                    { 13, "Gerente Comercial", 4 },
+                    { 14, "Desenvolvedor", 5 },
+                    { 15, "Analista de Sistemas", 5 },
+                    { 16, "Administrador de Redes", 5 },
+                    { 17, "Coordenador de TI", 5 },
+                    { 18, "Auxiliar de Logística", 6 },
+                    { 19, "Supervisor de Logística", 6 },
+                    { 20, "Advogado", 7 },
+                    { 21, "Assistente Jurídico", 7 },
+                    { 22, "Analista de Marketing", 8 },
+                    { 23, "Designer Gráfico", 8 },
+                    { 24, "Social Media", 8 },
+                    { 25, "Operador de Máquina", 9 },
+                    { 26, "Supervisor de Produção", 9 },
+                    { 27, "Atendente", 10 },
+                    { 28, "Supervisor de Atendimento", 10 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -241,9 +315,14 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cargo_SetorId",
-                table: "Cargo",
+                name: "IX_Cargos_SetorId",
+                table: "Cargos",
                 column: "SetorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegistroPonto_UsuarioId",
+                table: "RegistroPonto",
+                column: "UsuarioId");
         }
 
         /// <inheritdoc />
@@ -265,16 +344,19 @@ namespace pontoFacilApi.Migrations.UsuarioDb
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "RegistroPonto");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Cargo");
+                name: "Cargos");
 
             migrationBuilder.DropTable(
-                name: "Setor");
+                name: "Setores");
         }
     }
 }

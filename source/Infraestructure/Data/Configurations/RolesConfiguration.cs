@@ -29,7 +29,8 @@ using pontoFacilApi.source.Domain.Models;
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    CargoId = 1,
                 };
 
                 var result = await userManager.CreateAsync(adminUser, adminPassword);

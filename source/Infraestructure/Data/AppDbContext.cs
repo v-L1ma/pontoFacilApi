@@ -1,18 +1,22 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using pontoFacilApi.source.Domain.Models;
 
 namespace pontoFacilApi.source.Infraestructure.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<Usuario>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
-
+    
     public DbSet<Cargo> Cargos { get; set; }
     public DbSet<Setor> Setores { get; set; }
+    public DbSet<RegistroPonto> RegistroPonto { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         // Setores
         modelBuilder.Entity<Setor>().HasData(
             new Setor { Id = 1, Nome = "Administrativo" },
