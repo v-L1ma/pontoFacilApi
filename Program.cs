@@ -68,6 +68,10 @@ builder.Services
 builder.Services.AddScoped<ICadastrarUsuarioUseCase, CadastrarUsuarioUseCase>();
 builder.Services.AddScoped<ILoginUsuarioUsecase, LoginUsuarioUsecase>();
 builder.Services.AddScoped<IEditarPermissoesUsuarioUsecase, EditarPermissoesUsuarioUsecase>();
+builder.Services.AddScoped<IBuscarUsuarioPorIdUsecase, BuscarUsuarioPorIdUsecase>();
+builder.Services.AddScoped<IBuscarUsuariosPaginadoUsecase, BuscarUsuariosPaginadoUsecase>();
+builder.Services.AddScoped<IEditarUsuarioUsecase,EditarUsuarioUsecase>();
+builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -107,6 +111,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 

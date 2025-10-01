@@ -16,8 +16,14 @@ public class CadastrarUsuarioUseCase : ICadastrarUsuarioUseCase
         Usuario usuario = new Usuario
         {
             UserName = dto.Username,
+            CargoId = 1,
             Email = dto.Email
         };
+
+        if (await _userManager.FindByEmailAsync(dto.Email)!=null)
+        {
+            throw new ApplicationException("Email já está em uso.");
+        }
 
         IdentityResult resultado = await _userManager.CreateAsync(usuario, dto.Password);
 
