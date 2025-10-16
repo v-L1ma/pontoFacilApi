@@ -1,20 +1,21 @@
-<section>
-
+<app-form-banner-layout [bannerPosition]="'right'">
     <div class="login">
         <h1>Bem-vindo de volta</h1>
         <p>Entre com suas credenciais para acessar o sistema</p>
 
-        <form>
-           
+        <form [formGroup]="loginForm" (ngSubmit)="enviar()">
+            
             <mat-form-field class="inputField" appearance="outline">
                 <mat-label>E-mail</mat-label>
-                <input placeholder="Digite seu email" matInput type="email" />
+                <input formControlName="email" placeholder="Digite seu email" matInput type="email" />
             </mat-form-field>
-            <mat-error class="erro">Email inválido</mat-error>
+            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+                <mat-error class="erro">Email inválido</mat-error>
+            }
 
             <mat-form-field class="inputField" appearance="outline">
                 <mat-label>Senha</mat-label>
-                <input placeholder="Digite sua senha" matInput [type]="mostrarSenha() ? 'password' : 'text'" />
+                <input formControlName="senha" placeholder="Digite sua senha" matInput [type]="mostrarSenha() ? 'password' : 'text'" />
                 <button
                 matIconButton
                 matSuffix
@@ -26,7 +27,9 @@
                 <mat-icon>{{mostrarSenha() ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-            <mat-error class="erro">Senha inválida</mat-error>
+            @if (loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched) {
+                <mat-error class="erro">Senha inválida</mat-error>
+            }
 
             <button class="enviar" mat-flat-button type="submit">
                 Entrar
@@ -34,11 +37,6 @@
         </form>
         <p class="cadastro">Não tem uma conta? <a routerLink="/cadastro">Cadastre-se gratuitamente</a></p>
     </div>
-    <picture class="banner">
-        <div class="conteudo">
-            <h1 class="titulo">Gerencie sua equipe com eficiência</h1>
-            <p class="texto">Sistema completo para gestão de colaboradores e processos internos</p>
-        </div>
-    </picture>
 
-</section>
+</app-form-banner-layout>
+

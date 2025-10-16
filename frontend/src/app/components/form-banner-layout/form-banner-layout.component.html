@@ -1,0 +1,12 @@
+<section [ngStyle]="bannerPosition()==='right' ? {'flex-direction': 'row'} : {'flex-direction': 'row-reverse'}" >
+
+    <ng-content></ng-content>
+    
+    <div class="banner">
+        <div class="conteudo">
+            <h1 class="titulo">Gerencie sua equipe com eficiência</h1>
+            <p class="texto">Sistema completo para gestão de colaboradores e processos internos</p>
+        </div>
+    </div>
+
+</section>

@@ -1,79 +1,46 @@
-section{
+.login{
+    width: 35%;
+    padding: 2rem;
     display: flex;
-    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
 
-    .login{
-        width: 35%;
-        padding: 2rem;
+    form{
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        gap: 1rem;
 
-        form{
-            display: flex;
-            flex-direction: column;
-
-            .inputField{
-            margin: 0;
-            }
-            
-            .erro{
-                margin-top: -1rem;
-                margin-bottom: 1rem;
-            }
-
-            .enviar{
-                border-radius: .5rem;
-            }
+        .inputField{
+        margin: 0;
+        }
+        
+        .erro{
+            margin-top: -1rem;
+            margin-bottom: 1rem;
         }
 
-        .cadastro{
-            color: gray;
-            a{
-                font-weight: bold;
-                color: black;
-            }
+        .enviar{
+            border-radius: .5rem;
         }
     }
 
-    .banner{
-        background-image: url('../../../../public/login-hero.jpg');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 65%;
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-
-        .conteudo{
-            display: flex;
-            flex-direction: column;
-            background-image: linear-gradient(to top, white, transparent);
-            padding: 10rem 3rem 3rem 3rem;
-            gap: 1rem;
+    .cadastro{
+        color: gray;
+        text-align: center;
+        a{
+            font-weight: bold;
+            color: black;
         }
     }
 }
 
 @media screen and (max-width:1000px) {
-    section{
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        background-color: rgb(245, 245, 245);
-
-        .login{
-            height: fit-content;
-            width: 95%;
-            border: 1px solid rgb(210, 210, 210);
-            border-radius: 1rem;
-            background-color: white;
-            padding: 5rem 1rem;
-        }
-        .banner{
-            display: none;
-        }
+    .login{
+        height: fit-content;
+        width: 95%;
+        border: 1px solid rgb(210, 210, 210);
+        border-radius: 1rem;
+        background-color: white;
+        padding: 5rem 1rem;
     }
 }
