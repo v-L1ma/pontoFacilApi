@@ -1,0 +1,48 @@
+<app-form-banner-layout [bannerPosition]="'left'">
+    <div class="login">
+        <h1>Criar uma conta</h1>
+        <p>Preencha os dados abaixo para se cadastrar</p>
+
+        <form [formGroup]="cadastroForm" (ngSubmit)="enviar()">
+            
+            <mat-form-field class="inputField" appearance="outline">
+                <mat-label>Nome completo</mat-label>
+                <input formControlName="nome" placeholder="Digite seu nome completo" matInput type="text" />
+            </mat-form-field>
+            @if (cadastroForm.get('nome')?.invalid && cadastroForm.get('nome')?.touched) {
+                <mat-error class="erro">O nome deve ter mais de 5 caracteres</mat-error>
+            }
+
+            <mat-form-field class="inputField" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input formControlName="email" placeholder="Digite seu email" matInput type="email" />
+            </mat-form-field>
+            @if (cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched) {
+                <mat-error class="erro">Email inválido</mat-error>
+            }
+
+            <mat-form-field class="inputField" appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input formControlName="senha" placeholder="Digite sua senha" matInput type="text" />
+            </mat-form-field>
+            @if (cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched) {
+                <mat-error class="erro">Senha inválida</mat-error>
+            }
+
+            <mat-form-field class="inputField" appearance="outline">
+                <mat-label>Confirme a senha</mat-label>
+                <input formControlName="confirmarSenha" placeholder="Confirme a sua senha" matInput type="text" />
+            </mat-form-field>
+            @if (cadastroForm.get('confirmarSenha')?.errors?.['camposDiferentes'] && cadastroForm.get('confirmarSenha')?.touched) {
+                <mat-error class="erro">As senhas não coincidem</mat-error>
+            }
+
+            <button class="enviar" mat-flat-button [disabled]="cadastroForm.invalid" type="submit">
+                Entrar
+            </button>
+        </form>
+        <p class="cadastro">Já tem uma conta? <a routerLink="/login">Faça login</a></p>
+    </div>
+
+</app-form-banner-layout>
+

@@ -1,0 +1,46 @@
+.login{
+    width: 35%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    form{
+        display: flex;
+        flex-direction: column;
+
+        .inputField{
+        margin: 0;
+        }
+        
+        .erro{
+            margin-top: -1rem;
+            margin-bottom: 1rem;
+        }
+
+        .enviar{
+            border-radius: .5rem;
+        }
+    }
+
+    .cadastro{
+        color: gray;
+        text-align: center;
+        a{
+            font-weight: bold;
+            color: black;
+        }
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .login{
+        height: fit-content;
+        width: 95%;
+        border: 1px solid rgb(210, 210, 210);
+        border-radius: 1rem;
+        background-color: white;
+        padding: 5rem 1rem;
+    }
+}

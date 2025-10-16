@@ -7,9 +7,11 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBannerLayoutComponent } from "../../components/form-banner-layout/form-banner-layout.component";
+import { compararSenhaValidator } from '../../validators/compararSenha.validator';
+
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-cadastro',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -18,25 +20,27 @@ import { FormBannerLayoutComponent } from "../../components/form-banner-layout/f
     RouterLink,
     ReactiveFormsModule,
     FormBannerLayoutComponent
-],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  ],
+  templateUrl: './cadastro.component.html',
+  styleUrl: './cadastro.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class CadastroComponent {
   mostrarSenha = signal(true);
-  loginForm!: FormGroup;
+  cadastroForm!: FormGroup;
 
   constructor(private fb: FormBuilder){}
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+    this.cadastroForm = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(5)]],
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required]]
-    });
+      senha: ['', [Validators.required, Validators.minLength(5)]],
+      confirmarSenha: ['', [Validators.required]]
+    }, { validators: compararSenhaValidator('senha','confirmarSenha')});
   }
 
   enviar(){
-    console.log(this.loginForm.value)
+    console.log(this.cadastroForm.value)
   }
 
   esconder(){

@@ -31,7 +31,7 @@
                 <mat-error class="erro">Senha inválida</mat-error>
             }
 
-            <button class="enviar" mat-flat-button type="submit">
+            <button class="enviar" [disabled]="loginForm.invalid" mat-flat-button type="submit">
                 Entrar
             </button>
         </form>
