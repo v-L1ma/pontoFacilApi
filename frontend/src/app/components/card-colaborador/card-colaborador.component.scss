@@ -1,0 +1,52 @@
+.card{
+    background-color: white;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border: 1px solid rgb(216, 216, 216);
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .titulo{
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        h1{
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .icone{
+            display: flex;
+            padding: 1.1rem;
+            background-color: rgb(88, 206, 127);
+            border-radius: 100%;
+            color: white;
+            font-weight: bolder;
+        }
+
+        .menu{
+        }
+    }
+
+    .infos{
+        p{
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+            color: rgb(150, 150, 150);
+        }
+    }
+
+    button{
+        border-radius: .5rem;
+    }
+}

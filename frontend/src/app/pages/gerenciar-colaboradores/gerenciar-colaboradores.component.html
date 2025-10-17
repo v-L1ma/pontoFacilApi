@@ -1,0 +1,28 @@
+<section class="container">
+    <header>
+        <div class="titulo">
+            <h1>Colaboradores</h1>
+            <p>Aqui voce pode gerenciar sua equipe</p>
+        </div>
+        <button mat-flat-button>
+            <mat-icon>add</mat-icon>
+            Adicionar Colaborador
+        </button>
+    </header>
+
+    <div class="search">
+        <mat-form-field appearance="outline" class="field">
+            <mat-icon matIconPrefix>search</mat-icon>
+            <mat-label>Enter your password</mat-label>
+            <input matInput type="text"/>
+        </mat-form-field>
+    </div>
+
+    <section class="gallery">
+        <app-card-colaborador [colaborador]="{nome:'Vinicius Lima', email:'vinicius', departamento:'ti'}"></app-card-colaborador>
+        <app-card-colaborador [colaborador]="{nome:'Vinicius Lima', email:'vinicius', departamento:'ti'}"></app-card-colaborador>
+        <app-card-colaborador [colaborador]="{nome:'Vinicius Lima', email:'vinicius', departamento:'ti'}"></app-card-colaborador>
+        <app-card-colaborador [colaborador]="{nome:'Vinicius Lima', email:'vinicius', departamento:'ti'}"></app-card-colaborador>
+        <app-card-colaborador [colaborador]="{nome:'Vinicius Lima', email:'vinicius', departamento:'ti'}"></app-card-colaborador>
+    </section>
+</section>

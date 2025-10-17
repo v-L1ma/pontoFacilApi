@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="header">
+        <div class="titulo">
+            <div class="icone">{{pegarIniciais()}}</div>
+            <h1>{{colaborador().nome}}</h1>
+        </div>
+        <button matIconButton [matMenuTriggerFor]="menu" aria-label="Opcoes">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu class="menu" #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Editar</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Excluir</span>
+        </button>
+        </mat-menu>
+    </div>
+    <div class="infos">
+        <p>
+            <mat-icon>mail</mat-icon>
+            email@com
+        </p>
+        <p>
+            <mat-icon>work</mat-icon>
+            Departamento
+        </p>
+    </div>
+    <button mat-stroked-button>Ver detalhes</button>
+</div>
