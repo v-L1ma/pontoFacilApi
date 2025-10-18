@@ -73,11 +73,12 @@ builder.Services
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<IColaboradorService, ColaboradorService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
+builder.Services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
-
 
 builder.Services.AddAuthorization();
 

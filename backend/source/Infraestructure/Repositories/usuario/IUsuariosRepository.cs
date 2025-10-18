@@ -7,6 +7,5 @@ public interface IUsuariosRepository
     public Usuario? BuscarPorEmail(string email);
     public Task EditarPerfil(string id, EditarUsuarioDTO dto);
     public Task AdminEditarPerfil(string idUsuario, AdminEditarUsuarioDTO dto);
-    public void AlterarCargoUsuario();
     public Task DesativarPerfil(string idUsuario);
 }

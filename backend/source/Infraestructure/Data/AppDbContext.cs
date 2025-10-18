@@ -12,6 +12,7 @@ public class AppDbContext : IdentityDbContext<Usuario>
     
     public DbSet<Cargo> Cargos { get; set; }
     public DbSet<Setor> Setores { get; set; }
+    public DbSet<Colaborador> Colaboradores { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

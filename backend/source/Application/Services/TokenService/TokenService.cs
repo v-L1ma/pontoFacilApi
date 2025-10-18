@@ -13,13 +13,13 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string GerarToken(Usuario usuario, string role)
+    public string GerarToken(Usuario usuario)
     {
 
         Claim[] claims = new Claim[]{
             new Claim("Username", usuario.UserName!),
             new Claim("Id", usuario.Id),
-            new Claim(ClaimTypes.Role, role)
+            new Claim("Email", usuario.Email!)
         };
 
         var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]!));

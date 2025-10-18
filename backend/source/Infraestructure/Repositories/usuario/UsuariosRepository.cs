@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using pontoFacilApi.source.Domain.Models;
@@ -10,10 +9,6 @@ public class UsuariosRepository : IUsuariosRepository
     public UsuariosRepository(AppDbContext context)
     {
         _context = context;
-    }
-    public void AlterarCargoUsuario()
-    {
-        throw new NotImplementedException();
     }
 
     public Usuario? BuscarPorId(string idUsuario)
@@ -31,8 +26,21 @@ public class UsuariosRepository : IUsuariosRepository
     }
     public List<UsuarioDto> BuscarUsuariosPaginado(int pageSize, int pageNumber)
     {
+        // var usuarios = _context.Users
+        // .Include(u => u.Cargo)
+        // .OrderBy(u => u.Id)
+        // .Skip((pageNumber - 1) * pageSize)
+        // .Take(pageSize)
+        // .Select(u => new UsuarioDto
+        // {
+        //     Id = u.Id,
+        //     Nome = u.UserName,
+        //     Email = u.Email,
+        //     Cargo = u.Cargo != null ? u.Cargo.Nome : null
+        // })
+        // .ToList();
+
         var usuarios = _context.Users
-        .Include(u => u.Cargo)
         .OrderBy(u => u.Id)
         .Skip((pageNumber - 1) * pageSize)
         .Take(pageSize)
@@ -40,8 +48,7 @@ public class UsuariosRepository : IUsuariosRepository
         {
             Id = u.Id,
             Nome = u.UserName,
-            Email = u.Email,
-            Cargo = u.Cargo != null ? u.Cargo.Nome : null
+            Email = u.Email
         })
         .ToList();
 

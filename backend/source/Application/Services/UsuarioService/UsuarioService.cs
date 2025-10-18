@@ -62,7 +62,6 @@ public class UsuarioService : IUsuarioService
         Usuario usuario = new Usuario
         {
             UserName = dto.Username,
-            CargoId = 1,
             Email = dto.Email.ToLower(),
         };
 
@@ -79,8 +78,6 @@ public class UsuarioService : IUsuarioService
         {
             throw new ApplicationException("Falha ao cadastrar usuário!");
         }
-
-        await _userManager.AddToRoleAsync(usuarioBanco, "Colaborador");
 
         return new ResponseBase<Usuario>()
         {
@@ -189,8 +186,6 @@ public class UsuarioService : IUsuarioService
             throw new ApplicationException("Usuario não cadastrado.");
         }
 
-        var usuarioRole = await _userManager.GetRolesAsync(usuarioBanco);
-
         var resultado = await _signInManager.PasswordSignInAsync(usuarioBanco, dto.Password, false, false);
 
         if (!resultado.Succeeded)
@@ -198,7 +193,7 @@ public class UsuarioService : IUsuarioService
             throw new ApplicationException("Senha inválida.");
         }
 
-        string token = _tokenService.GerarToken(usuarioBanco,usuarioRole[0]);
+        string token = _tokenService.GerarToken(usuarioBanco);
 
         return new ResponseBase<string>()
         {
