@@ -1,12 +1,9 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using pontoFacilApi.source.Application.Usecases.CadastrarUsuario;
-using pontoFacilApi.source.Application.Usecases.LoginUsuario;
 using pontoFacilApi.source.Domain.Models;
 using pontoFacilApi.source.Infraestructure.Data;
 
@@ -46,6 +43,17 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                      });
+});
+
 builder.Services.AddControllers();
 
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -65,22 +73,13 @@ builder.Services
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<ICadastrarUsuarioUseCase, CadastrarUsuarioUseCase>();
-builder.Services.AddScoped<ILoginUsuarioUsecase, LoginUsuarioUsecase>();
-builder.Services.AddScoped<IEditarPermissoesUsuarioUsecase, EditarPermissoesUsuarioUsecase>();
-builder.Services.AddScoped<IBuscarUsuarioPorIdUsecase, BuscarUsuarioPorIdUsecase>();
-builder.Services.AddScoped<IBuscarUsuariosPaginadoUsecase, BuscarUsuariosPaginadoUsecase>();
-builder.Services.AddScoped<IEditarUsuarioUsecase,EditarUsuarioUsecase>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-builder.Services.AddSingleton<IAuthorizationHandler, AdministradorAuthorization>();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("CargoAdministrador", policy => policy.AddRequirements(new CargoAdministrador("Administrador")));
-});
+builder.Services.AddAuthorization();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -99,12 +98,6 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await IdentitySeeder.SeedRolesAndAdminAsync(services);
-}
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -114,6 +107,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 

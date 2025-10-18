@@ -29,23 +29,30 @@ public class UsuariosRepository : IUsuariosRepository
         var usuarioBanco = _context.Users.FromSqlRaw(sql, new SqlParameter("email", email.ToUpper())).ToList().FirstOrDefault();
         return usuarioBanco;
     }
-    public List<Usuario> BuscarUsuariosPaginado(int pageSize, int pageNumber)
+    public List<UsuarioDto> BuscarUsuariosPaginado(int pageSize, int pageNumber)
     {
-        string sql = "SELECT * FROM AspNetUsers ORDER BY Id ASC OFFSET ((@pageNumber - 1) * @pageSize) ROWS FETCH NEXT @pageSize ROWS ONLY;";
+        var usuarios = _context.Users
+        .Include(u => u.Cargo)
+        .OrderBy(u => u.Id)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .Select(u => new UsuarioDto
+        {
+            Id = u.Id,
+            Nome = u.UserName,
+            Email = u.Email,
+            Cargo = u.Cargo != null ? u.Cargo.Nome : null
+        })
+        .ToList();
 
-        var parametros = new SqlParameter[]{
-            new SqlParameter("pageNumber",pageNumber),
-            new SqlParameter("pageSize",pageSize),
-        };
-
-        List<Usuario> usuariosBanco = _context.Users.FromSqlRaw(sql, parametros).ToList();
-
-        return usuariosBanco;
+        return usuarios;
     }
 
-    public void DesativarPerfil()
+    public async Task DesativarPerfil(string idUsuario)
     {
-        throw new NotImplementedException();
+        string sql = @"DELETE FROM AspNetUsers WHERE Id=@id;";
+
+        await _context.Database.ExecuteSqlRawAsync(sql, new SqlParameter("id", idUsuario));
     }
 
     public async Task EditarPerfil(string idUsuario, EditarUsuarioDTO dto)
@@ -66,7 +73,7 @@ public class UsuariosRepository : IUsuariosRepository
         if (!string.IsNullOrEmpty(dto.Email))
         {
             set += ", Email = @email, NormalizedEmail = @normalizedEmail";
-            parametros = parametros.Append(new SqlParameter("email", dto.Email)).ToArray();
+            parametros = parametros.Append(new SqlParameter("email", dto.Email.ToLower())).ToArray();
             parametros = parametros.Append(new SqlParameter("normalizedEmail", dto.Email.ToUpper())).ToArray();
         }
 
@@ -98,7 +105,7 @@ public class UsuariosRepository : IUsuariosRepository
         if (!string.IsNullOrEmpty(dto.Email))
         {
             set += ", Email = @email, NormalizedEmail = @normalizedEmail";
-            parametros = parametros.Append(new SqlParameter("email", dto.Email)).ToArray();
+            parametros = parametros.Append(new SqlParameter("email", dto.Email.ToLower())).ToArray();
             parametros = parametros.Append(new SqlParameter("normalizedEmail", dto.Email.ToUpper())).ToArray();
         }
 

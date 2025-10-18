@@ -1,11 +1,5 @@
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using pontoFacilApi.source.Application.DTOs;
-using pontoFacilApi.source.Application.Usecases.CadastrarUsuario;
-using pontoFacilApi.source.Application.Usecases.LoginUsuario;
 using pontoFacilApi.source.Domain.Models;
 
 namespace pontoFacilApi.source.Web.Controllers;
@@ -15,35 +9,27 @@ namespace pontoFacilApi.source.Web.Controllers;
 [Authorize]
 public class UsuariosController : ControllerBase
 {
-    private readonly IEditarPermissoesUsuarioUsecase _editarPermissoesUsuarioUsecase;
-    private readonly IBuscarUsuarioPorIdUsecase _buscarUsuarioPorIdUsecase;
-    private readonly IBuscarUsuariosPaginadoUsecase _buscarUsuariosPaginadoUsecase;
-    private readonly IEditarUsuarioUsecase _editarUsuarioUsecase;
+    private readonly IUsuarioService _usuarioService;
 
     public UsuariosController(
-        IEditarPermissoesUsuarioUsecase editarPermissoesUsuarioUsecase,
-        IBuscarUsuarioPorIdUsecase buscarUsuarioPorIdUsecase,
-        IBuscarUsuariosPaginadoUsecase buscarUsuariosPaginadoUsecase,
-        IEditarUsuarioUsecase editarUsuarioUsecase)
+        IUsuarioService usuarioService
+    )
     {
-        _editarPermissoesUsuarioUsecase = editarPermissoesUsuarioUsecase;
-        _buscarUsuarioPorIdUsecase = buscarUsuarioPorIdUsecase;
-        _buscarUsuariosPaginadoUsecase = buscarUsuariosPaginadoUsecase;
-        _editarUsuarioUsecase = editarUsuarioUsecase;
+        _usuarioService = usuarioService;
     }
 
-    [Authorize(Roles = "Admin,RH,Gestor")]
+    // [Authorize(Roles = "Admin")]
     [HttpGet("buscarUsuariosPaginado")]
-    public ActionResult<ResponseBase<List<Usuario>>> BuscarUsuariosPaginado([FromQuery] int pageSize, int pageNumber)
+    public ActionResult<ResponseBase<List<UsuarioDto>>> BuscarUsuariosPaginado([FromQuery] int pageSize, int pageNumber)
     {
-        ResponseBase<List<Usuario>> response = _buscarUsuariosPaginadoUsecase.Executar(pageSize, pageNumber);
+        ResponseBase<List<UsuarioDto>> response = _usuarioService.BuscarUsuarioPaginado(pageSize, pageNumber);
         return Ok(response);
     }
 
     [HttpGet("{idUsuario}")]
     public ActionResult<ResponseBase<Usuario>> BuscarPorId(string idUsuario)
     {
-        ResponseBase<Usuario> response = _buscarUsuarioPorIdUsecase.Executar(idUsuario);
+        ResponseBase<Usuario> response = _usuarioService.BuscarUsuarioPorId(idUsuario);
         return Ok(response);
     }
 
@@ -51,7 +37,7 @@ public class UsuariosController : ControllerBase
     public async Task<ActionResult<ResponseBase<string>>> EditarPerfil([FromBody] EditarUsuarioDTO dto)
     {
         string? idUsuario = User.FindFirst("Id")?.Value;
-        ResponseBase<string> response = await _editarUsuarioUsecase.Executar(idUsuario!,dto);
+        ResponseBase<string> response = await _usuarioService.EditarUsuario(idUsuario!,dto);
         return Ok(response);
     }
 
@@ -59,15 +45,15 @@ public class UsuariosController : ControllerBase
     [HttpPut("/{idUsuario}")]
     public async Task<ActionResult<ResponseBase<Usuario>>> AdminEditarPerfilUsuarioPorId(string idUsuario, [FromBody] AdminEditarUsuarioDTO dto)
     {
-        ResponseBase<Usuario> response = await _editarPermissoesUsuarioUsecase.Executar(idUsuario, dto);
+        ResponseBase<Usuario> response = await _usuarioService.EditarPermissoesUsuario(idUsuario, dto);
         return Ok(response);
     }
 
     [HttpDelete("{idUsuario}")]
-    public async Task<ActionResult<ResponseBase<Usuario>>> DesativarPerfil(string idUsuario)
+    public async Task<ActionResult<ResponseBase<string>>> ExcluirPerfil(string idUsuario)
     {
-        throw new NotImplementedException();
-        // return Ok(response);
+        ResponseBase<string> response = await _usuarioService.ExcluirUsuario(idUsuario);
+        return Ok(response);
     }
 
 }
