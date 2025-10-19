@@ -6,6 +6,5 @@ public interface IUsuariosRepository
     public Usuario? BuscarPorId(string idUsuario);
     public Usuario? BuscarPorEmail(string email);
     public Task EditarPerfil(string id, EditarUsuarioDTO dto);
-    public Task AdminEditarPerfil(string idUsuario, AdminEditarUsuarioDTO dto);
     public Task DesativarPerfil(string idUsuario);
 }

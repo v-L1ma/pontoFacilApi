@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using pontoFacilApi.source.Domain.Models;
@@ -18,37 +19,37 @@ private readonly IColaboradorService _colaboradorService;
     }
 
     [HttpGet("buscarColaboradoresPaginado")]
-    public ActionResult<ResponseBase<List<Colaborador>>> BuscarColaboradoresPaginado([FromQuery] int pageSize, int pageNumber)
+    public async Task<ActionResult<ResponseBase<List<ColaboradorDto>>>> BuscarColaboradoresPaginado([FromQuery] int pageSize, int pageNumber)
     {
-        ResponseBase<List<Colaborador>> response = _colaboradorService.BuscarColaboradoresPaginado(pageSize, pageNumber);
+        ResponseBase<List<ColaboradorDto>> response = await _colaboradorService.BuscarColaboradoresPaginado(pageSize, pageNumber);
         return Ok(response);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<ResponseBase<Colaborador>> BuscarPorId(string idUsuario)
+    public ActionResult<ResponseBase<ColaboradorDto>> BuscarPorId(string id)
     {
-        ResponseBase<Colaborador> response = _colaboradorService.BuscarColaboradorPorId(idUsuario);
+        ResponseBase<ColaboradorDto> response = _colaboradorService.BuscarColaboradorPorId(id);
         return Ok(response);
     }
 
     [HttpPost]
-    public ActionResult<ResponseBase<string>> CadastrarColaborador (CadastrarColaboradorDto dto)
+    public async Task<ActionResult<ResponseBase<ColaboradorDto>>> CadastrarColaborador (CadastrarColaboradorDto dto)
     {
-        ResponseBase<string> response = _colaboradorService.CadastrarColaborador(dto);
+        ResponseBase<ColaboradorDto> response = await _colaboradorService.CadastrarColaborador(dto);
         return Ok(response);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<ResponseBase<Colaborador>>> EditarPerfil(string idUsuario, [FromBody] EditarColaboradorDTO dto)
+    public async Task<ActionResult<ResponseBase<ColaboradorDto>>> EditarPerfil(string id, [FromBody] EditarColaboradorDTO dto)
     {    
-        ResponseBase<Colaborador> response = await _colaboradorService.EditarColaborador(idUsuario, dto);
+        ResponseBase<ColaboradorDto> response = await _colaboradorService.EditarColaborador(id, dto);
         return Ok(response);
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<ResponseBase<string>> ExcluirPerfil(string idUsuario)
+    public ActionResult<ResponseBase<string>> ExcluirPerfil(string id)
     {
-        ResponseBase<string> response = _colaboradorService.ExcluirColaborador(idUsuario);
+        ResponseBase<string> response = _colaboradorService.ExcluirColaborador(id);
         return Ok(response);
     }
 

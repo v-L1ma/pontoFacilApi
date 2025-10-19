@@ -12,8 +12,8 @@ using pontoFacilApi.source.Infraestructure.Data;
 namespace pontoFacilApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251018174124_criandoColaborador")]
-    partial class criandoColaborador
+    [Migration("20251019221246_relecionandoCargoColaborador")]
+    partial class relecionandoCargoColaborador
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -10,47 +10,53 @@ public class ColaboradorService : IColaboradorService
     {
         _colaboradorRepository = colaboradorRepository;
     }
-    public ResponseBase<List<Colaborador>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
+    public async Task<ResponseBase<List<ColaboradorDto>>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
     {
         if (pageSize < 0 || pageNumber < 0)
         {
             throw new ApplicationException("O tamanho e o numero da pagina devem ser maior que zero!");
         }
-        List<Colaborador> colaboradores = _colaboradorRepository.BuscarUsuariosPaginado(pageSize, pageNumber);
 
-        return new ResponseBase<List<Colaborador>>
+        List<ColaboradorDto> colaboradores = await _colaboradorRepository.BuscarColaboradoresPaginado(pageSize, pageNumber);
+
+        return new ResponseBase<List<ColaboradorDto>>
         {
             Dados = colaboradores,
             Message = "Colaboradores listados com sucesso!"
         };
     }
 
-    public ResponseBase<Colaborador> BuscarColaboradorPorId(string id)
+    public ResponseBase<ColaboradorDto> BuscarColaboradorPorId(string id)
     {
          if (string.IsNullOrEmpty(id))
         {
             throw new ApplicationException("O id não pode ser vazio.");
         }
 
-        Colaborador? colaborador = _colaboradorRepository.BuscarPorId(id);
+        ColaboradorDto? colaborador = _colaboradorRepository.BuscarPorId(id);
 
         if (colaborador is null)
         {
             throw new ApplicationException("Nenhum colaborador encontrado");
         }
 
-        return new ResponseBase<Colaborador>
+        return new ResponseBase<ColaboradorDto>
         {
             Dados = colaborador,
             Message = "Informações do colaborador encontradas com sucesso!"
         };
     }
 
-    public ResponseBase<string> CadastrarColaborador(CadastrarColaboradorDto dto)
+    public async Task<ResponseBase<ColaboradorDto>> CadastrarColaborador(CadastrarColaboradorDto dto)
     {
-        if (dto.CargoId == 0 || string.IsNullOrEmpty(dto.Nome))
+        if (string.IsNullOrEmpty(dto.Nome))
         {
-            throw new ApplicationException("Dados de cadastro inválidos!");
+            throw new ApplicationException("Insira um nome válido!");
+        }
+
+        if (dto.CargoId < 1 || dto.CargoId > 28)
+        {
+            throw new ApplicationException("Insira um cargo válido!");
         }
 
         if (dto.Nome.Length<5)
@@ -58,17 +64,33 @@ public class ColaboradorService : IColaboradorService
             throw new ApplicationException("O nome do colaborador deve ter mais de 5 caracteres.");
         }
         
-        _colaboradorRepository.CadastrarColaborador(dto);
+        var colaboradorNovo = await _colaboradorRepository.CadastrarColaborador(dto);
 
-        return new ResponseBase<string>()
-        { 
-            Message = "Colaborador cadastrado com sucesso!"
+        return new ResponseBase<ColaboradorDto>()
+        {
+            Message = "Colaborador cadastrado com sucesso!",
+            Dados = colaboradorNovo
         };
     }
 
-    public async Task<ResponseBase<Colaborador>> EditarColaborador(string id, EditarColaboradorDTO dto)
+    public async Task<ResponseBase<ColaboradorDto>> EditarColaborador(string id, EditarColaboradorDTO dto)
     {
-        Colaborador? colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
+        if (string.IsNullOrEmpty(dto.Nome))
+        {
+            throw new ApplicationException("Insira um nome válido!");
+        }
+
+        if (dto.CargoId < 1 || dto.CargoId > 28)
+        {
+            throw new ApplicationException("Insira um cargo válido!");
+        }
+
+        if (dto.Nome.Length<5)
+        {
+            throw new ApplicationException("O nome do colaborador deve ter mais de 5 caracteres.");
+        }
+        
+        ColaboradorDto? colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
 
         if (colaboradorBanco is null)
         {
@@ -79,23 +101,23 @@ public class ColaboradorService : IColaboradorService
 
         colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
 
-        return new ResponseBase<Colaborador>()
+        return new ResponseBase<ColaboradorDto>()
         {
-            Message = "Permissões alteradas com sucesso.",
+            Message = "Informacoes do colaborador alteradas com sucesso.",
             Dados = colaboradorBanco
         };
     }
 
     public ResponseBase<string> ExcluirColaborador(string id)
     {
-        Colaborador? colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
+        ColaboradorDto? colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
 
         if (colaboradorBanco is null)
         {
             throw new ApplicationException("Colaborador não cadastrado");
         }
 
-        _colaboradorRepository.DesativarPerfil(id);
+        _colaboradorRepository.ExcluirColaborador(id);
 
         return new ResponseBase<string>()
         {

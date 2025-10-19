@@ -18,7 +18,6 @@ public class UsuariosController : ControllerBase
         _usuarioService = usuarioService;
     }
 
-    // [Authorize(Roles = "Admin")]
     [HttpGet("buscarUsuariosPaginado")]
     public ActionResult<ResponseBase<List<UsuarioDto>>> BuscarUsuariosPaginado([FromQuery] int pageSize, int pageNumber)
     {
@@ -38,14 +37,6 @@ public class UsuariosController : ControllerBase
     {
         string? idUsuario = User.FindFirst("Id")?.Value;
         ResponseBase<string> response = await _usuarioService.EditarUsuario(idUsuario!,dto);
-        return Ok(response);
-    }
-
-    [Authorize(Roles = "Admin")]
-    [HttpPut("/{idUsuario}")]
-    public async Task<ActionResult<ResponseBase<Usuario>>> AdminEditarPerfilUsuarioPorId(string idUsuario, [FromBody] AdminEditarUsuarioDTO dto)
-    {
-        ResponseBase<Usuario> response = await _usuarioService.EditarPermissoesUsuario(idUsuario, dto);
         return Ok(response);
     }
 

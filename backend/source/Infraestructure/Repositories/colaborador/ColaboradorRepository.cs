@@ -18,83 +18,118 @@ public class ColaboradorRepository : IColaboradorRepository
         throw new NotImplementedException();
     }
 
-    public Colaborador? BuscarPorId(string id)
+    public ColaboradorDto? BuscarPorId(string id)
     {
-        string sql = "SELECT * FROM Colaboradores WHERE Id = @id;";
-        var usuarioBanco = _context.Database.SqlQueryRaw<Colaborador>(sql, new SqlParameter("idUsuario", id)).ToList().FirstOrDefault();
-        return usuarioBanco;
+        var usuarioBanco = _context.Colaboradores
+                                    .Include(c => c.Cargo)
+                                    .ThenInclude(c => c.Setor)
+                                    .ToList()
+                                    .FirstOrDefault(c => c.Id == id);
+
+        return usuarioBanco != null ? new ColaboradorDto
+        {
+            Id = usuarioBanco.Id,
+            Nome = usuarioBanco.Nome,
+            Cargo = usuarioBanco.Cargo.Nome,
+            Setor = usuarioBanco.Cargo.Setor.Nome
+        } : null;
     }
 
-    public List<Colaborador> BuscarUsuariosPaginado(int pageSize, int pageNumber)
+    public async Task<List<ColaboradorDto>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
     {
-        string sql = @"SELECT 
-                            * 
-                        FROM Colaboradores 
-                        ORDER BY Id ASC OFFSET ((@pageNumber - 1) * @pageSize) 
-                        ROWS FETCH NEXT @pageSize 
-                        ROWS ONLY;";
+        var colaboradoresBanco = await _context.Colaboradores
+                        .Include(colaborador => colaborador.Cargo)
+                        .ThenInclude(cargo => cargo.Setor)
+                        .OrderBy(c => c.Id)
+                        .Skip((pageNumber - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToListAsync();
 
-        var parametros = new SqlParameter[]{
-            new SqlParameter("pageNumber",pageNumber),
-            new SqlParameter("pageSize",pageSize),
+        return colaboradoresBanco.Select(c => new ColaboradorDto
+        {
+            Id = c.Id,
+            Nome = c.Nome,
+            Cargo = c.Cargo.Nome,
+            Setor = c.Cargo.Setor.Nome
+        }).ToList();
+    }
+
+    public async Task<ColaboradorDto> CadastrarColaborador(CadastrarColaboradorDto dto)
+    {
+        Colaborador novo = new Colaborador
+        {
+            Nome = dto.Nome,
+            CargoId = dto.CargoId
         };
 
-        var usuariosBanco = _context.Database.SqlQueryRaw<List<Colaborador>>(sql, parametros).ToList().FirstOrDefault();
-        return usuariosBanco != null ? usuariosBanco : [];
-    }
+        _context.Colaboradores.Add(novo);
+        await _context.SaveChangesAsync();
 
-    public void CadastrarColaborador(CadastrarColaboradorDto dto)
-    {
-        string sql = @"INSERT INTO Colaboradores (Nome, CargoId)
-                        VALUES (@nome, @cargoId);";
+        var colaboradorBanco = await _context.Colaboradores
+            .Include(c => c.Cargo)
+            .ThenInclude(cargo => cargo.Setor)
+            .FirstOrDefaultAsync(c => c.Id == novo.Id);
 
-        var parametros = new SqlParameter[]{
-            new SqlParameter("nome",dto.Nome),
-            new SqlParameter("cargoId",dto.CargoId),
+        if (colaboradorBanco == null)
+            throw new ApplicationException("Erro ao buscar colaborador cadastrado.");
+
+        return new ColaboradorDto
+        {
+            Id = colaboradorBanco.Id,
+            Nome = colaboradorBanco.Nome,
+            Cargo = colaboradorBanco.Cargo.Nome,
+            Setor = colaboradorBanco.Cargo.Setor.Nome
         };
-
-        _context.Colaboradores.FromSqlRaw(sql, parametros);
-        _context.SaveChanges();
+        
     }
 
-    public async Task DesativarPerfil(string id)
+    public async Task ExcluirColaborador(string id)
     {
-        string sql = @"DELETE FROM Colaboradores WHERE Id=@id;";
-
-        await _context.Database.ExecuteSqlRawAsync(sql, new SqlParameter("id", id));
-        _context.SaveChanges();
+        var colaboradorBanco = _context.Colaboradores
+                        .Include(c => c.Cargo)
+                        .ThenInclude(c => c.Setor)
+                        .ToList()
+                        .FirstOrDefault(c => c.Id == id);
+        if (colaboradorBanco != null)
+        {
+            _context.Remove(colaboradorBanco);
+        }
+        await _context.SaveChangesAsync();
     }
 
-    public async Task EditarColaborador(string id, EditarColaboradorDTO dto)
+    public async Task<ColaboradorDto> EditarColaborador(string id ,EditarColaboradorDTO dto)
     {
-        string sql = "UPDATE Colaboradores";
+        Colaborador? colaborador = await _context.Colaboradores.FirstOrDefaultAsync(c => c.Id == id);
 
-        string set = "";
-
-        var parametros = new SqlParameter[] { new SqlParameter("id", id) };
-
-        if (!string.IsNullOrEmpty(dto.Nome))
+        if (colaborador == null)
         {
-            set += " SET Nome = @nome";
-            parametros = parametros.Append(new SqlParameter("nome", dto.Nome)).ToArray();
+            throw new ApplicationException("Nenhum colaborador com esse id foi encontrado!");
         }
 
-        if (!string.IsNullOrEmpty(dto.CargoId))
+        if (string.IsNullOrEmpty(dto.Nome))
         {
-            set += ", CargoId = @cargoId";
-            parametros = parametros.Append(new SqlParameter("cargoId", dto.CargoId)).ToArray();
+            colaborador!.Nome = dto.Nome;
         }
 
-        if (set == "")
+        if (dto.CargoId > 0 && dto.CargoId<28)
         {
-            throw new ApplicationException("Nenhum dado para ser atualizado.");
+            colaborador!.CargoId = dto.CargoId;
         }
 
-        sql += set + " WHERE Id = @id;";
+        _context.Update(colaborador);
+        await _context.SaveChangesAsync();
 
-        await _context.Database.ExecuteSqlRawAsync(sql, parametros);
-        _context.SaveChanges();
+        Colaborador? colaboradorAtualizado = await _context.Colaboradores
+                                                    .Include(c => c.Cargo)
+                                                    .ThenInclude(cargo => cargo.Setor)
+                                                    .FirstOrDefaultAsync(c => c.Id == colaborador.Id);
+        return new ColaboradorDto
+        {
+            Id = colaboradorAtualizado.Id,
+            Nome = colaboradorAtualizado.Nome,
+            Cargo = colaboradorAtualizado.Cargo.Nome,
+            Setor = colaboradorAtualizado.Cargo.Setor.Nome
+        };
     }
 
-    
 }

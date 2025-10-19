@@ -14,52 +14,50 @@ public class UsuariosRepository : IUsuariosRepository
     public Usuario? BuscarPorId(string idUsuario)
     {
         string sql = "SELECT * FROM AspNetUsers WHERE Id = @idUsuario;";
-        var usuarioBanco = _context.Users.FromSqlRaw(sql, new SqlParameter("idUsuario", idUsuario)).ToList().FirstOrDefault();
+
+        var usuarioBanco = _context.Database
+                                    .SqlQueryRaw<Usuario>(sql, new SqlParameter("idUsuario", idUsuario))
+                                    .AsEnumerable()
+                                    .FirstOrDefault();
         return usuarioBanco;
     }
 
     public Usuario? BuscarPorEmail(string email)
     {
         string sql = "SELECT * FROM AspNetUsers WHERE NormalizedEmail = @email;";
-        var usuarioBanco = _context.Users.FromSqlRaw(sql, new SqlParameter("email", email.ToUpper())).ToList().FirstOrDefault();
+        var usuarioBanco = _context.Database
+                                    .SqlQueryRaw<Usuario>(sql, new SqlParameter("email", email.ToUpper()))
+                                    .AsEnumerable()
+                                    .FirstOrDefault();
         return usuarioBanco;
     }
     public List<UsuarioDto> BuscarUsuariosPaginado(int pageSize, int pageNumber)
     {
-        // var usuarios = _context.Users
-        // .Include(u => u.Cargo)
-        // .OrderBy(u => u.Id)
-        // .Skip((pageNumber - 1) * pageSize)
-        // .Take(pageSize)
-        // .Select(u => new UsuarioDto
-        // {
-        //     Id = u.Id,
-        //     Nome = u.UserName,
-        //     Email = u.Email,
-        //     Cargo = u.Cargo != null ? u.Cargo.Nome : null
-        // })
-        // .ToList();
+        string sql = @"
+            SELECT Id, UserName AS Nome, Email
+            FROM AspNetUsers
+            ORDER BY Id ASC
+            OFFSET ((@pageNumber - 1) * @pageSize) ROWS
+            FETCH NEXT @pageSize ROWS ONLY;
+        ";
 
-        var usuarios = _context.Users
-        .OrderBy(u => u.Id)
-        .Skip((pageNumber - 1) * pageSize)
-        .Take(pageSize)
-        .Select(u => new UsuarioDto
+        var parametros = new[]
         {
-            Id = u.Id,
-            Nome = u.UserName,
-            Email = u.Email
-        })
-        .ToList();
+            new SqlParameter("pageNumber", pageNumber),
+            new SqlParameter("pageSize", pageSize)
+        };
 
+        var usuarios = _context.Database
+                            .SqlQueryRaw<UsuarioDto>(sql, parametros)
+                            .ToList();
         return usuarios;
     }
 
-    public async Task DesativarPerfil(string idUsuario)
+    public async Task DesativarPerfil(string id)
     {
         string sql = @"DELETE FROM AspNetUsers WHERE Id=@id;";
 
-        await _context.Database.ExecuteSqlRawAsync(sql, new SqlParameter("id", idUsuario));
+        await _context.Database.ExecuteSqlRawAsync(sql, new SqlParameter("id", id));
     }
 
     public async Task EditarPerfil(string idUsuario, EditarUsuarioDTO dto)
@@ -93,42 +91,5 @@ public class UsuariosRepository : IUsuariosRepository
 
         await _context.Database.ExecuteSqlRawAsync(sql, parametros);
     }
-    
-    public async Task AdminEditarPerfil(string idUsuario, AdminEditarUsuarioDTO dto)
-    {
-        string sql = "UPDATE AspNetUsers";
 
-        string set = "";
-
-        var parametros = new SqlParameter[] { new SqlParameter("id",idUsuario) };
-
-        if (!string.IsNullOrEmpty(dto.Nome))
-        {
-            set += " SET UserName = @nome, NormalizedUserName = @normalizedUserName";
-            parametros = parametros.Append(new SqlParameter("nome", dto.Nome)).ToArray();
-            parametros = parametros.Append(new SqlParameter("normalizedUserName", dto.Nome.ToUpper())).ToArray();
-        }
-
-        if (!string.IsNullOrEmpty(dto.Email))
-        {
-            set += ", Email = @email, NormalizedEmail = @normalizedEmail";
-            parametros = parametros.Append(new SqlParameter("email", dto.Email.ToLower())).ToArray();
-            parametros = parametros.Append(new SqlParameter("normalizedEmail", dto.Email.ToUpper())).ToArray();
-        }
-
-        if (dto.CargoId>=0 && dto.CargoId!=null)
-        {
-            set += ", CargoId = @cargoId";
-            parametros = parametros.Append(new SqlParameter("cargoId", dto.CargoId)).ToArray();
-        }
-
-        if (set == "")
-        {
-            throw new ApplicationException("Nenhum dado para ser atualizado.");
-        }
-
-        sql += set + " WHERE Id = @id";
-
-        await _context.Database.ExecuteSqlRawAsync(sql, parametros);
-    }
 }

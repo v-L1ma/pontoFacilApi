@@ -2,9 +2,9 @@ using pontoFacilApi.source.Domain.Models;
 
 public interface IColaboradorService
 {
-    ResponseBase<Colaborador> BuscarColaboradorPorId(string idUsuario);
-    ResponseBase<List<Colaborador>> BuscarColaboradoresPaginado(int pageSize, int pageNumber);
-    Task<ResponseBase<Colaborador>> EditarColaborador(string idUsuario, EditarColaboradorDTO dto);
+    ResponseBase<ColaboradorDto> BuscarColaboradorPorId(string idUsuario);
+    Task<ResponseBase<List<ColaboradorDto>>> BuscarColaboradoresPaginado(int pageSize, int pageNumber);
+    Task<ResponseBase<ColaboradorDto>> EditarColaborador(string idUsuario, EditarColaboradorDTO dto);
     ResponseBase<string> ExcluirColaborador(string idUsuario);
-    ResponseBase<string> CadastrarColaborador(CadastrarColaboradorDto dto);
+    Task<ResponseBase<ColaboradorDto>> CadastrarColaborador(CadastrarColaboradorDto dto);
 }

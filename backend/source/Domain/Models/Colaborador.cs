@@ -1,12 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace pontoFacilApi.source.Domain.Models;
 
 public class Colaborador
 {
-
-    public string Id { get; set; }
-    public string Nome { get; set; }
+    [Key]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public string Nome { get; set; } = string.Empty;
     public int CargoId { get; set; }
-    public virtual Cargo Cargo { get; set; } 
+    public virtual Cargo Cargo { get; set; } = null!;
 }
