@@ -106,7 +106,7 @@ public class ColaboradorRepository : IColaboradorRepository
             throw new ApplicationException("Nenhum colaborador com esse id foi encontrado!");
         }
 
-        if (string.IsNullOrEmpty(dto.Nome))
+        if (!string.IsNullOrEmpty(dto.Nome))
         {
             colaborador!.Nome = dto.Nome;
         }

@@ -14,7 +14,7 @@ public class ColaboradorService : IColaboradorService
     {
         if (pageSize < 0 || pageNumber < 0)
         {
-            throw new ApplicationException("O tamanho e o numero da pagina devem ser maior que zero!");
+            throw new ParametroInvalidoException("O tamanho e o numero da pagina devem ser maior que zero!");
         }
 
         List<ColaboradorDto> colaboradores = await _colaboradorRepository.BuscarColaboradoresPaginado(pageSize, pageNumber);
@@ -30,14 +30,14 @@ public class ColaboradorService : IColaboradorService
     {
          if (string.IsNullOrEmpty(id))
         {
-            throw new ApplicationException("O id não pode ser vazio.");
+            throw new ParametroInvalidoException("O id não pode ser vazio.");
         }
 
         ColaboradorDto? colaborador = _colaboradorRepository.BuscarPorId(id);
 
         if (colaborador is null)
         {
-            throw new ApplicationException("Nenhum colaborador encontrado");
+            throw new NaoEncontradoException("Nenhum colaborador encontrado");
         }
 
         return new ResponseBase<ColaboradorDto>
@@ -51,17 +51,17 @@ public class ColaboradorService : IColaboradorService
     {
         if (string.IsNullOrEmpty(dto.Nome))
         {
-            throw new ApplicationException("Insira um nome válido!");
+            throw new ParametroInvalidoException("Insira um nome válido!");
         }
 
         if (dto.CargoId < 1 || dto.CargoId > 28)
         {
-            throw new ApplicationException("Insira um cargo válido!");
+            throw new ParametroInvalidoException("Insira um cargo válido!");
         }
 
         if (dto.Nome.Length<5)
         {
-            throw new ApplicationException("O nome do colaborador deve ter mais de 5 caracteres.");
+            throw new ParametroInvalidoException("O nome do colaborador deve ter mais de 5 caracteres.");
         }
         
         var colaboradorNovo = await _colaboradorRepository.CadastrarColaborador(dto);
@@ -77,24 +77,24 @@ public class ColaboradorService : IColaboradorService
     {
         if (string.IsNullOrEmpty(dto.Nome))
         {
-            throw new ApplicationException("Insira um nome válido!");
+            throw new ParametroInvalidoException("Insira um nome válido!");
         }
 
         if (dto.CargoId < 1 || dto.CargoId > 28)
         {
-            throw new ApplicationException("Insira um cargo válido!");
+            throw new ParametroInvalidoException("Insira um cargo válido!");
         }
 
         if (dto.Nome.Length<5)
         {
-            throw new ApplicationException("O nome do colaborador deve ter mais de 5 caracteres.");
+            throw new ParametroInvalidoException("O nome do colaborador deve ter mais de 5 caracteres.");
         }
         
         ColaboradorDto? colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
 
         if (colaboradorBanco is null)
         {
-            throw new ApplicationException("Colaborador não cadastrado");
+            throw new NaoEncontradoException("Colaborador não cadastrado");
         }
 
         await _colaboradorRepository.EditarColaborador(id, dto);
@@ -114,7 +114,7 @@ public class ColaboradorService : IColaboradorService
 
         if (colaboradorBanco is null)
         {
-            throw new ApplicationException("Colaborador não cadastrado");
+            throw new NaoEncontradoException("Colaborador não cadastrado");
         }
 
         _colaboradorRepository.ExcluirColaborador(id);

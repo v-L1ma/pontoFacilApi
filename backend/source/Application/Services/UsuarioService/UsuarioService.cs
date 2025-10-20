@@ -24,7 +24,7 @@ public class UsuarioService : IUsuarioService
     public ResponseBase<List<UsuarioDto>> BuscarUsuarioPaginado(int pageSize, int pageNumber)
     {
         if(pageSize<0 || pageNumber<0){
-            throw new ApplicationException("O tamanho e o numero da pagina devem ser maior que zero!");
+            throw new ParametroInvalidoException("O tamanho e o numero da pagina devem ser maior que zero!");
         }
 
         List<UsuarioDto> usuarios = _usuariosRepository.BuscarUsuariosPaginado(pageSize, pageNumber);
@@ -40,14 +40,14 @@ public class UsuarioService : IUsuarioService
     {
         if (string.IsNullOrEmpty(idUsuario))
         {
-            throw new ApplicationException("O id não pode ser vazio.");
+            throw new ParametroInvalidoException("O id não pode ser vazio.");
         }
 
         Usuario? usuario = _usuariosRepository.BuscarPorId(idUsuario);
 
         if (usuario is null)
         {
-            throw new ApplicationException("Nenhum usuario encontrado");
+            throw new NaoEncontradoException("Nenhum usuario encontrado");
         }
 
         return new ResponseBase<Usuario>
@@ -67,7 +67,7 @@ public class UsuarioService : IUsuarioService
 
         if (await _userManager.FindByEmailAsync(dto.Email.ToLower())!=null)
         {
-            throw new ApplicationException("Email já está em uso.");
+            throw new EmUsoException("Email já está em uso.");
         }
 
         IdentityResult resultado = await _userManager.CreateAsync(usuario, dto.Password);
@@ -90,19 +90,19 @@ public class UsuarioService : IUsuarioService
     {
          if (string.IsNullOrEmpty(idUsuario))
         {
-            throw new ApplicationException("O Id não pode ser vazio.");
+            throw new ParametroInvalidoException("O Id não pode ser vazio.");
         }
 
         Usuario? usuarioBanco = _usuariosRepository.BuscarPorId(idUsuario);
 
         if (usuarioBanco is null)
         {
-            throw new ApplicationException("Usuario não encontrado.");
+            throw new NaoEncontradoException("Usuario não encontrado.");
         }
         
         if (!string.IsNullOrEmpty(dto.Email) && _usuariosRepository.BuscarPorEmail(dto.Email.ToLower()) != null && usuarioBanco.Email != dto.Email.ToLower())
         {
-            throw new ApplicationException("O email fornecido já está em uso.");
+            throw new EmUsoException("O email fornecido já está em uso.");
         }
 
         await _usuariosRepository.EditarPerfil(idUsuario, dto);
@@ -117,14 +117,14 @@ public class UsuarioService : IUsuarioService
     {
         if (string.IsNullOrEmpty(idUsuario))
         {
-            throw new ApplicationException("Forneça um id.");
+            throw new ParametroInvalidoException("Forneça um id.");
         }
 
         var usuarioBanco = await _userManager.FindByIdAsync(idUsuario);
 
         if (usuarioBanco == null)
         {
-            throw new ApplicationException("Usuario não cadastrado.");
+            throw new NaoEncontradoException("Usuario não cadastrado.");
         }
 
         await _usuariosRepository.DesativarPerfil(idUsuario);
@@ -141,14 +141,14 @@ public class UsuarioService : IUsuarioService
 
         if (usuarioBanco == null)
         {
-            throw new ApplicationException("Usuario não cadastrado.");
+            throw new NaoEncontradoException("Email e/ou senha inválidos.");
         }
 
         var resultado = await _signInManager.PasswordSignInAsync(usuarioBanco, dto.Password, false, false);
 
         if (!resultado.Succeeded)
         {
-            throw new ApplicationException("Senha inválida.");
+            throw new NaoEncontradoException("Email e/ou senha inválidos.");
         }
 
         string token = _tokenService.GerarToken(usuarioBanco);

@@ -25,10 +25,11 @@ public class UsuariosController : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet("{idUsuario}")]
-    public ActionResult<ResponseBase<Usuario>> BuscarPorId(string idUsuario)
+    [HttpGet()]
+    public ActionResult<ResponseBase<Usuario>> BuscarPorId()
     {
-        ResponseBase<Usuario> response = _usuarioService.BuscarUsuarioPorId(idUsuario);
+        string? idUsuario = User.FindFirst("Id")?.Value;
+        ResponseBase<Usuario> response = _usuarioService.BuscarUsuarioPorId(idUsuario!);
         return Ok(response);
     }
 
@@ -40,10 +41,11 @@ public class UsuariosController : ControllerBase
         return Ok(response);
     }
 
-    [HttpDelete("{idUsuario}")]
-    public async Task<ActionResult<ResponseBase<string>>> ExcluirPerfil(string idUsuario)
+    [HttpDelete()]
+    public async Task<ActionResult<ResponseBase<string>>> ExcluirPerfil()
     {
-        ResponseBase<string> response = await _usuarioService.ExcluirUsuario(idUsuario);
+        string? idUsuario = User.FindFirst("Id")?.Value;
+        ResponseBase<string> response = await _usuarioService.ExcluirUsuario(idUsuario!);
         return Ok(response);
     }
 
