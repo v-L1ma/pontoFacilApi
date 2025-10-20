@@ -18,12 +18,12 @@ public class UsuariosController : ControllerBase
         _usuarioService = usuarioService;
     }
 
-    [HttpGet("buscarUsuariosPaginado")]
-    public ActionResult<ResponseBase<List<UsuarioDto>>> BuscarUsuariosPaginado([FromQuery] int pageSize, int pageNumber)
-    {
-        ResponseBase<List<UsuarioDto>> response = _usuarioService.BuscarUsuarioPaginado(pageSize, pageNumber);
-        return Ok(response);
-    }
+    // [HttpGet("buscarUsuariosPaginado")]
+    // public ActionResult<ResponseBase<List<UsuarioDto>>> BuscarUsuariosPaginado([FromQuery] int pageSize, int pageNumber)
+    // {
+    //     ResponseBase<List<UsuarioDto>> response = _usuarioService.BuscarUsuarioPaginado(pageSize, pageNumber);
+    //     return Ok(response);
+    // }
 
     [HttpGet()]
     public ActionResult<ResponseBase<Usuario>> BuscarPorId()

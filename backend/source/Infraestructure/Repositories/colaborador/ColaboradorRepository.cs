@@ -49,7 +49,7 @@ public class ColaboradorRepository : IColaboradorRepository
         } : null;
     }
 
-    public async Task<List<ColaboradorDto>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
+    public async Task<PaginacaoDTO<ColaboradorDto>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
     {
         var colaboradoresBanco = await _context.Colaboradores
                         .Include(colaborador => colaborador.Cargo)
@@ -59,7 +59,7 @@ public class ColaboradorRepository : IColaboradorRepository
                         .Take(pageSize)
                         .ToListAsync();
 
-        return colaboradoresBanco.Select(c => new ColaboradorDto
+        List<ColaboradorDto> colaboradores = colaboradoresBanco.Select(c => new ColaboradorDto
         {
             Id = c.Id,
             Nome = c.Nome,
@@ -67,6 +67,15 @@ public class ColaboradorRepository : IColaboradorRepository
             Cargo = c.Cargo.Nome,
             Setor = c.Cargo.Setor.Nome
         }).ToList();
+
+        int total = colaboradores.Count();
+
+        return new PaginacaoDTO<ColaboradorDto>
+        {
+            Itens = colaboradores,
+            Total = total
+        };
+
     }
 
     public async Task<ColaboradorDto> CadastrarColaborador(CadastrarColaboradorDto dto)

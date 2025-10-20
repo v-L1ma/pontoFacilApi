@@ -2,7 +2,7 @@ using pontoFacilApi.source.Domain.Models;
 
 public interface IColaboradorRepository
 {
-    public Task<List<ColaboradorDto>> BuscarColaboradoresPaginado(int pageSize, int pageNumber);
+    public Task<PaginacaoDTO<ColaboradorDto>> BuscarColaboradoresPaginado(int pageSize, int pageNumber);
     public ColaboradorDto? BuscarPorId(string id);
     public ColaboradorDto? BuscarPorCPF(string cpf);
     public Task<ColaboradorDto> EditarColaborador(string id, EditarColaboradorDTO dto);

@@ -31,27 +31,27 @@ public class UsuariosRepository : IUsuariosRepository
                                     .FirstOrDefault();
         return usuarioBanco;
     }
-    public List<UsuarioDto> BuscarUsuariosPaginado(int pageSize, int pageNumber)
-    {
-        string sql = @"
-            SELECT Id, UserName AS Nome, Email
-            FROM AspNetUsers
-            ORDER BY Id ASC
-            OFFSET ((@pageNumber - 1) * @pageSize) ROWS
-            FETCH NEXT @pageSize ROWS ONLY;
-        ";
+    // public List<UsuarioDto> BuscarUsuariosPaginado(int pageSize, int pageNumber)
+    // {
+    //     string sql = @"
+    //         SELECT Id, UserName AS Nome, Email
+    //         FROM AspNetUsers
+    //         ORDER BY Id ASC
+    //         OFFSET ((@pageNumber - 1) * @pageSize) ROWS
+    //         FETCH NEXT @pageSize ROWS ONLY;
+    //     ";
 
-        var parametros = new[]
-        {
-            new SqlParameter("pageNumber", pageNumber),
-            new SqlParameter("pageSize", pageSize)
-        };
+    //     var parametros = new[]
+    //     {
+    //         new SqlParameter("pageNumber", pageNumber),
+    //         new SqlParameter("pageSize", pageSize)
+    //     };
 
-        var usuarios = _context.Database
-                            .SqlQueryRaw<UsuarioDto>(sql, parametros)
-                            .ToList();
-        return usuarios;
-    }
+    //     var usuarios = _context.Database
+    //                         .SqlQueryRaw<UsuarioDto>(sql, parametros)
+    //                         .ToList();
+    //     return usuarios;
+    // }
 
     public async Task DesativarPerfil(string id)
     {

@@ -19,9 +19,9 @@ private readonly IColaboradorService _colaboradorService;
     }
 
     [HttpGet("buscarColaboradoresPaginado")]
-    public async Task<ActionResult<ResponseBase<List<ColaboradorDto>>>> BuscarColaboradoresPaginado([FromQuery] int pageSize, int pageNumber)
+    public async Task<ActionResult<ResponseBase<PaginacaoDTO<ColaboradorDto>>>> BuscarColaboradoresPaginado([FromQuery] int pageSize, int pageNumber)
     {
-        ResponseBase<List<ColaboradorDto>> response = await _colaboradorService.BuscarColaboradoresPaginado(pageSize, pageNumber);
+        ResponseBase<PaginacaoDTO<ColaboradorDto>> response = await _colaboradorService.BuscarColaboradoresPaginado(pageSize, pageNumber);
         return Ok(response);
     }
 

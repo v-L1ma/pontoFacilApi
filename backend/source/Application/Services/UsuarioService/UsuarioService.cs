@@ -21,20 +21,20 @@ public class UsuarioService : IUsuarioService
         _usuariosRepository = usuariosRepository;
     }
 
-    public ResponseBase<List<UsuarioDto>> BuscarUsuarioPaginado(int pageSize, int pageNumber)
-    {
-        if(pageSize<0 || pageNumber<0){
-            throw new ParametroInvalidoException("O tamanho e o numero da pagina devem ser maior que zero!");
-        }
+    // public ResponseBase<List<UsuarioDto>> BuscarUsuarioPaginado(int pageSize, int pageNumber)
+    // {
+    //     if(pageSize<0 || pageNumber<0){
+    //         throw new ParametroInvalidoException("O tamanho e o numero da pagina devem ser maior que zero!");
+    //     }
 
-        List<UsuarioDto> usuarios = _usuariosRepository.BuscarUsuariosPaginado(pageSize, pageNumber);
+    //     List<UsuarioDto> usuarios = _usuariosRepository.BuscarUsuariosPaginado(pageSize, pageNumber);
 
-        return new ResponseBase<List<UsuarioDto>>
-        {
-            Dados = usuarios,
-            Message = "Usuários listados com sucesso!"
-        };
-    }
+    //     return new ResponseBase<List<UsuarioDto>>
+    //     {
+    //         Dados = usuarios,
+    //         Message = "Usuários listados com sucesso!"
+    //     };
+    // }
 
     public ResponseBase<Usuario> BuscarUsuarioPorId(string idUsuario)
     {

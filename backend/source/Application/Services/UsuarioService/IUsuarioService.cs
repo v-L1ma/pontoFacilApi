@@ -5,7 +5,7 @@ using pontoFacilApi.source.Domain.Models;
 public interface IUsuarioService
 {
     ResponseBase<Usuario> BuscarUsuarioPorId(string idUsuario);
-    ResponseBase<List<UsuarioDto>> BuscarUsuarioPaginado(int pageSize, int pageNumber);
+    // ResponseBase<List<UsuarioDto>> BuscarUsuarioPaginado(int pageSize, int pageNumber);
     Task<ResponseBase<string>> EditarUsuario(string idUsuario, EditarUsuarioDTO dto);
     Task<ResponseBase<string>> ExcluirUsuario(string idUsuario);
     Task<ResponseBase<Usuario>> CadastrarUsuario(CadastrarUsuarioDTO dto);

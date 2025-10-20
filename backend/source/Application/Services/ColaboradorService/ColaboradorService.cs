@@ -10,18 +10,18 @@ public class ColaboradorService : IColaboradorService
     {
         _colaboradorRepository = colaboradorRepository;
     }
-    public async Task<ResponseBase<List<ColaboradorDto>>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
+    public async Task<ResponseBase<PaginacaoDTO<ColaboradorDto>>> BuscarColaboradoresPaginado(int pageSize, int pageNumber)
     {
         if (pageSize < 0 || pageNumber < 0)
         {
             throw new ParametroInvalidoException("O tamanho e o numero da pagina devem ser maior que zero!");
         }
 
-        List<ColaboradorDto> colaboradores = await _colaboradorRepository.BuscarColaboradoresPaginado(pageSize, pageNumber);
+        PaginacaoDTO<ColaboradorDto> paginacao = await _colaboradorRepository.BuscarColaboradoresPaginado(pageSize, pageNumber);
 
-        return new ResponseBase<List<ColaboradorDto>>
+        return new ResponseBase<PaginacaoDTO<ColaboradorDto>>
         {
-            Dados = colaboradores,
+            Dados = paginacao,
             Message = "Colaboradores listados com sucesso!"
         };
     }
