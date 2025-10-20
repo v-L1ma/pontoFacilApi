@@ -4,9 +4,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBannerLayoutComponent } from "../../components/form-banner-layout/form-banner-layout.component";
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,11 @@ export class LoginComponent implements OnInit{
   mostrarSenha = signal(true);
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder){}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ){}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -36,7 +41,17 @@ export class LoginComponent implements OnInit{
   }
 
   enviar(){
-    console.log(this.loginForm.value)
+    const {email, senha} = this.loginForm.value;
+    this.authService.autenticar(email,senha).subscribe({
+      next:(response)=>{
+        console.log('oi')
+        console.log(response);
+        this.router.navigateByUrl('/gerencia')
+      },
+      error:(error)=>{
+        console.log(error);
+      }
+    });
   }
 
   esconder(){

@@ -1,10 +1,16 @@
-.login{
+@use '../../../variables.scss';
+
+.cadastro{
     width: 35%;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
+
+    h1{
+        color: variables.$primary;
+    }
 
     form{
         display: flex;
@@ -24,7 +30,7 @@
         }
     }
 
-    .cadastro{
+    .login{
         color: gray;
         text-align: center;
         a{
@@ -35,10 +41,10 @@
 }
 
 @media screen and (max-width:1000px) {
-    .login{
+    .cadastro{
         height: fit-content;
         width: 95%;
-        border: 1px solid rgb(210, 210, 210);
+        border: 1px solid variables.$light_gray;
         border-radius: 1rem;
         background-color: white;
         padding: 5rem 1rem;

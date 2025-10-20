@@ -1,0 +1,40 @@
+@use '../../../variables.scss';
+
+header{
+    
+    .conteudo{
+        display: flex;
+        width: 70%;
+        margin: 0 auto;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+
+        h1{
+            color: variables.$primary;
+        }
+
+        .opcoes{
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+
+            .item{
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                padding: 0.5rem 1rem;
+                border-radius: 5rem;
+                cursor: pointer;
+                transition: 300ms;
+
+                &:hover{
+                    background-color: variables.$primary;
+                    color: white;
+
+                }
+            }
+        }
+    }
+    border-bottom: 1px solid variables.$light_gray;
+}

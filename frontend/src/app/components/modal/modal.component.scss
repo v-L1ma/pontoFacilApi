@@ -1,0 +1,42 @@
+@use '../../../variables.scss';
+
+form{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+
+    div{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+
+        label{
+            font-size: 1rem;
+            color: black;
+        }
+
+        input,select{
+            border: 1px solid rgb(213, 213, 213);
+            background-color: transparent;
+            padding: .5rem;
+            border-radius: .5rem;
+
+            &::placeholder{
+                color: rgb(130, 130, 130);
+            }
+        }
+    }
+}
+
+header{
+    h2{
+        font-size: 2rem;
+        font-weight: 500;
+        color: variables.$primary;
+    }
+    p{
+        font-size: 1rem;
+        color: rgb(130, 130, 130);
+    }
+
+}

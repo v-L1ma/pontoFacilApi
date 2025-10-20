@@ -1,5 +1,5 @@
 <app-form-banner-layout [bannerPosition]="'left'">
-    <div class="login">
+    <div class="cadastro">
         <h1>Criar uma conta</h1>
         <p>Preencha os dados abaixo para se cadastrar</p>
 
@@ -11,6 +11,9 @@
             </mat-form-field>
             @if (cadastroForm.get('nome')?.invalid && cadastroForm.get('nome')?.touched) {
                 <mat-error class="erro">O nome deve ter mais de 5 caracteres</mat-error>
+            }
+            @if (cadastroForm.get('nome')?.errors?.['faltaSegundoNome'] && cadastroForm.get('nome')?.touched) {
+                <mat-error class="erro">Por favor, insira seu nome e sobrenome</mat-error>
             }
 
             <mat-form-field class="inputField" appearance="outline">
@@ -41,7 +44,7 @@
                 Entrar
             </button>
         </form>
-        <p class="cadastro">Já tem uma conta? <a routerLink="/login">Faça login</a></p>
+        <p class="login">Já tem uma conta? <a routerLink="/login">Faça login</a></p>
     </div>
 
 </app-form-banner-layout>

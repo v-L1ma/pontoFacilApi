@@ -8,11 +8,11 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu class="menu" #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openEditDialog()">
             <mat-icon>edit</mat-icon>
             <span>Editar</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="excluir(colaborador().id)">
             <mat-icon>delete</mat-icon>
             <span>Excluir</span>
         </button>
@@ -20,13 +20,20 @@
     </div>
     <div class="infos">
         <p>
-            <mat-icon>mail</mat-icon>
-            email@com
+            <mat-icon>badge</mat-icon>
+            {{colaborador().cpf}}
         </p>
         <p>
             <mat-icon>work</mat-icon>
-            Departamento
+            {{colaborador().cargo}}
+        </p>
+        <p>
+            <mat-icon>apartment</mat-icon>
+            {{colaborador().setor}}
         </p>
     </div>
-    <button mat-stroked-button>Ver detalhes</button>
+    
+    <button mat-stroked-button>
+        <mat-icon>visibility</mat-icon>
+        Ver detalhes</button>
 </div>
