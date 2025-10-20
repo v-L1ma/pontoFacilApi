@@ -13,9 +13,22 @@ public class ColaboradorRepository : IColaboradorRepository
     {
         _context = context;
     }
-    public Colaborador? BuscarPorEmail(string email)
+    public ColaboradorDto? BuscarPorCPF(string cpf)
     {
-        throw new NotImplementedException();
+        var usuarioBanco = _context.Colaboradores
+                                    .Include(c => c.Cargo)
+                                    .ThenInclude(c => c.Setor)
+                                    .ToList()
+                                    .FirstOrDefault(c => c.CPF == cpf);
+
+        return usuarioBanco != null ? new ColaboradorDto
+        {
+            Id = usuarioBanco.Id,
+            Nome = usuarioBanco.Nome,
+            CPF = usuarioBanco.CPF,
+            Cargo = usuarioBanco.Cargo.Nome,
+            Setor = usuarioBanco.Cargo.Setor.Nome
+        } : null;
     }
 
     public ColaboradorDto? BuscarPorId(string id)
@@ -30,6 +43,7 @@ public class ColaboradorRepository : IColaboradorRepository
         {
             Id = usuarioBanco.Id,
             Nome = usuarioBanco.Nome,
+            CPF = usuarioBanco.CPF,
             Cargo = usuarioBanco.Cargo.Nome,
             Setor = usuarioBanco.Cargo.Setor.Nome
         } : null;
@@ -49,6 +63,7 @@ public class ColaboradorRepository : IColaboradorRepository
         {
             Id = c.Id,
             Nome = c.Nome,
+            CPF = c.CPF,
             Cargo = c.Cargo.Nome,
             Setor = c.Cargo.Setor.Nome
         }).ToList();
@@ -59,7 +74,8 @@ public class ColaboradorRepository : IColaboradorRepository
         Colaborador novo = new Colaborador
         {
             Nome = dto.Nome,
-            CargoId = dto.CargoId
+            CargoId = dto.CargoId,
+            CPF =  dto.CPF
         };
 
         _context.Colaboradores.Add(novo);
@@ -77,6 +93,7 @@ public class ColaboradorRepository : IColaboradorRepository
         {
             Id = colaboradorBanco.Id,
             Nome = colaboradorBanco.Nome,
+            CPF = colaboradorBanco.CPF,
             Cargo = colaboradorBanco.Cargo.Nome,
             Setor = colaboradorBanco.Cargo.Setor.Nome
         };
@@ -127,6 +144,7 @@ public class ColaboradorRepository : IColaboradorRepository
         {
             Id = colaboradorAtualizado.Id,
             Nome = colaboradorAtualizado.Nome,
+            CPF = colaboradorAtualizado.CPF,
             Cargo = colaboradorAtualizado.Cargo.Nome,
             Setor = colaboradorAtualizado.Cargo.Setor.Nome
         };
