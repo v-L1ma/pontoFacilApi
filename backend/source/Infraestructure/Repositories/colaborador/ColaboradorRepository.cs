@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using pontoFacilApi.source.Domain.Models;
 using pontoFacilApi.source.Infraestructure.Data;
@@ -68,7 +66,7 @@ public class ColaboradorRepository : IColaboradorRepository
             Setor = c.Cargo.Setor.Nome
         }).ToList();
 
-        int total = colaboradores.Count();
+        int total = _context.Colaboradores.ToList().Count();
 
         return new PaginacaoDTO<ColaboradorDto>
         {
@@ -127,20 +125,18 @@ public class ColaboradorRepository : IColaboradorRepository
     {
         Colaborador? colaborador = await _context.Colaboradores.FirstOrDefaultAsync(c => c.Id == id);
 
-        if (colaborador == null)
+        if (
+            dto.Nome == colaborador!.Nome &&
+            dto.CPF == colaborador!.CPF &&
+            dto.CargoId == colaborador!.CargoId
+        )
         {
-            throw new ApplicationException("Nenhum colaborador com esse id foi encontrado!");
+            throw new ParametroInvalidoException("Nenhum dado precisa ser atualizado.");
         }
 
-        if (!string.IsNullOrEmpty(dto.Nome))
-        {
-            colaborador!.Nome = dto.Nome;
-        }
-
-        if (dto.CargoId > 0 && dto.CargoId<28)
-        {
-            colaborador!.CargoId = dto.CargoId;
-        }
+        colaborador!.Nome = dto.Nome;
+        colaborador!.CargoId = dto.CargoId;
+        colaborador.CPF = dto.CPF;
 
         _context.Update(colaborador);
         await _context.SaveChangesAsync();

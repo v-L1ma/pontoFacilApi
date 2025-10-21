@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using pontoFacilApi.source.Domain.Models;
 
@@ -49,7 +50,12 @@ public class ColaboradorService : IColaboradorService
 
     public async Task<ResponseBase<ColaboradorDto>> CadastrarColaborador(CadastrarColaboradorDto dto)
     {
-        if (string.IsNullOrEmpty(dto.Nome))
+        string nome = dto.Nome.TrimStart();
+        nome = nome.TrimEnd();
+
+        nome = Regex.Replace(nome, @"[^\p{L}\s']", "");
+        
+        if (string.IsNullOrEmpty(nome))
         {
             throw new ParametroInvalidoException("Insira um nome válido!");
         }
@@ -59,7 +65,7 @@ public class ColaboradorService : IColaboradorService
             throw new ParametroInvalidoException("Insira um cargo válido!");
         }
 
-        if (dto.Nome.Length<5)
+        if (nome.Length<3)
         {
             throw new ParametroInvalidoException("O nome do colaborador deve ter mais de 5 caracteres.");
         }
@@ -76,7 +82,12 @@ public class ColaboradorService : IColaboradorService
             throw new EmUsoException("Este CPF já pertence a outro colaborador.");
         }
         
-        var colaboradorNovo = await _colaboradorRepository.CadastrarColaborador(dto);
+        var colaboradorNovo = await _colaboradorRepository.CadastrarColaborador(new CadastrarColaboradorDto
+        {
+            Nome = nome,
+            CargoId = dto.CargoId,
+            CPF = dto.CPF
+        });
 
         return new ResponseBase<ColaboradorDto>()
         {
@@ -87,7 +98,11 @@ public class ColaboradorService : IColaboradorService
 
     public async Task<ResponseBase<ColaboradorDto>> EditarColaborador(string id, EditarColaboradorDTO dto)
     {
-        if (string.IsNullOrEmpty(dto.Nome))
+        string nome = dto.Nome.Trim();
+
+        nome = Regex.Replace(nome, @"[^\p{L}\s]", "");
+
+        if (string.IsNullOrEmpty(nome))
         {
             throw new ParametroInvalidoException("Insira um nome válido!");
         }
@@ -97,7 +112,7 @@ public class ColaboradorService : IColaboradorService
             throw new ParametroInvalidoException("Insira um cargo válido!");
         }
 
-        if (dto.Nome.Length < 5)
+        if (nome.Length < 3)
         {
             throw new ParametroInvalidoException("O nome do colaborador deve ter mais de 5 caracteres.");
         }
@@ -114,12 +129,16 @@ public class ColaboradorService : IColaboradorService
             throw new NaoEncontradoException("Colaborador não cadastrado");
         }
 
-        if (_colaboradorRepository.BuscarPorCPF(dto.CPF)!=null)
+        if (dto.CPF != colaboradorBanco.CPF && _colaboradorRepository.BuscarPorCPF(dto.CPF) != null)
         {
             throw new EmUsoException("Este CPF já pertence a outro colaborador.");
         }
 
-        await _colaboradorRepository.EditarColaborador(id, dto);
+        await _colaboradorRepository.EditarColaborador(id, new EditarColaboradorDTO{
+            Nome = nome,
+            CPF = dto.CPF,
+            CargoId = dto.CargoId
+        });
 
         colaboradorBanco = _colaboradorRepository.BuscarPorId(id);
 

@@ -38,9 +38,9 @@ export class CadastroComponent {
 
   ngOnInit(): void {
     this.cadastroForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(5)]],
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[\p{L}\s'-]+$/u)]],
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(5)]],
+      senha: ['', [Validators.required, Validators.minLength(3)]],
       confirmarSenha: ['', [Validators.required]]
     }, { validators:compararSenhaValidator('senha','confirmarSenha')});
   }
@@ -48,10 +48,10 @@ export class CadastroComponent {
 
   enviar(){
     const cadastrarUsuarioDTO:cadastrarUsuarioDTO = {
-      username: this.cadastroForm.value.nome,
-      email: this.cadastroForm.value.email,
-      password: this.cadastroForm.value.senha,
-      rePassword: this.cadastroForm.value.confirmarSenha
+      Username: this.cadastroForm.value.nome,
+      Email: this.cadastroForm.value.email,
+      Password: this.cadastroForm.value.senha,
+      RePassword: this.cadastroForm.value.confirmarSenha
     }
 
     this.authService.cadastrar(cadastrarUsuarioDTO).subscribe({

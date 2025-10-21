@@ -83,7 +83,7 @@ export class ModalComponent implements OnInit{
       const cargoId = this.cargos.find(c=> c.Nome == cargo)?.Id;
 
       this.cadastroForm = this.fb.group({
-        nome: [nome, [Validators.required, Validators.minLength(5)]],
+        nome: [nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
         CPF: [cpf, [Validators.required, cpfValidator]],
         cargoId: [cargoId, [Validators.required]]
       });
@@ -91,7 +91,7 @@ export class ModalComponent implements OnInit{
     }
 
     this.cadastroForm = this.fb.group({
-          nome: ['', [Validators.required, Validators.minLength(5)]],
+          nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
           CPF: ['', [Validators.required, cpfValidator]],
           cargoId: ['', [Validators.required]]
         });

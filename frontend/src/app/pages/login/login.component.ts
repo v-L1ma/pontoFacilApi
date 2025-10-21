@@ -44,12 +44,11 @@ export class LoginComponent implements OnInit{
     const {email, senha} = this.loginForm.value;
     this.authService.autenticar(email,senha).subscribe({
       next:(response)=>{
-        console.log('oi')
-        console.log(response);
+        // console.log(response);
         this.router.navigateByUrl('/gerencia')
       },
       error:(error)=>{
-        console.log(error);
+        // console.log(error);
       }
     });
   }

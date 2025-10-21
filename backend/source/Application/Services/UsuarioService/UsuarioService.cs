@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Identity;
 using pontoFacilApi.source.Application.DTOs;
 using pontoFacilApi.source.Domain.Models;
@@ -59,16 +60,27 @@ public class UsuarioService : IUsuarioService
 
     public async Task<ResponseBase<Usuario>> CadastrarUsuario(CadastrarUsuarioDTO dto)
     {
-        Usuario usuario = new Usuario
-        {
-            UserName = dto.Username,
-            Email = dto.Email.ToLower(),
-        };
 
-        if (await _userManager.FindByEmailAsync(dto.Email.ToLower())!=null)
+        string nome = dto.Username.TrimStart();
+        nome = nome.TrimEnd();
+
+        nome = Regex.Replace(nome, @"[^\p{L}\s']", "");
+
+        if (await _userManager.FindByEmailAsync(dto.Email.ToLower()) != null)
         {
             throw new EmUsoException("Email já está em uso.");
         }
+        
+        if (nome!.Length <3)
+        {
+            throw new ParametroInvalidoException("O nome deve ter no minimo 3 caracteres.");
+        }
+
+        Usuario usuario = new Usuario
+        {
+            UserName = nome,
+            Email = dto.Email.ToLower(),
+        };
 
         IdentityResult resultado = await _userManager.CreateAsync(usuario, dto.Password);
 
@@ -88,9 +100,19 @@ public class UsuarioService : IUsuarioService
 
     public async Task<ResponseBase<string>> EditarUsuario(string idUsuario, EditarUsuarioDTO dto)
     {
-         if (string.IsNullOrEmpty(idUsuario))
+        string nome = dto.Nome!.TrimStart();
+        nome = nome.TrimEnd();
+
+        nome = Regex.Replace(nome, @"[^\p{L}\s']", "");
+
+        if (string.IsNullOrEmpty(idUsuario))
         {
             throw new ParametroInvalidoException("O Id não pode ser vazio.");
+        }
+        
+        if (nome!.Length <3)
+        {
+            throw new ParametroInvalidoException("O nome deve ter no minimo 3 caracteres.");
         }
 
         Usuario? usuarioBanco = _usuariosRepository.BuscarPorId(idUsuario);
@@ -105,7 +127,11 @@ public class UsuarioService : IUsuarioService
             throw new EmUsoException("O email fornecido já está em uso.");
         }
 
-        await _usuariosRepository.EditarPerfil(idUsuario, dto);
+        await _usuariosRepository.EditarPerfil(idUsuario, new EditarUsuarioDTO
+        {
+            Nome = nome,
+            Email = dto.Email
+        });
 
         return new ResponseBase<string>
         {

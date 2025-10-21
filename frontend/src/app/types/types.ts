@@ -1,14 +1,14 @@
 export interface usuario {
-    id:string;
-    nome:string;
-    email:string;
+    Id:string;
+    Username:string;
+    Email:string;
 }
 
 export interface cadastrarUsuarioDTO {
-    username:string;
-    email:string;
-    password:string;
-    rePassword:string;
+    Username:string;
+    Email:string;
+    Password:string;
+    RePassword:string;
 }
 
 export interface colaborador {

@@ -7,7 +7,7 @@ import { CardColaboradorComponent } from "../../components/card-colaborador/card
 import { HeaderComponent } from "../../components/header/header.component";
 import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { cadastrarColaboradorDTO, colaborador } from '../../types/types';
+import { cadastrarColaboradorDTO, colaborador, usuario } from '../../types/types';
 import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../components/modal/modal.component';
@@ -42,7 +42,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
   colaboradores:colaborador[] = [];
-  userLogado : colaborador | null = null;
+  userLogado : usuario | null = null;
   readonly dialog = inject(MatDialog);
   pesquisar:string = '';
   handlePageEvent(event:any) {

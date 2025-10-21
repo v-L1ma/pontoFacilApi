@@ -11,10 +11,20 @@
                 <mat-icon>groups</mat-icon>
                 Colaboradores
             </a>
-            <button mat-stroked-button (click)="logout()">
-                <mat-icon>logout</mat-icon>
-                Sair
-            </button>
+            <a class="item" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>account_circle</mat-icon>
+                {{this.usuarioNome}}
+            </a>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>person</mat-icon>
+                    <span>Ver perfil</span>
+                </button>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    Sair
+                </button>
+            </mat-menu>
         </nav>
     </div>
 </header>
