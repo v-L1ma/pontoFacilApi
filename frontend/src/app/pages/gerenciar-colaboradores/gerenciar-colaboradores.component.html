@@ -16,7 +16,7 @@
         <mat-form-field appearance="outline" class="field">
             <mat-icon matIconPrefix>search</mat-icon>
             <mat-label>Busque pelo nome</mat-label>
-            <input [(ngModel)]="pesquisar" matInput type="text"/>
+            <input [(ngModel)]="pesquisar" (ngModelChange)="buscarPeloNome()" matInput type="text"/>
         </mat-form-field>
     </div>
 
@@ -25,7 +25,7 @@
             <app-loading></app-loading>
         } @else{
             <section class="gallery">
-            @for (colaborador of colaboradores; track $index) {
+            @for (colaborador of colaboradoresFiltrados; track $index) {
                 <app-card-colaborador [colaborador]="colaborador" (acaoExecutada)="buscarColaboradores()"></app-card-colaborador>
             } 
             @empty {

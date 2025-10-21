@@ -43,10 +43,12 @@ export class GerenciarColaboradoresComponent implements OnInit{
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
   colaboradores:colaborador[] = [];
+  colaboradoresFiltrados:colaborador[] = [];
   userLogado : usuario | null = null;
   readonly dialog = inject(MatDialog);
   pesquisar:string = '';
   isLoading = signal<boolean>(false);
+  private timeout:any;
 
   handlePageEvent(event:any) {
     this.length = event.length;
@@ -101,13 +103,13 @@ export class GerenciarColaboradoresComponent implements OnInit{
 
   }
 
-  // buscarPeloNome(){
-  //   const pesquisa = this.pesquisar.toLocaleLowerCase().trimStart();
-
-  //   this.colaboradoresFiltrados.set(
-  //     this.colaboradores.filter(c=> c.nome.toLocaleLowerCase().includes(pesquisa))
-  //   )
-  // }
+  buscarPeloNome(){
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(()=>{
+      const pesquisa = this.pesquisar.toLocaleLowerCase().trim();
+      this.colaboradoresFiltrados = this.colaboradores.filter(c=> c.nome.toLocaleLowerCase().includes(pesquisa));  
+    },1000)
+  }
 
   buscarColaboradores(){
       this.colaboradoresService.buscarColaboradores(this.pageSize, this.pageNumber+1)
@@ -116,6 +118,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
           console.log(response)
           this.colaboradores = response.dados.itens;
           this.length = response.dados.total;
+          this.colaboradoresFiltrados = this.colaboradores;
         },
         error:(error)=>{
           console.log(error)
