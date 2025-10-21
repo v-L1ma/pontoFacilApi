@@ -20,11 +20,19 @@
         </mat-form-field>
     </div>
 
-    <section class="gallery">
-        @for (colaborador of colaboradores; track $index) {
-            <app-card-colaborador [colaborador]="colaborador" (acaoExecutada)="buscarColaboradores()"></app-card-colaborador>
+    
+        @if (isLoading()) {
+            <app-loading></app-loading>
+        } @else{
+            <section class="gallery">
+            @for (colaborador of colaboradores; track $index) {
+                <app-card-colaborador [colaborador]="colaborador" (acaoExecutada)="buscarColaboradores()"></app-card-colaborador>
+            } 
+            @empty {
+                <p>Nenhum colaborador encontrado.</p>
+            }
+            </section>
         }
-    </section>
 
     <mat-paginator 
         (page)="handlePageEvent($event)"

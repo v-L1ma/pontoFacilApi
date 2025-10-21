@@ -13,6 +13,9 @@ export function mensagensInterceptor(req: HttpRequest<unknown>, next: HttpHandle
       // console.log(req.url, 'returned a response with status', event.status);
       // console.log("body", body.message);
       const body = event.body as responseBase;
+      if(body.message.includes("Colaboradores listados com sucesso!")){
+        return;
+      }
       mensagemService.mostrarMensagemSucesso(body.message)
     }
   }),

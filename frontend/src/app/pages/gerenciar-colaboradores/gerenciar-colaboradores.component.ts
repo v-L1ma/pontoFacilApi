@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -11,8 +11,8 @@ import { cadastrarColaboradorDTO, colaborador, usuario } from '../../types/types
 import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { AuthService } from '../../services/auth/auth.service';
 import { FormsModule } from '@angular/forms';
+import { LoadingComponent } from "../../components/loading/loading/loading.component";
 
 @Component({
   selector: 'app-gerenciar-colaboradores',
@@ -24,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     CardColaboradorComponent,
     HeaderComponent,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    LoadingComponent
 ],
   templateUrl: './gerenciar-colaboradores.component.html',
   styleUrl: './gerenciar-colaboradores.component.scss'
@@ -45,6 +46,8 @@ export class GerenciarColaboradoresComponent implements OnInit{
   userLogado : usuario | null = null;
   readonly dialog = inject(MatDialog);
   pesquisar:string = '';
+  isLoading = signal<boolean>(false);
+
   handlePageEvent(event:any) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -57,7 +60,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
     this.usuarioService.retornarUser().subscribe(usuario => {
       this.userLogado = usuario
     });
-
+    this.isLoading.set(true);
     this.buscarColaboradores();
   }
 
@@ -107,17 +110,18 @@ export class GerenciarColaboradoresComponent implements OnInit{
   // }
 
   buscarColaboradores(){
-    this.colaboradoresService.buscarColaboradores(this.pageSize, this.pageNumber+1)
-    .subscribe({
-      next:(response)=>{
-        console.log(response)
-        this.colaboradores = response.dados.itens;
-        this.length = response.dados.total;
-      },
-      error:(error)=>{
-        console.log(error)
-      }
-    })
-  }
+      this.colaboradoresService.buscarColaboradores(this.pageSize, this.pageNumber+1)
+      .subscribe({
+        next:(response)=>{
+          console.log(response)
+          this.colaboradores = response.dados.itens;
+          this.length = response.dados.total;
+        },
+        error:(error)=>{
+          console.log(error)
+        }
+      })
+      this.isLoading.set(false); 
+    }
 
 }
