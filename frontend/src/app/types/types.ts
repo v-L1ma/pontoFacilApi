@@ -2,6 +2,7 @@ export interface usuario {
     Id:string;
     Username:string;
     Email:string;
+    exp:number;
 }
 
 export interface cadastrarUsuarioDTO {

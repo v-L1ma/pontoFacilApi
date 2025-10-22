@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { usuario } from '../../types/types';
 
 const KEY = 'token'
 
@@ -20,5 +21,10 @@ export class TokenService {
 
   possuiToken():boolean{
     return !!this.retornarToken()
+  }
+
+  isTokenValido(token:usuario):boolean{
+    // console.log("EXPIROU OU NÃO ", token.exp * 1000 > Date.now())
+    return token.exp * 1000 > Date.now()
   }
 }

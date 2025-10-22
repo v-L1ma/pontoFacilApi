@@ -19,7 +19,20 @@ export class usuarioLogadoService {
 
   decodificarToken(){
     const token = this.tokenService.retornarToken()!;
-    const usuarioLogado = jwtDecode(token) as usuario;
+    let usuarioLogado:usuario;
+    try {
+      usuarioLogado = jwtDecode(token) as usuario;
+
+      if(!this.tokenService.isTokenValido(usuarioLogado)){
+        console.log("Token expirado")
+        this.logout();
+        return;
+      }
+    } catch (error) {
+      console.log("Token inválido na localStorage");
+      this.logout();
+      return;
+    }
     this.usuarioLogadoSubject.next(usuarioLogado);
   }
 
