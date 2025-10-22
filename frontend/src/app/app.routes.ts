@@ -10,17 +10,35 @@ export const routes: Routes = [
     {
         path:'login',
         loadComponent: ()=> import('./pages/login/login.component').then((c)=>(c.LoginComponent))
-    }
-    ,
+    },
     {
         path:'cadastro',
         loadComponent: ()=> import('./pages/cadastro/cadastro.component').then((c)=>(c.CadastroComponent))
     },
     {
-        path:'gerencia',
-        loadComponent: ()=> import('./pages/gerenciar-colaboradores/gerenciar-colaboradores.component').then(
-            (c)=>(c.GerenciarColaboradoresComponent)        
-        ),
-        canActivate: [authGuard]
+        path:'portal',
+        redirectTo:'portal/gerencia',
+        pathMatch:"full"
+    },
+    {
+        path:'portal',
+        loadComponent: ()=> import('./pages/portal/portal.component').then((c)=>(c.PortalComponent)),
+        canActivate: [authGuard],
+        children:[
+            {
+                path:'gerencia',
+                loadComponent: ()=> import('./pages/gerenciar-colaboradores/gerenciar-colaboradores.component').then((c)=>(c.GerenciarColaboradoresComponent)),
+                canActivate: [authGuard]
+            },
+            {
+                path:'perfil',
+                loadComponent: ()=> import('./pages/perfil/perfil.component').then((c)=>(c.PerfilComponent)),
+                canActivate: [authGuard]
+            }
+        ]
+    },
+    {
+        path:"**",
+        redirectTo:'login'
     }
 ];

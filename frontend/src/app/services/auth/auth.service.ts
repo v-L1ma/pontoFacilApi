@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { cadastrarColaboradorDTO, cadastrarUsuarioDTO } from '../../types/types';
+import { alterarSenhaDto, cadastrarColaboradorDTO, cadastrarUsuarioDTO, responseBase } from '../../types/types';
 import { usuarioLogadoService } from '../usuario-logado/usuario-logado.service';
 
 interface authResponse{
@@ -32,6 +32,10 @@ export class AuthService {
 
   cadastrar(dto: cadastrarUsuarioDTO): Observable<any>{
     return this.http.post<any>(`${environment.API_URL}/Autenticacao/cadastro`,dto);
+  }
+
+  alterarSenha(dto:alterarSenhaDto):Observable<responseBase>{
+    return this.http.put<responseBase>(`${environment.API_URL}/Autenticacao/senha`,dto)
   }
 
 }

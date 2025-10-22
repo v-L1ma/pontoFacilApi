@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatMenuModule } from "@angular/material/menu";
-import { usuario } from '../../types/types';
 
 @Component({
   selector: 'app-header',
   imports: [
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterLink
 ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'

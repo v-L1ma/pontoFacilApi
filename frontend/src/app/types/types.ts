@@ -12,6 +12,17 @@ export interface cadastrarUsuarioDTO {
     RePassword:string;
 }
 
+export interface editarPerfilUsuarioDto{
+    nome: string;
+    email: string;
+}
+
+export interface alterarSenhaDto{
+    senhaAtual: string;
+    senhaNova: string;
+    confirmarSenhaNova: string;
+}
+
 export interface colaborador {
     id:string;
     nome:string;

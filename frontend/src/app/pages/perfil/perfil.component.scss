@@ -1,0 +1,119 @@
+@use "../../../variables.scss";
+
+main{
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .cabecalho{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .infos{
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+
+            h1{
+                background: linear-gradient(90deg, variables.$secondary 0%, variables.$primary 100%);
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                padding: .5rem 0;
+            }
+        }
+
+        .icone{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg, variables.$secondary 0%, variables.$primary 100%);
+            color: white;
+            font-size: 3rem;
+            width: 5rem;
+            height: 5rem;
+            border-radius: 100%;
+        }
+    }
+
+    section{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        border: 1px solid variables.$light_gray;
+        border-radius: .5rem;
+        overflow: hidden;
+        padding-bottom: 2rem;
+        
+        .cabecalho{
+            background-color: #006b5d18;
+            padding: 2rem;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 2rem;
+
+            button{
+                border-radius: .5rem;
+                width: 25%;
+            }
+        }
+
+        .botoes{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 2rem;
+
+            button{
+                border-radius: .5rem;
+                width: 25%;
+            }
+        }
+
+        .botoes__editando{
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            button{
+                border-radius: .5rem;
+                width: 10rem;
+            }
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .inputField{
+        &:disabled{
+            background-color: rgb(0, 110, 255);
+        }
+    }
+
+    .erro{
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+    }
+
+    section.excluir{
+        padding: 2rem;
+
+        button{
+            border-radius: .5rem;
+            width: 25%;
+            border: 1px solid red;
+            color: red;
+            background-color: rgba(255, 0, 0, 0.104);
+        }
+    }
+}

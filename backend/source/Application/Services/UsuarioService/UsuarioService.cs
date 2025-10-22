@@ -70,8 +70,8 @@ public class UsuarioService : IUsuarioService
         {
             throw new EmUsoException("Email já está em uso.");
         }
-        
-        if (nome!.Length <3)
+
+        if (nome!.Length < 3)
         {
             throw new ParametroInvalidoException("O nome deve ter no minimo 3 caracteres.");
         }
@@ -109,8 +109,8 @@ public class UsuarioService : IUsuarioService
         {
             throw new ParametroInvalidoException("O Id não pode ser vazio.");
         }
-        
-        if (nome!.Length <3)
+
+        if (nome!.Length < 3)
         {
             throw new ParametroInvalidoException("O nome deve ter no minimo 3 caracteres.");
         }
@@ -121,7 +121,7 @@ public class UsuarioService : IUsuarioService
         {
             throw new NaoEncontradoException("Usuario não encontrado.");
         }
-        
+
         if (!string.IsNullOrEmpty(dto.Email) && _usuariosRepository.BuscarPorEmail(dto.Email.ToLower()) != null && usuarioBanco.Email != dto.Email.ToLower())
         {
             throw new EmUsoException("O email fornecido já está em uso.");
@@ -135,7 +135,7 @@ public class UsuarioService : IUsuarioService
 
         return new ResponseBase<string>
         {
-            Message="Informações atualizadas com sucesso."
+            Message = "Informações atualizadas com sucesso."
         };
     }
 
@@ -157,7 +157,7 @@ public class UsuarioService : IUsuarioService
 
         return new ResponseBase<string>
         {
-            Message="Conta excluida com sucesso."
+            Message = "Conta excluida com sucesso."
         };
     }
 
@@ -183,6 +183,44 @@ public class UsuarioService : IUsuarioService
         {
             Message = "Login efetuado com sucesso!",
             Dados = token
+        };
+    }
+
+    public async Task<ResponseBase<string>> AlterarSenha(string id,AlterarSenhaDTO dto)
+    {
+
+        if (!string.Equals(dto.SenhaNova, dto.ConfirmarSenhaNova))
+        {
+            throw new ParametroInvalidoException("A nova senha e a confirmação da senha não coincidem");
+        }
+
+        if (string.Equals(dto.SenhaNova, dto.SenhaAtual))
+        {
+            throw new ParametroInvalidoException("A senha atual e a nova são iguais.");
+        }
+
+        Usuario? usuario = await _userManager.FindByIdAsync(id);
+
+        if(usuario is null)
+        {
+            throw new NaoEncontradoException("Usuario não cadastrado");
+        }
+
+        var result = await _userManager.ChangePasswordAsync(usuario,dto.SenhaAtual,dto.SenhaNova);
+
+        if(!result.Succeeded){
+            string mensagem="";
+            foreach (var item in result.Errors)
+            {
+                mensagem += item.Description;
+            }
+            throw new ParametroInvalidoException(mensagem);
+        }
+
+        return new ResponseBase<string>()
+        {
+            Message = "Senha alterada com sucesso!",
+            Dados = null
         };
     }
 }

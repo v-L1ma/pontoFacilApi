@@ -1,0 +1,97 @@
+<main>
+    <div class="cabecalho">
+        <mat-icon class="icone">person</mat-icon>
+    
+        <div class="infos">
+            <h1>Meu perfil</h1>
+            <p>Gerencie suas informações pessoais</p>
+        </div>
+    </div>
+    
+    <section>
+        <div class="cabecalho">
+            <h1>Informações Pessoais</h1>
+            <p>Visualize suas informações cadastradas</p>
+        </div>
+    
+            <form [formGroup]="cadastroForm" >
+    
+                <mat-form-field class="inputField" appearance="outline">
+                    <mat-label>Nome completo</mat-label>
+                    <input formControlName="nome" placeholder="Digite seu nome completo" matInput type="text" />
+                </mat-form-field>
+                @if (cadastroForm.get('nome')?.errors?.['minlength'] && cadastroForm.get('nome')?.touched) {
+                    <mat-error class="erro">O nome deve ter mais de 3 caracteres</mat-error>
+                }
+                @if (cadastroForm.get('nome')?.errors?.['pattern'] && cadastroForm.get('nome')?.touched) {
+                    <mat-error class="erro">O nome não pode conter caracteres especiais</mat-error>
+                }
+    
+                <mat-form-field class="inputField" appearance="outline">
+                    <mat-label>E-mail</mat-label>
+                    <input formControlName="email" placeholder="Digite seu email" matInput type="email" />
+                </mat-form-field>
+                @if (cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched) {
+                    <mat-error class="erro">Email inválido</mat-error>
+                }
+            </form>
+    
+                @if (isEditando()) {
+                <div class="botoes__editando">
+                    <button mat-flat-button [disabled]="cadastroForm.invalid" type="button" (click)="salvarEdicao()">
+                        Salvar
+                    </button>
+                    <button mat-stroked-button type="button" (click)="cancelar()">
+                        Cancelar
+                    </button>
+                </div>
+                } @else {
+                <div class="botoes">
+                    <button mat-flat-button type="button" (click)="editar()">
+                        Editar
+                    </button>
+                    <mat-slide-toggle [(ngModel)]="isEditandoSenha">Editar senha</mat-slide-toggle>
+                </div>
+                }
+    
+            @if(isEditandoSenha && !isEditando()){
+                <form [formGroup]="senhaForm">
+    
+                    <mat-form-field class="inputField" appearance="outline">
+                        <mat-label>Senha atual</mat-label>
+                        <input formControlName="senhaAtual" placeholder="Digite sua senha atual" matInput type="text" />
+                    </mat-form-field>
+                    @if (senhaForm.get('senhaAtual')?.invalid && senhaForm.get('senhaAtual')?.touched) {
+                        <mat-error class="erro">Insira uma senha.</mat-error>
+                    }
+    
+                    <mat-form-field class="inputField" appearance="outline">
+                        <mat-label>Digite a senha nova</mat-label>
+                        <input formControlName="senhaNova" placeholder="Digite a sua nova senha" matInput type="text" />
+                    </mat-form-field>
+                    @if (senhaForm.get('senhaNova')?.invalid && senhaForm.get('senhaNova')?.touched) {
+                        <mat-error class="erro">Senha inválida.</mat-error>
+                    }
+    
+                    <mat-form-field class="inputField" appearance="outline">
+                        <mat-label>Confirme a senha</mat-label>
+                        <input formControlName="confirmarSenhaNova" placeholder="Confirme a sua nova senha " matInput type="text" />
+                    </mat-form-field>
+                    @if (senhaForm.get('confirmarSenhaNova')?.errors?.['camposDiferentes'] && senhaForm.get('confirmarSenhaNova')?.touched) {
+                        <mat-error class="erro">As senhas não coincidem</mat-error>
+                    }
+                    <button mat-flat-button [disabled]="senhaForm.invalid" type="button" (click)="alterarSenha()">
+                        Salvar
+                    </button>
+                </form>
+            }
+    </section>
+
+    <section class="excluir">
+        <h1>Excluir conta</h1>
+        <p>ATENÇÃO! Essa ação é irreversível, ao excluir sua conta esta ação não poderá ser desfeita.</p>
+        <button mat-stroked-button type="button" (click)="excluirConta()">
+            Excluir
+        </button>
+    </section>
+</main>

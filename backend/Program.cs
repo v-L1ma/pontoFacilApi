@@ -71,7 +71,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services
-        .AddIdentity<Usuario, IdentityRole>()
+        .AddIdentity<Usuario, IdentityRole>(options =>
+        {
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' ";
+        })
         .AddEntityFrameworkStores<AppDbContext>()
         .AddDefaultTokenProviders();
 

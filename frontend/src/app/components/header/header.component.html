@@ -3,11 +3,11 @@
     <div class="conteudo">
         <h1>PontoFácil</h1>
         <nav class="opcoes">
-            <a class="item">
+            <a class="item" routerLink="dashboard">
                 <mat-icon>analytics</mat-icon>
                 Dashboard
             </a>
-            <a class="item">
+            <a class="item" routerLink="gerencia">
                 <mat-icon>groups</mat-icon>
                 Colaboradores
             </a>
@@ -16,7 +16,7 @@
                 {{this.usuarioNome}}
             </a>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button routerLink="perfil" mat-menu-item>
                     <mat-icon>person</mat-icon>
                     <span>Ver perfil</span>
                 </button>

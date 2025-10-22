@@ -10,4 +10,6 @@ public interface IUsuarioService
     Task<ResponseBase<string>> ExcluirUsuario(string idUsuario);
     Task<ResponseBase<Usuario>> CadastrarUsuario(CadastrarUsuarioDTO dto);
     Task<ResponseBase<string>> LoginUsuario(LoginUsuarioDTO dto);
+    Task<ResponseBase<string>> AlterarSenha(string id,AlterarSenhaDTO dto);
+
 }

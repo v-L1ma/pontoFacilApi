@@ -4,7 +4,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { CardColaboradorComponent } from "../../components/card-colaborador/card-colaborador.component";
-import { HeaderComponent } from "../../components/header/header.component";
 import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { cadastrarColaboradorDTO, colaborador, usuario } from '../../types/types';
@@ -22,7 +21,6 @@ import { LoadingComponent } from "../../components/loading/loading/loading.compo
     MatButtonModule,
     MatIconModule,
     CardColaboradorComponent,
-    HeaderComponent,
     MatPaginatorModule,
     FormsModule,
     LoadingComponent
@@ -54,7 +52,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageNumber = event.pageIndex;
-    console.log(event);
+    // console.log(event);
     this.buscarColaboradores();
   }
   

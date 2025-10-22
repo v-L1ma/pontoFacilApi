@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
-import { BehaviorSubject } from 'rxjs';
-import { colaborador, usuario } from '../../types/types';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { colaborador, editarPerfilUsuarioDto, responseBase, usuario } from '../../types/types';
 import { jwtDecode } from 'jwt-decode';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,10 @@ export class usuarioLogadoService {
 
   private usuarioLogadoSubject = new BehaviorSubject<usuario | null>(null);
 
-  constructor(private tokenService: TokenService){
+  constructor(
+    private tokenService: TokenService,
+    private http:HttpClient
+  ){
     if(this.tokenService.possuiToken()){
         this.decodificarToken();
     }
@@ -52,5 +57,22 @@ export class usuarioLogadoService {
 
   estaLogado(){
     return this.tokenService.possuiToken();
+  }
+
+  editarPerfil(dados: editarPerfilUsuarioDto):void{
+    let usuario = this.usuarioLogadoSubject.value;
+    usuario!.Username=dados.nome;
+    usuario!.Email=dados.email; 
+    this.http.put<responseBase>(`${environment.API_URL}/Usuarios`, dados).subscribe({
+      next:(response)=>{
+        this.usuarioLogadoSubject.next(usuario);
+      },
+      error:(erro)=>{
+      }
+    })
+  }
+
+  excluirConta(){
+    return this.http.delete<responseBase>(`${environment.API_URL}/Usuarios`)
   }
 }

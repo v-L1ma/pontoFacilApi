@@ -2,6 +2,11 @@
 @use '@angular/material' as mat;
 
 header{    
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.796);
+    backdrop-filter: blur(10px);
+    z-index: 100;
     .conteudo{
         display: flex;
         width: 70%;
