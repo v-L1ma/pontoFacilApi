@@ -1,19 +1,18 @@
-import { Component, inject, signal } from '@angular/core';
-import { DialogData, ModalFormComponent } from '../modalForm/modal-form.component';
+import { Component, inject } from '@angular/core';
+import { DialogData, ModalFormComponent } from '../modal-form/modal-form.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
-  MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule,  } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -23,7 +22,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatDialogActions,
     MatDialogClose,
-    MatDialogContent,
     MatDialogTitle,
     MatInputModule,
     MatFormFieldModule,

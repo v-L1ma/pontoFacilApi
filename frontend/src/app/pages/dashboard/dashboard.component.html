@@ -1,0 +1,36 @@
+<main class="wrapper">
+        <div class="gallery-cards">
+            <div class="card">
+                <div class="infos">
+                    <h1>Total de colaboradores ativos</h1>
+                    <p>13</p>
+                </div>
+                <mat-icon class="icone">person</mat-icon>
+            </div>
+            <div class="card">
+                <div class="infos">
+                    <h1>Novos colaboradores no mês</h1>
+                    <p>2</p>
+                </div>
+                <mat-icon class="icone">person</mat-icon>
+            </div>
+            <div class="card">
+                <div class="infos">
+                    <h1>Colaboradores demitidos</h1>
+                    <p>1</p>
+                </div>
+                <mat-icon class="icone">person</mat-icon>
+            </div>
+        </div>
+    
+        <div class="gallery-graficos">
+            <div class="chart-container">
+                <h1>Distribuição por departamento</h1>
+                <canvas id="colaboradorDepartamentoChart">{{colaboradorDepartamentoChart}}</canvas>
+            </div>
+            <div class="chart-container">
+                <h1>Evolução do número de colaboradores ao longo do tempo</h1>
+                <canvas id="colaboradoresTotalTempo">{{colaboradoresTotalTempo}}</canvas>
+            </div>
+        </div>
+</main>

@@ -9,7 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { cadastrarColaboradorDTO, colaborador, usuario } from '../../types/types';
 import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalFormComponent } from '../../components/modalForm/modal-form.component';
+import { ModalFormComponent } from '../../components/modal-form/modal-form.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from "../../components/loading/loading/loading.component";
 

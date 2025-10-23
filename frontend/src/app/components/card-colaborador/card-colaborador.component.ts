@@ -6,7 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { colaborador } from '../../types/types';
 import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalFormComponent } from '../modalForm/modal-form.component';
+import { ModalFormComponent } from '../modal-form/modal-form.component';
 
 @Component({
   selector: 'app-card-colaborador',
