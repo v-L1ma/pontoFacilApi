@@ -27,4 +27,8 @@ export class ColaboradoresService {
   cadastrar(colaborador:cadastrarColaboradorDTO){
     return this.http.post<responseBase>(`${environment.API_URL}/Colaborador`, colaborador);
   }
+
+  estatisticas():Observable<responseBase>{
+    return this.http.get<responseBase>(`${environment.API_URL}/Colaborador/estatisticas`);
+  }
 }

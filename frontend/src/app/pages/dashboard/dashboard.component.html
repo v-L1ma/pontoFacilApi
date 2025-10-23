@@ -3,23 +3,23 @@
             <div class="card">
                 <div class="infos">
                     <h1>Total de colaboradores ativos</h1>
-                    <p>13</p>
+                    <p>{{this.data.colaboradoresAtivos ?? 0}}</p>
                 </div>
                 <mat-icon class="icone">person</mat-icon>
             </div>
             <div class="card">
                 <div class="infos">
                     <h1>Novos colaboradores no mês</h1>
-                    <p>2</p>
+                    <p>{{this.data.novosColaboradoresMes ?? 0}}</p>
                 </div>
-                <mat-icon class="icone">person</mat-icon>
+                <mat-icon class="icone">person_add</mat-icon>
             </div>
             <div class="card">
                 <div class="infos">
                     <h1>Colaboradores demitidos</h1>
-                    <p>1</p>
+                    <p>{{this.data.colaboradoresDemitidos ?? 0}}</p>
                 </div>
-                <mat-icon class="icone">person</mat-icon>
+                <mat-icon class="icone">person_remove</mat-icon>
             </div>
         </div>
     

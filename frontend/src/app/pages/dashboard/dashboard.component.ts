@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Chart,registerables } from "chart.js";
 import { MatIcon } from "@angular/material/icon";
+import { ColaboradoresService } from "../../services/colaboradores/colaboradores.service";
 
 Chart.register(...registerables)
 @Component({
@@ -31,32 +32,44 @@ export class DashboardComponent implements OnInit{
  
   colaboradorDepartamentoChart:any;
   colaboradoresTotalTempo:any;
+  data:any;
+
+  constructor(
+    private colaboradoresService:ColaboradoresService
+  ){}
 
   ngOnInit(): void {
-    this.colaboradorDepartamentoChart = new Chart("colaboradorDepartamentoChart",this.gerarConfig('bar',{
-      labels:['JAN','FEB', 'MAR','APRIL'],
-      datasets:[
-        {
-          label:'Sales',
-          data:['475','543','312','588'],
-          backgroundColor:'blue'
-        },
-        {
-          label:'PAT',
-          data:['100','120','133','134'],
-          backgroundColor:'red'
-        }
-      ]
-    }));
-    this.colaboradoresTotalTempo = new Chart("colaboradoresTotalTempo",this.gerarConfig('line',{
-      labels: ['JAN','FEB', 'MAR','APRIL'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    }));
+
+    this.colaboradoresService.estatisticas().subscribe({
+      next:(response)=>{
+        console.log(response)
+        this.data = response.dados
+        this.colaboradorDepartamentoChart = new Chart("colaboradorDepartamentoChart",this.gerarConfig('bar',{
+          labels:this.data.colaboradorDepartamento.labels,
+          datasets:[
+            {
+              label:this.data.colaboradorDepartamento.dataset.label,
+              data:this.data.colaboradorDepartamento.dataset.data,
+              backgroundColor:'rgb(75, 192, 192)'
+            }
+          ]
+        }));
+        this.colaboradoresTotalTempo = new Chart("colaboradoresTotalTempo",this.gerarConfig('line',{
+          labels:this.data.colaboradoresTotalTempo.labels,
+          datasets: [{
+            label: this.data.colaboradoresTotalTempo.dataset.label,
+            data: this.data.colaboradoresTotalTempo.dataset.data,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          }]
+        }));
+      },
+      error:(erro)=>{
+        console.log(erro)
+      }
+    })
+
+    
   }
 }
