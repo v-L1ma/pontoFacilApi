@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Chart,registerables } from "chart.js";
 import { MatIcon } from "@angular/material/icon";
 import { ColaboradoresService } from "../../services/colaboradores/colaboradores.service";
+import { ColaboradoresStats } from "../../types/types";
 
 Chart.register(...registerables)
 @Component({
@@ -32,7 +33,7 @@ export class DashboardComponent implements OnInit{
  
   colaboradorDepartamentoChart:any;
   colaboradoresTotalTempo:any;
-  data:any;
+  data!:ColaboradoresStats;
 
   constructor(
     private colaboradoresService:ColaboradoresService
