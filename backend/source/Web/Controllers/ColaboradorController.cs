@@ -53,6 +53,11 @@ private readonly IColaboradorService _colaboradorService;
         return Ok(response);
     }
 
-
+    [HttpGet("estatisticas")]
+    public async Task<ActionResult<ResponseBase<EstatisticasColaboradoresDto>>> EstatisticasColaboradores()
+    {
+        ResponseBase<EstatisticasColaboradoresDto> response = await _colaboradorService.EstatisticasColaboradores();
+        return Ok(response);
+    }
 
 }

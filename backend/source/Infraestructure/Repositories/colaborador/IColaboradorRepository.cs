@@ -8,4 +8,5 @@ public interface IColaboradorRepository
     public Task<ColaboradorDto> EditarColaborador(string id, EditarColaboradorDTO dto);
     public Task<ColaboradorDto> CadastrarColaborador(CadastrarColaboradorDto dto);
     public Task ExcluirColaborador(string id);
+    public Task<EstatisticasColaboradoresDto> EstatisticasColaboradores();
 }

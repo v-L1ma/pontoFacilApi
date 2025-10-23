@@ -7,4 +7,5 @@ public interface IColaboradorService
     Task<ResponseBase<ColaboradorDto>> EditarColaborador(string idUsuario, EditarColaboradorDTO dto);
     ResponseBase<string> ExcluirColaborador(string idUsuario);
     Task<ResponseBase<ColaboradorDto>> CadastrarColaborador(CadastrarColaboradorDto dto);
+    Task<ResponseBase<EstatisticasColaboradoresDto>> EstatisticasColaboradores();
 }
