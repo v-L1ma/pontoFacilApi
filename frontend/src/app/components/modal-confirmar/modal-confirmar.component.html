@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <header mat-dialog-title>
+        <h2>{{data.tituloModal}}</h2>
+        <p>{{data.descricaoModal}}</p>
+    </header>
+    <mat-dialog-actions class="botoes">
+      <button mat-stroked-button (click)="onNoClick()">Cancelar</button>
+      <button mat-flat-button [mat-dialog-close]="true">Confirmar</button>
+    </mat-dialog-actions>
+</div>

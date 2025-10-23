@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +11,8 @@ import { usuarioLogadoService } from '../../services/usuario-logado/usuario-loga
 import { usuario } from '../../types/types';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ModalConfirmarComponent } from '../../components/modal-confirmar/modal-confirmar.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-perfil',
@@ -34,6 +36,7 @@ export class PerfilComponent {
   isEditando = signal(false)
   isEditandoSenha = false
   usuarioLogado!:usuario;
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private fb: FormBuilder,
@@ -114,5 +117,21 @@ export class PerfilComponent {
     this.senhaForm.get("senha")?.setValue('');
     this.senhaForm.get("senhaNova")?.setValue('');
     this.senhaForm.get("confirmarSenha")?.setValue('');
+  }
+
+  openEditDialog(): void {
+    const dialogRef = this.dialog.open(ModalConfirmarComponent, {
+      data: {
+        tituloModal: 'Deseja realmente excluir sua conta?', 
+        descricaoModal:'Preencha o seu e-mail e senha para confirmar a exclusão da conta',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      // console.log('The dialog was closed');
+      if (result == true) {
+        this.excluirConta();
+      }
+    });
   }
 }

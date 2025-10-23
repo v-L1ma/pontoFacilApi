@@ -35,11 +35,11 @@ export interface DialogData {
     ReactiveFormsModule,
     MatSelectModule
 ],
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.scss'
+  templateUrl: './modal-form.component.html',
+  styleUrl: './modal-form.component.scss'
 })
-export class ModalComponent implements OnInit{
-  readonly dialogRef = inject(MatDialogRef<ModalComponent>);
+export class ModalFormComponent implements OnInit{
+  readonly dialogRef = inject(MatDialogRef<ModalFormComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   cadastroForm!:FormGroup;
   private fb= inject(FormBuilder)

@@ -9,7 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { cadastrarColaboradorDTO, colaborador, usuario } from '../../types/types';
 import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from '../../components/modal/modal.component';
+import { ModalFormComponent } from '../../components/modalForm/modal-form.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from "../../components/loading/loading/loading.component";
 
@@ -65,7 +65,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
   }
 
   openCreateDialog(): void {
-    const dialogRef = this.dialog.open(ModalComponent, {
+    const dialogRef = this.dialog.open(ModalFormComponent, {
       data: {
         tituloModal: 'Cadastrar colaborador', 
         descricaoModal:'Preencha os dados da conta do colaborador que deseja cadastrar',

@@ -6,7 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { colaborador } from '../../types/types';
 import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalFormComponent } from '../modalForm/modal-form.component';
 
 @Component({
   selector: 'app-card-colaborador',
@@ -68,7 +68,7 @@ export class CardColaboradorComponent implements OnInit{
   }
 
   openEditDialog(): void {
-    const dialogRef = this.dialog.open(ModalComponent, {
+    const dialogRef = this.dialog.open(ModalFormComponent, {
       data: {
         tituloModal: 'Editar informações', 
         descricaoModal:'Preencha os dados da conta do colaborador que deseja editar',
