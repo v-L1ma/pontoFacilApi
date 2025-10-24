@@ -86,7 +86,7 @@ header{
                 padding: 2rem;
                 color: white;
                 font-size: 1rem;
-                transform: translateX(0,100);
+                animation: slideIn .3s ease-out forwards;
 
                 .item{
                     width: 100%;
@@ -126,5 +126,16 @@ header{
                 display: none;
             }
         }
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
     }
 }
