@@ -77,7 +77,7 @@ export class PerfilComponent {
   }
 
   alterarSenha(){
-    this.authService.alterarSenha(this.senhaForm.value).subscribe({
+    this.usuarioLogadoService.alterarSenha(this.senhaForm.value).subscribe({
       next:(response)=>{
         setTimeout(()=>{
           this.limparFormulario();

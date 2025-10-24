@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { colaborador, editarPerfilUsuarioDto, responseBase, usuario } from '../../types/types';
+import { alterarSenhaDto, colaborador, editarPerfilUsuarioDto, responseBase, usuario } from '../../types/types';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -70,6 +70,10 @@ export class usuarioLogadoService {
       error:(erro)=>{
       }
     })
+  }
+
+  alterarSenha(dto:alterarSenhaDto):Observable<responseBase>{
+    return this.http.put<responseBase>(`${environment.API_URL}/Usuarios/senha`,dto)
   }
 
   excluirConta(){

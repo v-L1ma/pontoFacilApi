@@ -28,12 +28,5 @@ public class AutenticacaoController : ControllerBase
         return Ok(response);
     }
 
-    [Authorize]
-    [HttpPut("senha")]
-    public async Task<ActionResult<ResponseBase<string>>> AlterarSenha(AlterarSenhaDTO dto)
-    {
-        string? idUsuario = User.FindFirst("Id")?.Value;
-        ResponseBase<string> response = await _usuarioService.AlterarSenha(idUsuario!, dto);
-        return Ok(response);
-    }
+    
 }

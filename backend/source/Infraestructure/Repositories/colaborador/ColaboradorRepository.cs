@@ -56,7 +56,7 @@ public class ColaboradorRepository : IColaboradorRepository
         var colaboradoresBanco = await _context.Colaboradores
                         .Include(colaborador => colaborador.Cargo)
                         .ThenInclude(cargo => cargo.Setor)
-                        .OrderBy(c => c.dataCriacao)
+                        .OrderByDescending(c => c.dataCriacao)
                         .Where(c=> c.Status==StatusEnum.ATIVO.ToString())
                         .Skip((pageNumber - 1) * pageSize)
                         .Take(pageSize)
