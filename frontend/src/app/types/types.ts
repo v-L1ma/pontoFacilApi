@@ -59,24 +59,3 @@ export interface ColaboradoresStats {
   colaboradorDepartamento: ChartData;
   colaboradoresTotalTempo: ChartData;
 }
-
-const dadosExemplo: ColaboradoresStats = {
-  colaboradoresAtivos: 150,
-  novosColaboradoresMes: 10,
-  colaboradoresDemitidos: 5,
-  colaboradorDepartamento: {
-    labels: ["TI", "Marketing", "Vendas"],
-    dataset: {
-      label: "Colaboradores por Departamento",
-      data: [60, 40, 50]
-    }
-  },
-  colaboradoresTotalTempo: {
-    labels: ["< 1 ano", "1-3 anos", "> 3 anos"],
-    dataset: {
-      label: "Tempo de Casa (Total)",
-      data: [70, 50, 30]
-    }
-  }
-};
-*/

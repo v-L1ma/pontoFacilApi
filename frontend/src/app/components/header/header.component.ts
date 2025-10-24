@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
@@ -19,6 +19,7 @@ import { MatMenuModule } from "@angular/material/menu";
 export class HeaderComponent implements OnInit{
 
   usuarioNome: string  = '';
+  isMenuOpen = signal<boolean>(false);
 
   constructor(
     private usuarioService: usuarioLogadoService,
@@ -37,4 +38,13 @@ export class HeaderComponent implements OnInit{
     this.usuarioService.logout();
     this.router.navigate(['/login']);
   }  
+
+  navegar(destino:string){
+    this.router.navigate([`/portal/${destino}`]);
+    this.abrirMenu()
+  }
+
+  abrirMenu(){
+    this.isMenuOpen.set(!this.isMenuOpen());
+  }
 }

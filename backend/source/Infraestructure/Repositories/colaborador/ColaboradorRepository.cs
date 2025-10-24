@@ -71,7 +71,7 @@ public class ColaboradorRepository : IColaboradorRepository
             Setor = c.Cargo.Setor.Nome
         }).ToList();
 
-        int total = _context.Colaboradores.ToList().Count();
+        int total = _context.Colaboradores.Where(c=> c.Status==StatusEnum.ATIVO.ToString()).ToList().Count();
 
         return new PaginacaoDTO<ColaboradorDto>
         {
@@ -191,6 +191,7 @@ public class ColaboradorRepository : IColaboradorRepository
         .ToArray();
 
     string?[] departamentos = colaboradoresBanco
+        .Where(c => c.Status == StatusEnum.ATIVO.ToString())
         .Select(c => c.Cargo?.Setor?.Nome)
         .Where(nome => !string.IsNullOrEmpty(nome))
         .Distinct()
@@ -199,7 +200,6 @@ public class ColaboradorRepository : IColaboradorRepository
         var totalColaboradoresPorSetor = colaboradoresBanco
             .Where(c => c.Status == StatusEnum.ATIVO.ToString())
             .Select(c => c.Cargo?.Setor?.Nome)
-            .Where(nome => !string.IsNullOrEmpty(nome))
             .GroupBy(nome => nome)
             .OrderBy(g => g.Key)
             .Select(g => g.Count())

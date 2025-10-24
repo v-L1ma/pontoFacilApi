@@ -12,7 +12,6 @@
 
         .card{
             display: flex;
-            flex-wrap: wrap-reverse;
             align-items: center;
             justify-content: space-around;
             border: 1px solid variables.$light_gray;
@@ -67,6 +66,51 @@
                 font-size: 1rem;
                 font-weight: 500;
                 color: gray;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1400px){
+.wrapper{
+
+    .gallery-cards{
+
+        .card{
+
+            .infos{
+                width: 60%;
+            }
+
+            .icone{
+                width: 40%;
+                display: flex;
+                justify-content: end;
+            }
+        }
+    }
+
+    .gallery-graficos{
+        .chart-container{
+            width: 50%;
+        }
+    }
+}
+}
+
+@media screen and (max-width:1000px){
+    .wrapper{
+        gap: 1rem;
+        .gallery-cards{
+            flex-direction: column;
+        }
+
+        .gallery-graficos{
+            flex-direction: column;
+            gap: 1rem;
+
+            .chart-container{
+                width: 100%;
             }
         }
     }

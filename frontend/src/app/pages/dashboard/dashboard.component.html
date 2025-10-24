@@ -3,21 +3,21 @@
             <div class="card">
                 <div class="infos">
                     <h1>Total de colaboradores ativos</h1>
-                    <p>{{this.data.colaboradoresAtivos ?? 0}}</p>
+                    <p>{{this.data.colaboradoresAtivos}}</p>
                 </div>
                 <mat-icon class="icone">person</mat-icon>
             </div>
             <div class="card">
                 <div class="infos">
                     <h1>Novos colaboradores no mês</h1>
-                    <p>{{this.data.novosColaboradoresMes ?? 0}}</p>
+                    <p>{{this.data.novosColaboradoresMes}}</p>
                 </div>
                 <mat-icon class="icone">person_add</mat-icon>
             </div>
             <div class="card">
                 <div class="infos">
                     <h1>Colaboradores demitidos</h1>
-                    <p>{{this.data.colaboradoresDemitidos ?? 0}}</p>
+                    <p>{{this.data.colaboradoresDemitidos}}</p>
                 </div>
                 <mat-icon class="icone">person_remove</mat-icon>
             </div>
@@ -29,7 +29,7 @@
                 <canvas id="colaboradorDepartamentoChart">{{colaboradorDepartamentoChart}}</canvas>
             </div>
             <div class="chart-container">
-                <h1>Evolução do número de colaboradores ao longo do tempo</h1>
+                <h1>Novos colaboradores por mês</h1>
                 <canvas id="colaboradoresTotalTempo">{{colaboradoresTotalTempo}}</canvas>
             </div>
         </div>

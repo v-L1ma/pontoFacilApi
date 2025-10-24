@@ -2,7 +2,7 @@
 <header>
     <div class="conteudo">
         <h1>PontoFácil</h1>
-        <nav class="opcoes">
+        <nav class="menu__desktop">
             <a class="item" routerLink="dashboard">
                 <mat-icon>analytics</mat-icon>
                 Dashboard
@@ -11,7 +11,7 @@
                 <mat-icon>groups</mat-icon>
                 Colaboradores
             </a>
-            <a class="item" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <a class="item" [matMenuTriggerFor]="menu" aria-label="Icone de uma pessoa">
                 <mat-icon>account_circle</mat-icon>
                 {{this.usuarioNome}}
             </a>
@@ -26,5 +26,37 @@
                 </button>
             </mat-menu>
         </nav>
+        <button mat-icon-button class="botao__menu__mobile" (click)="abrirMenu()">
+            <mat-icon class="menu__icone">menu</mat-icon>
+        </button>
+        @if (isMenuOpen()) {
+            <nav class="menu__mobile">
+                <div class="menu__opcoes">
+                    <button class="item fechar" (click)="abrirMenu()">
+                        <mat-icon>close</mat-icon>
+                        Fechar
+                    </button>
+                    <a class="item" (click)="navegar('dashboard')">
+                        <mat-icon>analytics</mat-icon>
+                        Dashboard
+                    </a>
+                    <a class="item" (click)="navegar('gerencia')">
+                        <mat-icon>groups</mat-icon>
+                        Colaboradores
+                    </a>
+                </div>
+    
+                <div class="dados__conta">
+                    <a class="item" (click)="navegar('perfil')">
+                        <mat-icon>account_circle</mat-icon>
+                        {{this.usuarioNome}}
+                    </a>
+                    <a class="item" (click)="logout()">
+                        <mat-icon>logout</mat-icon>
+                        Sair
+                    </a>
+                </div>
+            </nav>
+        }
     </div>
 </header>
