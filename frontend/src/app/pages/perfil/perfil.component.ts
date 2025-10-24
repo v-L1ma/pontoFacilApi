@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { ModalConfirmarComponent } from '../../components/modal-confirmar/modal-confirmar.component';
 import { MatDialog } from '@angular/material/dialog';
+import { VerficadorForcaSenhaComponent } from "../../components/verficador-forca-senha/verficador-forca-senha.component";
 
 @Component({
   selector: 'app-perfil',
@@ -25,8 +26,9 @@ import { MatDialog } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
-    FormsModule
-  ],
+    FormsModule,
+    VerficadorForcaSenhaComponent
+],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss'
 })
@@ -37,6 +39,8 @@ export class PerfilComponent {
   isEditandoSenha = false
   usuarioLogado!:usuario;
   readonly dialog = inject(MatDialog);
+  senha=signal<string>('');
+  private passwordRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*\\-_])[A-Za-z\\d!@#$%^&*\\-_]{8,}$';
 
   constructor(
     private fb: FormBuilder,
@@ -67,9 +71,13 @@ export class PerfilComponent {
 
     this.senhaForm = this.fb.group({
       senhaAtual: ['', [Validators.required, Validators.minLength(3)]],
-      senhaNova: ['', [Validators.required, Validators.minLength(3)]],
+      senhaNova: ['', [Validators.required, Validators.minLength(3), Validators.pattern(this.passwordRegex)]],
       confirmarSenhaNova: ['', [Validators.required]]
     }, { validators:compararSenhaValidator('senhaNova','confirmarSenha')});
+
+    this.senhaForm.get('senhaNova')?.valueChanges.subscribe((senha)=>{
+      this.senha.set(senha)
+    })
   }
 
   salvarEdicao(){

@@ -69,6 +69,7 @@
                         <mat-label>Digite a senha nova</mat-label>
                         <input formControlName="senhaNova" placeholder="Digite a sua nova senha" matInput type="text" />
                     </mat-form-field>
+                    <app-verficador-forca-senha [senha]="senha()"></app-verficador-forca-senha>
                     @if (senhaForm.get('senhaNova')?.invalid && senhaForm.get('senhaNova')?.touched) {
                         <mat-error class="erro">Senha inválida.</mat-error>
                     }

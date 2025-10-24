@@ -10,7 +10,7 @@ import { FormBannerLayoutComponent } from "../../components/form-banner-layout/f
 import { compararSenhaValidator } from '../../validators/compararSenha.validator';
 import { AuthService } from '../../services/auth/auth.service';
 import { cadastrarColaboradorDTO, cadastrarUsuarioDTO } from '../../types/types';
-import { NgClass } from "@angular/common";
+import { VerficadorForcaSenhaComponent } from "../../components/verficador-forca-senha/verficador-forca-senha.component";
 
 
 @Component({
@@ -24,7 +24,7 @@ import { NgClass } from "@angular/common";
     ReactiveFormsModule,
     FormBannerLayoutComponent,
     MatSelectModule,
-    NgClass
+    VerficadorForcaSenhaComponent
 ],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss'
@@ -32,8 +32,8 @@ import { NgClass } from "@angular/common";
 export class CadastroComponent {
   mostrarSenha = signal(true);
   cadastroForm!: FormGroup;
-  forcaDaSenha = signal<string>("");
   private passwordRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*\\-_])[A-Za-z\\d!@#$%^&*\\-_]{8,}$';
+  senha=signal<string>('');
 
   constructor(
     private fb: FormBuilder,
@@ -51,7 +51,7 @@ export class CadastroComponent {
     }, { validators:compararSenhaValidator('senha','confirmarSenha')});
 
     this.cadastroForm.get('senha')?.valueChanges.subscribe((senha)=>{
-      this.verificarForcaDaSenha(senha)
+      this.senha.set(senha)
     })
   }
 
@@ -73,39 +73,6 @@ export class CadastroComponent {
       },
     });
 
-  }
-
-  verificarForcaDaSenha(senha:string){
-    const especiais = /[!@#$%^&*(),.?":{}|<>_\-+=~[\]\\;'/`]/;
-    const letrasMaiusculasEMinusculas = /[A-Z]/;
-    const apenasMinusculas = /[a-z]/;
-    const numeros = /[0-9]/;
-
-    if( letrasMaiusculasEMinusculas.test(senha) && 
-        apenasMinusculas.test(senha) &&
-        numeros.test(senha) &&
-        especiais.test(senha) && 
-        senha.length>=3
-    ){
-      this.forcaDaSenha.set('forte');
-      return;
-    }
-    
-    if(letrasMaiusculasEMinusculas.test(senha) && 
-        apenasMinusculas.test(senha) &&
-        senha.length>=3){
-      this.forcaDaSenha.set('media');
-      return;
-    }
-    
-    if(apenasMinusculas.test(senha) &&
-        senha.length>=3){
-      this.forcaDaSenha.set('fraca');
-      return;
-    }
-    
-    this.forcaDaSenha.set('');
-    
   }
 
   esconder(){
