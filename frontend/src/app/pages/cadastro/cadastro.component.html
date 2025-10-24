@@ -26,16 +26,37 @@
 
             <mat-form-field class="inputField" appearance="outline">
                 <mat-label>Senha</mat-label>
-                <input formControlName="senha" placeholder="Digite sua senha" matInput type="text" />
+                <input formControlName="senha" placeholder="Digite sua senha" matInput [type]="mostrarSenha() ? 'password' : 'text'" />
+                <button
+                matIconButton
+                matSuffix
+                type="button"
+                (click)="esconder()"
+                [attr.aria-label]="'Esconder senha'"
+                [attr.aria-pressed]="mostrarSenha()"
+                >
+                <mat-icon>{{mostrarSenha() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
             </mat-form-field>
+
            <app-verficador-forca-senha [senha]="senha()"></app-verficador-forca-senha>
             @if (cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched) {
                 <mat-error class="erro">A senha deve conter no minimo: 1 Letra maiuscula, Caracter especial, Numeros, 5 caracteres</mat-error>
             }
-
+            
             <mat-form-field class="inputField" appearance="outline">
                 <mat-label>Confirme a senha</mat-label>
-                <input formControlName="confirmarSenha" placeholder="Confirme a sua senha" matInput type="text" />
+                <input formControlName="confirmarSenha" placeholder="Confirme a sua senha" matInput [type]="mostrarSenha() ? 'password' : 'text'" />
+                <button
+                matIconButton
+                matSuffix
+                type="button"
+                (click)="esconder()"
+                [attr.aria-label]="'Esconder senha'"
+                [attr.aria-pressed]="mostrarSenha()"
+                >
+                <mat-icon>{{mostrarSenha() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
             </mat-form-field>
             @if (cadastroForm.get('confirmarSenha')?.errors?.['camposDiferentes'] && cadastroForm.get('confirmarSenha')?.touched) {
                 <mat-error class="erro">As senhas não coincidem</mat-error>

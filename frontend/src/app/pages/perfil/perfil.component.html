@@ -59,7 +59,17 @@
     
                     <mat-form-field class="inputField" appearance="outline">
                         <mat-label>Senha atual</mat-label>
-                        <input formControlName="senhaAtual" placeholder="Digite sua senha atual" matInput type="text" />
+                        <input formControlName="senhaAtual" placeholder="Digite sua senha atual" matInput [type]="mostrarSenhaAtual() ? 'password' : 'text'" />
+                        <button
+                        matIconButton
+                        matSuffix
+                        type="button"
+                        (click)="esconder('atual')"
+                        [attr.aria-label]="'Esconder senha'"
+                        [attr.aria-pressed]="mostrarSenhaAtual()"
+                        >
+                        <mat-icon>{{mostrarSenhaAtual() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                     @if (senhaForm.get('senhaAtual')?.invalid && senhaForm.get('senhaAtual')?.touched) {
                         <mat-error class="erro">Insira uma senha.</mat-error>
@@ -67,16 +77,36 @@
     
                     <mat-form-field class="inputField" appearance="outline">
                         <mat-label>Digite a senha nova</mat-label>
-                        <input formControlName="senhaNova" placeholder="Digite a sua nova senha" matInput type="text" />
+                        <input formControlName="senhaNova" placeholder="Digite a sua nova senha" matInput [type]="mostrarSenhaNova() ? 'password' : 'text'" />
+                        <button
+                        matIconButton
+                        matSuffix
+                        type="button"
+                        (click)="esconder('nova')"
+                        [attr.aria-label]="'Esconder senha'"
+                        [attr.aria-pressed]="mostrarSenhaNova()"
+                        >
+                        <mat-icon>{{mostrarSenhaNova() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                     <app-verficador-forca-senha [senha]="senha()"></app-verficador-forca-senha>
                     @if (senhaForm.get('senhaNova')?.invalid && senhaForm.get('senhaNova')?.touched) {
                         <mat-error class="erro">Senha inválida.</mat-error>
                     }
-    
+
                     <mat-form-field class="inputField" appearance="outline">
                         <mat-label>Confirme a senha</mat-label>
-                        <input formControlName="confirmarSenhaNova" placeholder="Confirme a sua nova senha " matInput type="text" />
+                        <input formControlName="confirmarSenhaNova" placeholder="Confirme a sua nova senha" matInput [type]="mostrarConfirmarSenhaNova() ? 'password' : 'text'" />
+                        <button
+                        matIconButton
+                        matSuffix
+                        type="button"
+                        (click)="esconder('confirmarNova')"
+                        [attr.aria-label]="'Esconder senha'"
+                        [attr.aria-pressed]="mostrarConfirmarSenhaNova()"
+                        >
+                        <mat-icon>{{mostrarConfirmarSenhaNova() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>
                     @if (senhaForm.get('confirmarSenhaNova')?.errors?.['camposDiferentes'] && senhaForm.get('confirmarSenhaNova')?.touched) {
                         <mat-error class="erro">As senhas não coincidem</mat-error>

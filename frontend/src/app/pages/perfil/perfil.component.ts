@@ -41,6 +41,9 @@ export class PerfilComponent {
   readonly dialog = inject(MatDialog);
   senha=signal<string>('');
   private passwordRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*\\-_])[A-Za-z\\d!@#$%^&*\\-_]{8,}$';
+  mostrarSenhaAtual = signal(true);
+  mostrarSenhaNova = signal(true);
+  mostrarConfirmarSenhaNova = signal(true);
 
   constructor(
     private fb: FormBuilder,
@@ -73,7 +76,7 @@ export class PerfilComponent {
       senhaAtual: ['', [Validators.required, Validators.minLength(3)]],
       senhaNova: ['', [Validators.required, Validators.minLength(3), Validators.pattern(this.passwordRegex)]],
       confirmarSenhaNova: ['', [Validators.required]]
-    }, { validators:compararSenhaValidator('senhaNova','confirmarSenha')});
+    }, { validators:compararSenhaValidator('senhaNova','confirmarSenhaNova')});
 
     this.senhaForm.get('senhaNova')?.valueChanges.subscribe((senha)=>{
       this.senha.set(senha)
@@ -141,5 +144,22 @@ export class PerfilComponent {
         this.excluirConta();
       }
     });
+  }
+
+  esconder(campo:'atual'|'nova'|'confirmarNova'){
+
+    switch (campo) {
+      case 'atual':
+    this.mostrarSenhaAtual.set(!this.mostrarSenhaAtual());
+        break;
+      case 'nova':
+        this.mostrarSenhaNova.set(!this.mostrarSenhaNova());
+        break;
+      case 'confirmarNova':
+        this.mostrarConfirmarSenhaNova.set(!this.mostrarConfirmarSenhaNova());
+        break;
+      default:
+        break;
+    }    
   }
 }
