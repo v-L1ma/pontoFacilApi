@@ -7,6 +7,7 @@ import { colaborador } from '../../types/types';
 import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFormComponent } from '../modal-form/modal-form.component';
+import { CpfPipe } from '../../pipes/Cpf.pipe';
 
 @Component({
   selector: 'app-card-colaborador',
@@ -14,7 +15,8 @@ import { ModalFormComponent } from '../modal-form/modal-form.component';
     MatIconModule,
     MatAnchor,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    CpfPipe
 ],
   templateUrl: './card-colaborador.component.html',
   styleUrl: './card-colaborador.component.scss'
