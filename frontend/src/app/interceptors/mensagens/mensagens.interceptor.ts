@@ -34,6 +34,11 @@ export function mensagensInterceptor(req: HttpRequest<unknown>, next: HttpHandle
     }
       // console.log(req.url, 'returned a response with status', erro.status);
       // console.log("erro", erro.error.detail)
+
+    if(erro.error.detail === undefined){
+      mensagemService.mostrarMensagemErro("Servidor fora do ar.")
+      return throwError(()=>erro);
+    }
       mensagemService.mostrarMensagemErro(erro.error.detail)
       return throwError(()=>erro);
     })
