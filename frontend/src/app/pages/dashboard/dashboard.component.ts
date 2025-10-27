@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Chart,registerables } from "chart.js";
 import { MatIcon } from "@angular/material/icon";
-import { ColaboradoresService } from "../../services/colaboradores/colaboradores.service";
-import { ColaboradoresStats } from "../../types/types";
+import { ColaboradoresService } from "../../shared/services/colaboradores/colaboradores.service"; 
+import { ColaboradoresStats } from "../../shared/types/types";
 
 Chart.register(...registerables)
 @Component({

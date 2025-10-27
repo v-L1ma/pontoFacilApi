@@ -1,0 +1,48 @@
+section{
+    display: flex;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+
+    .banner{
+        background-image: url('../../../../../public/login-hero.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        object-fit: cover;
+        width: 65%;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        position: relative;
+
+        &::after{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.384);
+        }
+
+        .conteudo{
+            display: flex;
+            flex-direction: column;
+            background-image: linear-gradient(to top, white, transparent);
+            padding: 10rem 3rem 3rem 3rem;
+            gap: 1rem;
+            z-index: 2;
+        }
+    }
+}
+
+@media screen and (max-width:1000px) {
+    section{
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        background-color: rgb(245, 245, 245);
+        
+        .banner{
+            display: none;
+        }
+    }
+}

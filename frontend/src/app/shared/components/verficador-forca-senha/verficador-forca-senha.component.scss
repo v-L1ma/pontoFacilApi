@@ -1,0 +1,48 @@
+@use "../../../core/variables.scss";
+
+.senha__forca{
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-top: -.5rem;
+    margin-bottom: 1rem;
+
+    .item{
+        width: 100%;
+        text-align: center;
+
+        &.fraca{
+            .barra{
+                background-color: #e7482c;
+            }
+
+            p{
+                color: #e7482c;
+            }
+        }
+
+        &.media{
+            .barra{
+                background-color: #f5ce1e;
+            }
+            p{
+                color: #c5a204;
+            }
+        }
+
+        &.forte{
+            .barra{
+                background-color: #5abe31;
+            }
+            p{
+                color: #5abe31;
+            }
+        }
+    }
+
+    .barra{
+        background-color: variables.$light_gray;
+        width: 100%;
+        height: .25rem;
+    }
+}

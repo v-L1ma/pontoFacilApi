@@ -6,11 +6,11 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormBannerLayoutComponent } from "../../components/form-banner-layout/form-banner-layout.component";
-import { compararSenhaValidator } from '../../validators/compararSenha.validator';
-import { AuthService } from '../../services/auth/auth.service';
-import { cadastrarColaboradorDTO, cadastrarUsuarioDTO } from '../../types/types';
-import { VerficadorForcaSenhaComponent } from "../../components/verficador-forca-senha/verficador-forca-senha.component";
+import { FormBannerLayoutComponent } from '../../shared/components/form-banner-layout/form-banner-layout.component'; 
+import { compararSenhaValidator } from '../../shared/validators/compararSenha.validator';
+import { AuthService } from '../../shared/services/auth/auth.service'; 
+import { cadastrarUsuarioDTO } from '../../shared/types/types';
+import { VerficadorForcaSenhaComponent } from '../../shared/components/verficador-forca-senha/verficador-forca-senha.component'; 
 
 
 @Component({

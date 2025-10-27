@@ -3,8 +3,8 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './interceptors/auth/auth.interceptor';
-import { mensagensInterceptor } from './interceptors/mensagens/mensagens.interceptor';
+import { authInterceptor } from './core/interceptors/auth/auth.interceptor'; 
+import { mensagensInterceptor } from './core/interceptors/mensagens/mensagens.interceptor';
 import { provideCharts } from 'ng2-charts';
 import { BarController, Colors, Legend } from 'chart.js';
 

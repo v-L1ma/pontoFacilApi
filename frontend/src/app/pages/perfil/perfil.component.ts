@@ -1,19 +1,19 @@
 import { Component, effect, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import { compararSenhaValidator } from '../../validators/compararSenha.validator';
-import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
-import { usuario } from '../../types/types';
-import { AuthService } from '../../services/auth/auth.service';
+import { compararSenhaValidator } from '../../shared/validators/compararSenha.validator';
+import { usuarioLogadoService } from '../../shared/services/usuario-logado/usuario-logado.service'; 
+import { usuario } from '../../shared/types/types';
+import { AuthService } from '../../shared/services/auth/auth.service'; 
 import { Router } from '@angular/router';
-import { ModalConfirmarComponent } from '../../components/modal-confirmar/modal-confirmar.component';
+import { ModalConfirmarComponent } from '../../shared/components/modal-confirmar/modal-confirmar.component'; 
 import { MatDialog } from '@angular/material/dialog';
-import { VerficadorForcaSenhaComponent } from "../../components/verficador-forca-senha/verficador-forca-senha.component";
+import { VerficadorForcaSenhaComponent } from '../../shared/components/verficador-forca-senha/verficador-forca-senha.component';
 
 @Component({
   selector: 'app-perfil',

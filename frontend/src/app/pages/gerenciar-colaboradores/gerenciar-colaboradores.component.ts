@@ -3,15 +3,15 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
-import { CardColaboradorComponent } from "../../components/card-colaborador/card-colaborador.component";
-import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
+import { CardColaboradorComponent } from '../../shared/components/card-colaborador/card-colaborador.component'; 
+import { ColaboradoresService } from '../../shared/services/colaboradores/colaboradores.service'; 
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { cadastrarColaboradorDTO, colaborador, usuario } from '../../types/types';
-import { usuarioLogadoService } from '../../services/usuario-logado/usuario-logado.service';
+import { cadastrarColaboradorDTO, colaborador, usuario } from '../../shared/types/types';
+import { usuarioLogadoService } from '../../shared/services/usuario-logado/usuario-logado.service'; 
 import { MatDialog } from '@angular/material/dialog';
-import { ModalFormComponent } from '../../components/modal-form/modal-form.component';
+import { ModalFormComponent } from '../../shared/components/modal-form/modal-form.component'; 
 import { FormsModule } from '@angular/forms';
-import { LoadingComponent } from "../../components/loading/loading/loading.component";
+import { LoadingComponent } from '../../shared/components/loading/loading/loading.component'; 
 
 @Component({
   selector: 'app-gerenciar-colaboradores',

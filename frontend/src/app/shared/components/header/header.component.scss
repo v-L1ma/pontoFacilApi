@@ -1,0 +1,141 @@
+@use '../../../core/variables.scss';
+@use '@angular/material' as mat;
+
+header{    
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.796);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    .conteudo{
+        display: flex;
+        width: 70%;
+        margin: 0 auto;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+
+        h1{
+            color: variables.$primary;
+        }
+
+        .botao__menu__mobile{
+            display: none;
+        }
+
+        .menu__mobile{
+            display: none;
+        }
+
+        .menu__desktop{
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+
+            .item{
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                padding: 0.5rem 1rem;
+                border-radius: 5rem;
+                cursor: pointer;
+                transition: 300ms;
+                color: black;
+
+                &:hover{
+                    background-color: variables.$primary;
+                    color: white;
+
+                }
+            }
+        }
+    }
+    border-bottom: 1px solid variables.$light_gray;
+}
+
+@media screen and (max-width:1000px){
+    header{
+        position: sticky;
+        .conteudo{
+            width: 90%;
+
+            .botao__menu__mobile{
+                display: flex;
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+
+                .menu__icone{
+                    font-size: 2rem;
+                    width: 2rem;
+                    height: 2rem;
+                }
+            }
+
+            .menu__mobile {
+                position: fixed;
+                top: 0;
+                right: 0;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100vh;
+                width: 60%;
+                 background: linear-gradient(90deg, variables.$primary 0%, variables.$secondary 100%);
+                padding: 2rem;
+                color: white;
+                font-size: 1rem;
+                animation: slideIn .3s ease-out forwards;
+
+                .item{
+                    width: 100%;
+                    display: flex;
+                    gap: 1rem;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 1rem;
+                    border-radius: 1rem;
+
+                    &:hover{
+                        background-color: rgba(255, 255, 255, 0.2);
+                    }
+                }
+                .fechar{
+                    margin-bottom: 1rem;
+                    background-color: transparent;
+                }
+
+                .menu__opcoes{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .dados__conta{
+                    display: flex;
+                    flex-direction: column;
+                    border: 1px solid variables.$light_gray;
+                    border-radius: 1rem;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1rem;
+                }
+            }
+
+            .menu__desktop{
+                display: none;
+            }
+        }
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

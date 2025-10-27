@@ -1,13 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnInit, signal} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import { MatFormFieldControl } from '@angular/material/form-field';
+import { Component, OnInit, signal} from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormBannerLayoutComponent } from "../../components/form-banner-layout/form-banner-layout.component";
-import { AuthService } from '../../services/auth/auth.service';
+import { FormBannerLayoutComponent } from '../../shared/components/form-banner-layout/form-banner-layout.component'; 
+import { AuthService } from '../../shared/services/auth/auth.service'; 
 
 @Component({
   selector: 'app-login',
