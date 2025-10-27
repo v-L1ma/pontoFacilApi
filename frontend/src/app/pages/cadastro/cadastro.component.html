@@ -31,7 +31,7 @@
                 matIconButton
                 matSuffix
                 type="button"
-                (click)="esconder()"
+                (click)="esconder('mostrarSenha')"
                 [attr.aria-label]="'Esconder senha'"
                 [attr.aria-pressed]="mostrarSenha()"
                 >
@@ -46,16 +46,16 @@
             
             <mat-form-field class="inputField" appearance="outline">
                 <mat-label>Confirme a senha</mat-label>
-                <input formControlName="confirmarSenha" placeholder="Confirme a sua senha" matInput [type]="mostrarSenha() ? 'password' : 'text'" />
+                <input formControlName="confirmarSenha" placeholder="Confirme a sua senha" matInput [type]="mostrarConfirmarSenha() ? 'password' : 'text'" />
                 <button
                 matIconButton
                 matSuffix
                 type="button"
-                (click)="esconder()"
+                (click)="esconder('mostrarConfirmarSenha')"
                 [attr.aria-label]="'Esconder senha'"
-                [attr.aria-pressed]="mostrarSenha()"
+                [attr.aria-pressed]="mostrarConfirmarSenha()"
                 >
-                <mat-icon>{{mostrarSenha() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-icon>{{mostrarConfirmarSenha() ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
             @if (cadastroForm.get('confirmarSenha')?.errors?.['camposDiferentes'] && cadastroForm.get('confirmarSenha')?.touched) {

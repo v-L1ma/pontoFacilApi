@@ -31,6 +31,7 @@ import { VerficadorForcaSenhaComponent } from "../../components/verficador-forca
 })
 export class CadastroComponent {
   mostrarSenha = signal(true);
+  mostrarConfirmarSenha = signal(true);
   cadastroForm!: FormGroup;
   private passwordRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*\\-_])[A-Za-z\\d!@#$%^&*\\-_]{8,}$';
   senha=signal<string>('');
@@ -75,7 +76,12 @@ export class CadastroComponent {
 
   }
 
-  esconder(){
-    this.mostrarSenha.set(!this.mostrarSenha());
+  esconder(input:string){
+    if(input==="mostrarConfirmarSenha"){      
+      this.mostrarConfirmarSenha.set(!this.mostrarConfirmarSenha());
+    }
+    if(input==="mostrarSenha"){
+      this.mostrarSenha.set(!this.mostrarSenha());
+    }
   }
 }
