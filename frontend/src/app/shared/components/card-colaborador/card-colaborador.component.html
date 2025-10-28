@@ -19,21 +19,18 @@
         </mat-menu>
     </div>
     <div class="infos">
-        <p>
+        <div class="item">
             <mat-icon>badge</mat-icon>
-            {{colaborador().cpf | cpf}}
-        </p>
-        <p>
+            <p><strong>CPF</strong> {{colaborador().cpf | cpf}}</p>
+        </div>
+        <div class="item">
             <mat-icon>work</mat-icon>
-            {{colaborador().cargo}}
-        </p>
-        <p>
+            
+            <p><strong>Cargo</strong> {{colaborador().cargo}}</p>
+        </div>
+        <div class="item">
             <mat-icon>apartment</mat-icon>
-            {{colaborador().setor}}
-        </p>
+            <p><strong>Setor</strong> {{colaborador().setor}}</p>
+        </div>
     </div>
-    
-    <button mat-stroked-button>
-        <mat-icon>visibility</mat-icon>
-        Ver detalhes</button>
 </div>

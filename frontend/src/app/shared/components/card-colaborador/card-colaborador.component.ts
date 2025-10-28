@@ -1,6 +1,5 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatAnchor } from "@angular/material/button";
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import { colaborador } from '../../types/types'; 
@@ -13,7 +12,6 @@ import { CpfPipe } from '../../pipes/Cpf.pipe';
   selector: 'app-card-colaborador',
   imports: [
     MatIconModule,
-    MatAnchor,
     MatMenuModule,
     MatButtonModule,
     CpfPipe
