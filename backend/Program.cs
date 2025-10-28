@@ -62,12 +62,7 @@ var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(ConnectionString);
-});
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(ConnectionString);
+    options.UseNpgsql(ConnectionString);
 });
 
 builder.Services
