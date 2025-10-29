@@ -7,9 +7,17 @@
                 <mat-icon>analytics</mat-icon>
                 Dashboard
             </a>
-            <a class="item" routerLink="gerencia">
+            <a class="item" routerLink="gerencia/colaboradores">
                 <mat-icon>groups</mat-icon>
                 Colaboradores
+            </a>
+            <a class="item" (click)="navegar('gerencia/cargos')">
+                <mat-icon>groups</mat-icon>
+                Cargos
+            </a>
+            <a class="item" (click)="navegar('gerencia/setores')">
+                <mat-icon>groups</mat-icon>
+                Setores
             </a>
             <a class="item" [matMenuTriggerFor]="menu" aria-label="Icone de uma pessoa">
                 <mat-icon>account_circle</mat-icon>
@@ -40,9 +48,17 @@
                         <mat-icon>analytics</mat-icon>
                         Dashboard
                     </a>
-                    <a class="item" (click)="navegar('gerencia')">
+                    <a class="item" (click)="navegar('gerencia/colaboradores')">
                         <mat-icon>groups</mat-icon>
                         Colaboradores
+                    </a>
+                    <a class="item" (click)="navegar('gerencia/cargos')">
+                        <mat-icon>groups</mat-icon>
+                        Cargos
+                    </a>
+                    <a class="item" (click)="navegar('gerencia/setores')">
+                        <mat-icon>groups</mat-icon>
+                        Setores
                     </a>
                 </div>
     

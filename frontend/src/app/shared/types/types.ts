@@ -59,3 +59,14 @@ export interface ColaboradoresStats {
   colaboradorDepartamento: ChartData;
   colaboradoresTotalTempo: ChartData;
 }
+
+export interface Cargo{
+  id: number,
+  nome: string,
+  setorId: number
+}
+
+export interface Setor{
+  id: number,
+  nome: string
+}

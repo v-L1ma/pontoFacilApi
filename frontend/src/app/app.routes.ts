@@ -17,7 +17,7 @@ export const routes: Routes = [
     },
     {
         path:'portal',
-        redirectTo:'portal/gerencia',
+        redirectTo:'portal/gerencia/colaboradores',
         pathMatch:"full"
     },
     {
@@ -26,8 +26,18 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children:[
             {
-                path:'gerencia',
+                path:'gerencia/colaboradores',
                 loadComponent: ()=> import('./pages/gerenciar-colaboradores/gerenciar-colaboradores.component').then((c)=>(c.GerenciarColaboradoresComponent)),
+                canActivate: [authGuard]
+            },
+            {
+                path:'gerencia/setores',
+                loadComponent: ()=> import('./pages/gerenciar-setores/gerenciar-setores.component').then((c)=>(c.GerenciarSetoresComponent)),
+                canActivate: [authGuard]
+            },
+            {
+                path:'gerencia/cargos',
+                loadComponent: ()=> import('./pages/gerenciar-cargos/gerenciar-cargos.component').then((c)=>(c.GerenciarCargosComponent)),
                 canActivate: [authGuard]
             },
             {

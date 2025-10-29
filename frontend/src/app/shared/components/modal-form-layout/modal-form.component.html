@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <header mat-dialog-title>
+        <h2>{{data.tituloModal}}</h2>
+        <p>{{data.descricaoModal}}</p>
+    </header>
+    <mat-dialog-content class="wrapper">
+    
+        <ng-container #formContainer></ng-container>
+
+    </mat-dialog-content>
+    <mat-dialog-actions class="wrapper">
+      <button mat-stroked-button (click)="onNoClick()">Cancelar</button>
+      <button mat-flat-button >Salvar</button>
+    </mat-dialog-actions>
+</div>
+
+<!-- [mat-dialog-close]="cadastroForm.value" [disabled]="cadastroForm.invalid" -->

@@ -4,39 +4,38 @@
         <p>{{data.descricaoModal}}</p>
     </header>
     <mat-dialog-content class="wrapper">
-  <form [formGroup]="cadastroForm">
-            
-            <mat-form-field class="inputField" appearance="outline">
-                <mat-label>Nome completo</mat-label>
-                <input formControlName="nome" placeholder="Digite seu nome completo" matInput type="text" />
-            </mat-form-field>
-            @if (cadastroForm.get('nome')?.errors?.['minLength'] && cadastroForm.get('nome')?.touched) {
-                <mat-error class="erro">O nome deve ter mais de 3 caracteres</mat-error>
-            }
-            @if (cadastroForm.get('nome')?.errors?.['pattern'] && cadastroForm.get('nome')?.touched) {
-                <mat-error class="erro">O nome não pode conter caracteres especiais</mat-error>
-            }
+    <form [formGroup]="cadastroForm">
+        <mat-form-field class="inputField" appearance="outline">
+            <mat-label>Nome completo</mat-label>
+            <input formControlName="nome" placeholder="Digite seu nome completo" matInput type="text" />
+        </mat-form-field>
+        @if (cadastroForm.get('nome')?.errors?.['minLength'] && cadastroForm.get('nome')?.touched) {
+            <mat-error class="erro">O nome deve ter mais de 3 caracteres</mat-error>
+        }
+        @if (cadastroForm.get('nome')?.errors?.['pattern'] && cadastroForm.get('nome')?.touched) {
+            <mat-error class="erro">O nome não pode conter caracteres especiais</mat-error>
+        }
 
-            <mat-form-field class="inputField" appearance="outline">
-                <mat-label>CPF</mat-label>
-                <input formControlName="CPF" placeholder="Digite seu CPF" matInput type="CPF" />
-            </mat-form-field>
-            @if (cadastroForm.get('CPF')?.invalid && cadastroForm.get('CPF')?.touched) {
-                <mat-error class="erro">CPF inválido</mat-error>
-            }
+        <mat-form-field class="inputField" appearance="outline">
+            <mat-label>CPF</mat-label>
+            <input formControlName="CPF" placeholder="Digite seu CPF" matInput type="CPF" />
+        </mat-form-field>
+        @if (cadastroForm.get('CPF')?.invalid && cadastroForm.get('CPF')?.touched) {
+            <mat-error class="erro">CPF inválido</mat-error>
+        }
 
-            <mat-form-field class="inputField" appearance="outline">
-                <mat-label>Cargo</mat-label>
-                <mat-select formControlName="cargoId">
-                    @for (cargo of cargos; track $index) {
-                    <mat-option [value]="cargo.Id">{{cargo.Nome}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            @if (cadastroForm.get('cargoId')?.invalid && cadastroForm.get('cargoId')?.touched) {
-                <mat-error class="erro">Cargo inválido</mat-error>
-            }
-        </form>
+        <mat-form-field class="inputField" appearance="outline">
+            <mat-label>Cargo</mat-label>
+            <mat-select formControlName="cargoId">
+                @for (cargo of cargos; track $index) {
+                <mat-option [value]="cargo.Id">{{cargo.Nome}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        @if (cadastroForm.get('cargoId')?.invalid && cadastroForm.get('cargoId')?.touched) {
+            <mat-error class="erro">Cargo inválido</mat-error>
+        }
+    </form>
 
     </mat-dialog-content>
     <mat-dialog-actions class="wrapper">
