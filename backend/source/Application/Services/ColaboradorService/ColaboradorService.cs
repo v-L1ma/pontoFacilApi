@@ -60,7 +60,7 @@ public class ColaboradorService : IColaboradorService
             throw new ParametroInvalidoException("Insira um nome válido!");
         }
 
-        if (dto.CargoId < 1 || dto.CargoId > 28)
+        if (dto.CargoId < 1)
         {
             throw new ParametroInvalidoException("Insira um cargo válido!");
         }
@@ -107,7 +107,7 @@ public class ColaboradorService : IColaboradorService
             throw new ParametroInvalidoException("Insira um nome válido!");
         }
 
-        if (dto.CargoId < 1 || dto.CargoId > 28)
+        if (dto.CargoId < 1)
         {
             throw new ParametroInvalidoException("Insira um cargo válido!");
         }

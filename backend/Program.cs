@@ -75,8 +75,13 @@ builder.Services
 
 builder.Services.AddScoped<IColaboradorService, ColaboradorService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ICargoService, CargoService>();
+builder.Services.AddScoped<ISetorService, SetorService>();
+
 builder.Services.AddScoped<IUsuariosRepository, UsuariosRepository>();
 builder.Services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
+builder.Services.AddScoped<ICargoRespository, CargoRepository>();
+builder.Services.AddScoped<ISetorRepository, SetorRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
