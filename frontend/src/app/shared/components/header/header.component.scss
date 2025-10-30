@@ -7,6 +7,15 @@ header{
     background-color: rgba(255, 255, 255, 0.796);
     backdrop-filter: blur(10px);
     z-index: 100;
+    .logo{
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        img{
+            height: 2.5rem;
+            width: 2.5rem;
+        }
+    }
     .conteudo{
         display: flex;
         width: 70%;
