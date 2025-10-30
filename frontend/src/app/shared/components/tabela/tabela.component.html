@@ -1,0 +1,49 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of itens(); track $index) {
+        <tr>
+            <td>{{item.id}}</td>
+            <td class="nome">
+                <p>{{item.nome}}</p>
+            </td>
+            <td class="botoes">
+                <button matIconButton (click)="editar.emit(item)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button matIconButton (click)="excluir.emit(item.id)">
+                    <mat-icon class="delete">delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+        } @empty {
+            <tr>
+                <td class="empty" colspan="6" >
+                    <p>Nenhum produto encontrado.</p>
+                </td>
+            </tr>
+        }        
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">
+                <mat-paginator
+                        [length]="paginacao().length"
+                        [pageSize]="paginacao().pageSize"
+                        [pageSizeOptions]="[5, 10, 25, 100]"
+                        aria-label="Selecionar página"
+                        (page)="mudarPagina($event)"
+                        >
+                </mat-paginator>
+        </td>
+        </tr>
+    </tfoot>
+</table>
+
+

@@ -9,9 +9,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { cadastrarColaboradorDTO, colaborador, usuario } from '../../shared/types/types';
 import { usuarioLogadoService } from '../../shared/services/usuario-logado/usuario-logado.service'; 
 import { MatDialog } from '@angular/material/dialog';
-import { ModalFormComponent } from '../../shared/components/modal-form/modal-form.component'; 
+import { ModalFormComponent } from '../../shared/components/modal-form-layout/modal-form.component'; 
 import { FormsModule } from '@angular/forms';
 import { LoadingComponent } from '../../shared/components/loading/loading/loading.component'; 
+import { CadastroColaboradorFormComponent } from '../../shared/components/cadastro-colaborador-form/cadastro-colaborador-form.component';
 
 @Component({
   selector: 'app-gerenciar-colaboradores',
@@ -69,14 +70,13 @@ export class GerenciarColaboradoresComponent implements OnInit{
       data: {
         tituloModal: 'Cadastrar colaborador', 
         descricaoModal:'Preencha os dados da conta do colaborador que deseja cadastrar',
-        colaborador:null
+        formComponent: CadastroColaboradorFormComponent
       },
     });
 
     dialogRef.afterClosed().subscribe((result:any) => {
       console.log('The dialog was closed');
-      if (result !== undefined) {
-         console.log(result);
+      if (result !== undefined){
          this.cadastrar(result)
       }
     });
@@ -85,7 +85,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
   cadastrar(form:any){
     const cadastrarColaboradorDTO:cadastrarColaboradorDTO = {
       nome: form.nome,
-      cpf: form.CPF,
+      CPF: form.CPF,
       cargoId: form.cargoId
     }
 

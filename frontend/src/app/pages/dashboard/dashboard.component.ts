@@ -33,7 +33,25 @@ export class DashboardComponent implements OnInit{
  
   colaboradorDepartamentoChart:any;
   colaboradoresTotalTempo:any;
-  data!:ColaboradoresStats;
+  data:ColaboradoresStats={
+    novosColaboradoresMes:0,
+    colaboradoresAtivos:0,
+    colaboradoresDemitidos:0,
+    colaboradorDepartamento:{
+      labels:["Nenhum"],
+      dataset:{
+        data:[0],
+        label:"Departamentos"
+      }
+    },
+    colaboradoresTotalTempo:{
+      labels:["10/2025"],
+      dataset:{
+        data:[0],
+        label:"Colaboradores"
+      }
+    },
+  };
 
   constructor(
     private colaboradoresService:ColaboradoresService

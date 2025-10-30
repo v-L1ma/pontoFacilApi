@@ -20,6 +20,14 @@ export function mensagensInterceptor(req: HttpRequest<unknown>, next: HttpHandle
         return;
       }
 
+      if(body.message.includes("Cargos listados com sucesso!")){
+        return;
+      }
+
+      if(body.message.includes("Setores listados com sucesso!")){
+        return;
+      }
+
       mensagemService.mostrarMensagemSucesso(body.message)
     }
   }),

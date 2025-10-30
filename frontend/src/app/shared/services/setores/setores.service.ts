@@ -1,0 +1,33 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment'; 
+import { responseBase } from '../../types/types';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SetoresService {
+  constructor(
+    private http:HttpClient
+  ){}
+  buscarTodos():Observable<responseBase>{
+    return this.http.get<responseBase>(`${environment.API_URL}/Setor`)
+  }
+
+  buscarPaginado(pageSize:number,pageNumber:number):Observable<responseBase>{
+    return this.http.get<responseBase>(`${environment.API_URL}/Setor/paginado?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+  }
+
+  editar(id:number,setor:any){
+    return this.http.put<responseBase>(`${environment.API_URL}/Setor/${id}`, setor);
+  }
+
+  excluir(id:number):Observable<responseBase>{
+    return this.http.delete<responseBase>(`${environment.API_URL}/Setor/${id}`);
+  }
+
+  cadastrar(setor:any){
+    return this.http.post<responseBase>(`${environment.API_URL}/Setor`, setor);
+  }
+}

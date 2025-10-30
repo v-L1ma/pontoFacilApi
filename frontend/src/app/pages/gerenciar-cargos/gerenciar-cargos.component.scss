@@ -1,0 +1,61 @@
+@use '@angular/material' as mat;
+@use '../../core/variables.scss';
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    header{
+        align-items: center;
+        .titulo{
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+        display: flex;
+        justify-content: space-between;
+
+        button{
+            border-radius: .5rem;
+        }
+    }
+
+    .search{
+        background-color: white;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid variables.$light_gray;
+        border-radius: 1rem;
+        .field{
+            margin-bottom: -1rem;
+            width: 100%;
+            @include mat.form-field-overrides((
+                outlined-outline-color:rgb(199, 199, 199),
+            ));
+        }
+    }
+
+    .gallery{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 1rem;
+    }
+    
+    @include mat.paginator-overrides((
+        container-background-color: rgb(255, 255, 255),
+    ));
+}
+
+@media screen and (max-width:1000px) {
+    .container{
+        width: 95%;
+        .gallery{
+            display: grid;
+            grid-template-columns: auto;
+        }
+    }
+}

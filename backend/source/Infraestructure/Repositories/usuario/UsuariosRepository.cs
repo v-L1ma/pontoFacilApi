@@ -1,5 +1,5 @@
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using pontoFacilApi.source.Domain.Models;
 using pontoFacilApi.source.Infraestructure.Data;
 
@@ -16,7 +16,7 @@ public class UsuariosRepository : IUsuariosRepository
         string sql = "SELECT * FROM AspNetUsers WHERE Id = @idUsuario;";
 
         var usuarioBanco = _context.Database
-                                    .SqlQueryRaw<Usuario>(sql, new SqlParameter("idUsuario", idUsuario))
+                                    .SqlQueryRaw<Usuario>(sql, new NpgsqlParameter("idUsuario", idUsuario))
                                     .AsEnumerable()
                                     .FirstOrDefault();
         return usuarioBanco;
@@ -26,7 +26,7 @@ public class UsuariosRepository : IUsuariosRepository
     {
         string sql = "SELECT * FROM AspNetUsers WHERE NormalizedEmail = @email;";
         var usuarioBanco = _context.Database
-                                    .SqlQueryRaw<Usuario>(sql, new SqlParameter("email", email.ToUpper()))
+                                    .SqlQueryRaw<Usuario>(sql, new NpgsqlParameter("email", email.ToUpper()))
                                     .AsEnumerable()
                                     .FirstOrDefault();
         return usuarioBanco;
@@ -57,7 +57,7 @@ public class UsuariosRepository : IUsuariosRepository
     {
         string sql = @"DELETE FROM AspNetUsers WHERE Id=@id;";
 
-        await _context.Database.ExecuteSqlRawAsync(sql, new SqlParameter("id", id));
+        await _context.Database.ExecuteSqlRawAsync(sql, new NpgsqlParameter("id", id));
     }
 
     public async Task EditarPerfil(string idUsuario, EditarUsuarioDTO dto)
@@ -66,20 +66,20 @@ public class UsuariosRepository : IUsuariosRepository
 
         string set = "";
 
-        var parametros = new SqlParameter[] { new SqlParameter("id", idUsuario) };
+        var parametros = new NpgsqlParameter[] { new NpgsqlParameter("id", idUsuario) };
 
         if (!string.IsNullOrEmpty(dto.Nome))
         {
             set += " SET UserName = @nome, NormalizedUserName = @normalizedUserName";
-            parametros = parametros.Append(new SqlParameter("nome", dto.Nome)).ToArray();
-            parametros = parametros.Append(new SqlParameter("normalizedUserName", dto.Nome.ToUpper())).ToArray();
+            parametros = parametros.Append(new NpgsqlParameter("nome", dto.Nome)).ToArray();
+            parametros = parametros.Append(new NpgsqlParameter("normalizedUserName", dto.Nome.ToUpper())).ToArray();
         }
 
         if (!string.IsNullOrEmpty(dto.Email))
         {
             set += ", Email = @email, NormalizedEmail = @normalizedEmail";
-            parametros = parametros.Append(new SqlParameter("email", dto.Email.ToLower())).ToArray();
-            parametros = parametros.Append(new SqlParameter("normalizedEmail", dto.Email.ToUpper())).ToArray();
+            parametros = parametros.Append(new NpgsqlParameter("email", dto.Email.ToLower())).ToArray();
+            parametros = parametros.Append(new NpgsqlParameter("normalizedEmail", dto.Email.ToUpper())).ToArray();
         }
 
         if (set == "")

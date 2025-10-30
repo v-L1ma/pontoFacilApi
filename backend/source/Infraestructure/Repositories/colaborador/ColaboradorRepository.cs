@@ -47,7 +47,9 @@ public class ColaboradorRepository : IColaboradorRepository
             Nome = usuarioBanco.Nome,
             CPF = usuarioBanco.CPF,
             Cargo = usuarioBanco.Cargo.Nome,
-            Setor = usuarioBanco.Cargo.Setor.Nome
+            Setor = usuarioBanco.Cargo.Setor.Nome,
+            CargoId = usuarioBanco.Cargo.Id,
+            SetorId = usuarioBanco.Cargo.SetorId
         } : null;
     }
 
@@ -68,7 +70,9 @@ public class ColaboradorRepository : IColaboradorRepository
             Nome = c.Nome,
             CPF = c.CPF,
             Cargo = c.Cargo.Nome,
-            Setor = c.Cargo.Setor.Nome
+            Setor = c.Cargo.Setor.Nome,
+            CargoId = c.Cargo.Id,
+            SetorId = c.Cargo.SetorId
         }).ToList();
 
         int total = _context.Colaboradores.Where(c=> c.Status==StatusEnum.ATIVO.ToString()).ToList().Count();
@@ -107,7 +111,9 @@ public class ColaboradorRepository : IColaboradorRepository
             Nome = colaboradorBanco.Nome,
             CPF = colaboradorBanco.CPF,
             Cargo = colaboradorBanco.Cargo.Nome,
-            Setor = colaboradorBanco.Cargo.Setor.Nome
+            Setor = colaboradorBanco.Cargo.Setor.Nome,
+            CargoId = colaboradorBanco.Cargo.Id,
+            SetorId = colaboradorBanco.Cargo.SetorId
         };
         
     }
@@ -159,7 +165,9 @@ public class ColaboradorRepository : IColaboradorRepository
             Nome = colaboradorAtualizado.Nome,
             CPF = colaboradorAtualizado.CPF,
             Cargo = colaboradorAtualizado.Cargo.Nome,
-            Setor = colaboradorAtualizado.Cargo.Setor.Nome
+            Setor = colaboradorAtualizado.Cargo.Setor.Nome,
+            CargoId = colaboradorAtualizado.Cargo.Id,
+            SetorId = colaboradorAtualizado.Cargo.SetorId
         };
     }
     

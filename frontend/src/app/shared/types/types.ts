@@ -28,12 +28,14 @@ export interface colaborador {
     nome:string;
     cpf:string;
     cargo:string;
+    cargoId:number;
     setor:string;
+    setorId:number
 }
 
 export interface cadastrarColaboradorDTO {
   nome: string,
-  cpf: string,
+  CPF: string,
   cargoId: number
 }
 
@@ -58,4 +60,15 @@ export interface ColaboradoresStats {
   colaboradoresDemitidos: number;
   colaboradorDepartamento: ChartData;
   colaboradoresTotalTempo: ChartData;
+}
+
+export interface Cargo{
+  id: number,
+  nome: string,
+  setorId: number
+}
+
+export interface Setor{
+  id: number,
+  nome: string
 }
