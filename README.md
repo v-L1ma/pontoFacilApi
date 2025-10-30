@@ -1,3 +1,10 @@
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/0ed0aea3-ce3f-45e0-b01c-9d2ccf84981b" width="45%" />
+  <img alt="image" src="https://github.com/user-attachments/assets/aeb8510e-ceae-4496-982b-3b97352a3bad" width="45%" />
+  <img alt="image" src="https://github.com/user-attachments/assets/c2f40c92-d5e1-4542-85b1-3efdd15c64c0" width="45%" />
+  <img alt="image" src="https://github.com/user-attachments/assets/52b9547d-b9e4-496b-9646-711c9d520103" width="45%" />
+</p>
+
 # 🕒 Ponto Fácil
 <div>
   
