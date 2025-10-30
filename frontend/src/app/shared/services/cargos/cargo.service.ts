@@ -16,8 +16,8 @@ export class CargoService {
     return this.http.get<responseBase>(`${environment.API_URL}/Cargos?pageSize=${pageSize}&pageNumber=${pageNumber}`)
   }
 
-  buscarPorSetor():Observable<responseBase>{
-    return this.http.get<responseBase>(`${environment.API_URL}/Cargos`)
+  buscarPorSetor(setorId:number):Observable<responseBase>{
+    return this.http.get<responseBase>(`${environment.API_URL}/Cargos/setor/${setorId}`)
   }
 
   editar(id:number,cargo:any){

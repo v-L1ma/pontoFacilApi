@@ -11,9 +11,12 @@ export class SetoresService {
   constructor(
     private http:HttpClient
   ){}
+  buscarTodos():Observable<responseBase>{
+    return this.http.get<responseBase>(`${environment.API_URL}/Setor`)
+  }
 
   buscarPaginado(pageSize:number,pageNumber:number):Observable<responseBase>{
-    return this.http.get<responseBase>(`${environment.API_URL}/Setor?pageSize=${pageSize}&pageNumber=${pageNumber}`)
+    return this.http.get<responseBase>(`${environment.API_URL}/Setor/paginado?pageSize=${pageSize}&pageNumber=${pageNumber}`)
   }
 
   editar(id:number,setor:any){

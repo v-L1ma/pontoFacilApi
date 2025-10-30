@@ -19,14 +19,29 @@
     }
 
     <mat-form-field class="inputField" appearance="outline">
-        <mat-label>Cargo</mat-label>
-        <mat-select formControlName="cargoId">
-            @for (cargo of cargos; track $index) {
-            <mat-option [value]="cargo.Id">{{cargo.Nome}}</mat-option>
+        <mat-label>Setor</mat-label>
+        <mat-select formControlName="setorId">
+            @for (setor of setores; track $index) {
+            <mat-option [value]="setor.id">{{setor.nome}}</mat-option>
+            } @empty {
+                <mat-option>Nenhum setor encontrado.</mat-option>
             }
         </mat-select>
     </mat-form-field>
-    @if (cadastroForm.get('cargoId')?.invalid && cadastroForm.get('cargoId')?.touched) {
-        <mat-error class="erro">Cargo inválido</mat-error>
+
+    @if(this.cadastroForm.get("setorId")?.value!=''){
+        <mat-form-field class="inputField" appearance="outline">
+            <mat-label>Cargo</mat-label>
+            <mat-select formControlName="cargoId">
+                @for (cargo of cargos; track $index) {
+                <mat-option [value]="cargo.id">{{cargo.nome}}</mat-option>
+                } @empty {
+                    <mat-option>Nenhum cargo encontrado.</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        @if (cadastroForm.get('cargoId')?.invalid && cadastroForm.get('cargoId')?.touched) {
+            <mat-error class="erro">Cargo inválido</mat-error>
+        } 
     }
 </form>

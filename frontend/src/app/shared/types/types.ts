@@ -28,7 +28,9 @@ export interface colaborador {
     nome:string;
     cpf:string;
     cargo:string;
+    cargoId:number;
     setor:string;
+    setorId:number
 }
 
 export interface cadastrarColaboradorDTO {

@@ -14,7 +14,7 @@
         <mat-label>Setor</mat-label>
         <mat-select formControlName="setorId">
             @for (setor of setores; track $index) {
-            <mat-option [value]="setor.Id">{{setor.Nome}}</mat-option>
+            <mat-option [value]="setor.id">{{setor.nome}}</mat-option>
             }
         </mat-select>
     </mat-form-field>

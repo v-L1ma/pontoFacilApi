@@ -5,8 +5,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { colaborador } from '../../types/types'; 
 import { ColaboradoresService } from '../../services/colaboradores/colaboradores.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalFormComponent } from '../modal-form/modal-form.component';
+import { ModalFormComponent } from '../modal-form-layout/modal-form.component';
 import { CpfPipe } from '../../pipes/Cpf.pipe';
+import { CadastroColaboradorFormComponent } from '../cadastro-colaborador-form/cadastro-colaborador-form.component';
 
 @Component({
   selector: 'app-card-colaborador',
@@ -68,19 +69,25 @@ export class CardColaboradorComponent implements OnInit{
   }
 
   openEditDialog(): void {
+    console.log(this.colaborador())
     const dialogRef = this.dialog.open(ModalFormComponent, {
       data: {
         tituloModal: 'Editar informações', 
         descricaoModal:'Preencha os dados da conta do colaborador que deseja editar',
-        colaborador: this.colaborador()
+        formComponent: CadastroColaboradorFormComponent,
+        formData: {
+          nome: this.colaborador().nome,
+          CPF: this.colaborador().cpf,
+          setorId: this.colaborador().setorId,
+          cargoId: this.colaborador().cargoId,
+        }
       },
     });
 
     dialogRef.afterClosed().subscribe((result:any) => {
       console.log('The dialog was closed');
       if (result !== undefined) {
-        console.log(result);
-
+        // console.log(result);
         this.editar(result);
       }
     });
