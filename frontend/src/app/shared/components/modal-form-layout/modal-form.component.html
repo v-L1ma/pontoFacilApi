@@ -10,8 +10,8 @@
     </mat-dialog-content>
     <mat-dialog-actions class="wrapper">
       <button mat-stroked-button (click)="onNoClick()">Cancelar</button>
-      <button mat-flat-button >Salvar</button>
+      <button mat-flat-button [mat-dialog-close]="onSave()" [disabled]="this.formComponentRef?.instance?.cadastroForm?.invalid">Salvar</button>
     </mat-dialog-actions>
 </div>
 
-<!-- [mat-dialog-close]="cadastroForm.value" [disabled]="cadastroForm.invalid" -->
+<!-- [mat-dialog-close]="cadastroForm.value"  -->

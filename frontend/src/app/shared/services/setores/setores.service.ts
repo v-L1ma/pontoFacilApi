@@ -16,11 +16,11 @@ export class SetoresService {
     return this.http.get<responseBase>(`${environment.API_URL}/Setor?pageSize=${pageSize}&pageNumber=${pageNumber}`)
   }
 
-  editar(id:string,setor:any){
+  editar(id:number,setor:any){
     return this.http.put<responseBase>(`${environment.API_URL}/Setor/${id}`, setor);
   }
 
-  excluir(id:string):Observable<responseBase>{
+  excluir(id:number):Observable<responseBase>{
     return this.http.delete<responseBase>(`${environment.API_URL}/Setor/${id}`);
   }
 

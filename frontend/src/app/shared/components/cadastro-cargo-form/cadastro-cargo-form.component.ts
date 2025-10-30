@@ -1,5 +1,5 @@
 import {MatDialogModule} from '@angular/material/dialog';
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -22,6 +22,7 @@ import { cpfValidator } from '../../validators/CPF.validator';
 })
 export class CadastroCargoFormComponent {
   cadastroForm!:FormGroup;
+  @Input() formData: any;
   setores = [
     { Id: 1, Nome: "Estagiário"},
     { Id: 2, Nome: "Assistente Administrativo"},
@@ -56,10 +57,18 @@ export class CadastroCargoFormComponent {
   constructor(private fb:FormBuilder){}
 
   ngOnInit(): void {
+    if(this.formData){
+      console.log("LOG NO FORM",this.formData)
+      this.cadastroForm = this.fb.group({
+        nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+        setorId: [this.formData.setorId, [Validators.required]]
+      });
+      return;
+    }
     this.cadastroForm = this.fb.group({
-          nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
-          setorId: ['', [Validators.required]]
-        });
+      nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+      setorId: ['', [Validators.required]]
+    });
   }
 
 }

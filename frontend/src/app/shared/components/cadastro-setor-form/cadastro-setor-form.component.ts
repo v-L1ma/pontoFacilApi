@@ -1,5 +1,5 @@
 import {MatDialogModule} from '@angular/material/dialog';
-import {Component, input, OnInit} from '@angular/core';
+import {Component, Input, input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -19,13 +19,20 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './cadastro-setor-form.component.html',
   styleUrl: './cadastro-setor-form.component.scss',
 })
-export class CadastroSetorFormComponent implements OnInit{
+export class CadastroSetorFormComponent implements OnInit {
   cadastroForm!:FormGroup;
-  formData = input<any>()
+  @Input() formData: any;
 
   constructor(private fb:FormBuilder){}
 
   ngOnInit(): void {
+    if(this.formData){
+      console.log("LOG NO FORM",this.formData)
+      this.cadastroForm = this.fb.group({
+        nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+      });
+      return;
+    }
     this.cadastroForm = this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
     });

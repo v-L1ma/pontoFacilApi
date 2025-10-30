@@ -17,7 +17,7 @@
                 <button matIconButton (click)="editar.emit(item)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button matIconButton>
+                <button matIconButton (click)="excluir.emit(item.id)">
                     <mat-icon class="delete">delete</mat-icon>
                 </button>
             </td>

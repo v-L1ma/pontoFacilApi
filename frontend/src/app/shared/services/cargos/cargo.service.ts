@@ -20,11 +20,11 @@ export class CargoService {
     return this.http.get<responseBase>(`${environment.API_URL}/Cargos`)
   }
 
-  editar(id:string,cargo:any){
+  editar(id:number,cargo:any){
     return this.http.put<responseBase>(`${environment.API_URL}/Cargos/${id}`, cargo);
   }
 
-  excluir(id:string):Observable<responseBase>{
+  excluir(id:number):Observable<responseBase>{
     return this.http.delete<responseBase>(`${environment.API_URL}/Cargos/${id}`);
   }
 

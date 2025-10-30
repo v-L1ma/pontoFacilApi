@@ -18,5 +18,5 @@
         </mat-form-field>
     </div>
 
-    <app-tabela [itens]="cargosFiltrados" [paginacao]="paginacao" (editar)="openCreateDialog()" (mudancaPagina)="mudarPagina($event)"></app-tabela>
+    <app-tabela [itens]="cargosFiltrados" [paginacao]="paginacao" (editar)="openEditDialog($event)" (excluir)="excluir($event)" (mudancaPagina)="mudarPagina($event)"></app-tabela>
 </section>

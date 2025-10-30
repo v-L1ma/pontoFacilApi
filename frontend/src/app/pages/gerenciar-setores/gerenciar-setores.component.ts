@@ -4,7 +4,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { Setor } from '../../shared/types/types';
+import { responseBase, Setor } from '../../shared/types/types';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFormComponent } from '../../shared/components/modal-form-layout/modal-form.component'; 
 import { FormsModule } from '@angular/forms';
@@ -38,12 +38,14 @@ export class GerenciarSetoresComponent implements OnInit {
   setores:Setor[] = [];
   setoresFiltrados:Setor[] = [];
 
-  readonly dialog = inject(MatDialog);
   pesquisar:string = '';
   isLoading = signal<boolean>(false);
   private timeout:any;
 
-  constructor(private setoresService: SetoresService){}
+  constructor(
+    private setoresService: SetoresService,
+    private dialog: MatDialog
+  ){}
 
   ngOnInit(): void {
     this.buscarSetores();
@@ -53,9 +55,17 @@ export class GerenciarSetoresComponent implements OnInit {
     this.setoresService.buscarPaginado(this.paginacao.pageSize, this.paginacao.pageIndex+1).subscribe(response=>{
         this.setores = response.dados.itens;
         this.paginacao.length = response.dados.total;
-        console.log("TOTAL ",response.dados.total)
+        // console.log("TOTAL ",response.dados.total)
         this.setoresFiltrados=this.setores
   })
+  }
+
+  buscarPeloNome(){
+    clearTimeout(this.timeout)
+    this.timeout = setTimeout(()=>{
+      const pesquisa = this.pesquisar.toLocaleLowerCase().trim();
+      this.setoresFiltrados = this.setores.filter(c=> c.nome.toLocaleLowerCase().includes(pesquisa));  
+    },1000)
   }
 
   mudarPagina(event:PageEvent){
@@ -74,10 +84,13 @@ export class GerenciarSetoresComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe((result:Setor) => {
+      // console.log('The dialog was closed');
       if (result !== undefined) {
-         console.log(result);
+        //  console.log(result);
+        this.setoresService.cadastrar(result).subscribe((response:responseBase)=>{
+          this.buscarSetores()
+        });
       }
     });
   }
@@ -87,23 +100,28 @@ export class GerenciarSetoresComponent implements OnInit {
       data: {
         tituloModal: 'Criar setor', 
         descricaoModal:'Preencha os dados do setor que deseja criar',
-        formComponent: CadastroSetorFormComponent
+        formData: {
+          nome:setor.nome,
+        },
+        formComponent: CadastroSetorFormComponent,
       },
     });
 
     dialogRef.afterClosed().subscribe((result:any) => {
       console.log('The dialog was closed');
       if (result !== undefined) {
-         console.log(result);
+        this.setoresService.editar(setor.id,result).subscribe((response:responseBase)=>{
+          this.buscarSetores()
+        });
       }
     });
   }
 
-  buscarPeloNome(){
-    clearTimeout(this.timeout)
-    this.timeout = setTimeout(()=>{
-      const pesquisa = this.pesquisar.toLocaleLowerCase().trim();
-      this.setoresFiltrados = this.setores.filter(c=> c.nome.toLocaleLowerCase().includes(pesquisa));  
-    },1000)
+  excluir(id:string){
+    const idConvertido = Number(id)
+    this.setoresService.excluir(idConvertido).subscribe((response:responseBase)=>{
+      this.buscarSetores();
+    });
   }
+
 }

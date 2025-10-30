@@ -5,7 +5,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { ColaboradoresService } from '../../shared/services/colaboradores/colaboradores.service'; 
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { cadastrarColaboradorDTO, colaborador, usuario } from '../../shared/types/types';
+import { cadastrarColaboradorDTO, Cargo, colaborador, responseBase, usuario } from '../../shared/types/types';
 import { usuarioLogadoService } from '../../shared/services/usuario-logado/usuario-logado.service'; 
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFormComponent } from '../../shared/components/modal-form-layout/modal-form.component'; 
@@ -68,13 +68,48 @@ export class GerenciarCargosComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
+    dialogRef.afterClosed().subscribe((result:Cargo) => {
       console.log('The dialog was closed');
       if (result !== undefined) {
          console.log(result);
         //  this.cadastrar(result)
+        this.cargosService.cadastrar(result).subscribe((response:responseBase)=>{
+          this.BuscarCargos();
+        })
       }
     });
+  }
+
+  openEditDialog(cargo:Cargo): void {
+    const dialogRef = this.dialog.open(ModalFormComponent, {
+      data: {
+        tituloModal: 'Editar cargo', 
+        descricaoModal:'Preencha os dados do cargo que deseja editar',
+        formComponent: CadastroCargoFormComponent,
+        formData:{
+          nome: cargo.nome,
+          setorId: cargo.setorId
+        }
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result:Cargo) => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+         console.log(result);
+        //  this.cadastrar(result)
+        this.cargosService.editar(cargo.id,result).subscribe((response:responseBase)=>{
+          this.BuscarCargos();
+        })
+      }
+    });
+  }
+
+  excluir(id:string){
+    const idConvertido = Number(id);
+    this.cargosService.excluir(idConvertido).subscribe((response:responseBase)=>{
+      this.BuscarCargos();
+    })
   }
 
   // cadastrar(form:any){
