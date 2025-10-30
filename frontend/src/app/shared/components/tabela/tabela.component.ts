@@ -1,13 +1,11 @@
-import { Component, inject, input, model, OnInit, output, signal } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { CurrencyPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from "@angular/material/icon";
 import {MatInputModule} from '@angular/material/input';
-import { ModalFormComponent } from '../modal-form/modal-form.component';
 
 @Component({
   selector: 'app-tabela',

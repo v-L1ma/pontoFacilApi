@@ -44,7 +44,7 @@ export class GerenciarCargosComponent {
   readonly dialog = inject(MatDialog);
   pesquisar:string = '';
   isLoading = signal<boolean>(false);
-  private timeout:any;
+  private timeout:number=0;
 
   mudarPagina(event:PageEvent){
     this.paginacao.length = event.length;
@@ -111,25 +111,6 @@ export class GerenciarCargosComponent {
       this.BuscarCargos();
     })
   }
-
-  // cadastrar(form:any){
-  //   const cadastrarColaboradorDTO:cadastrarColaboradorDTO = {
-  //     nome: form.nome,
-  //     cpf: form.CPF,
-  //     cargoId: form.cargoId
-  //   }
-
-  //   this.colaboradoresService.cadastrar(cadastrarColaboradorDTO).subscribe({
-  //     next:(response)=>{
-  //       console.log(response);
-  //       this.buscarColaboradores();
-  //     },
-  //     error:(error)=>{
-  //       console.log(error);
-  //     },
-  //   });
-
-  // }
 
   buscarPeloNome(){
     clearTimeout(this.timeout)

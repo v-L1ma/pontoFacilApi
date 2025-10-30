@@ -27,7 +27,7 @@ public class SetorRepository : ISetorRepository
     public SetorDto? BuscarPorNome(string nome)
     {
         var setorBanco = _context.Setores
-                                .FirstOrDefault(s => s.Nome == nome);
+                                .FirstOrDefault(s => s.Nome.ToUpper() == nome.ToUpper());
 
         return setorBanco != null ? new SetorDto
         {

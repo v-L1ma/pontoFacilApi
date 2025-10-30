@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { DialogData, ModalFormComponent } from '../modal-form/modal-form.component';
+import { DialogData, ModalFormComponent } from '../modal-form-layout/modal-form.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {

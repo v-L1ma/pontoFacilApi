@@ -76,8 +76,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe((result:any) => {
       console.log('The dialog was closed');
-      if (result !== undefined) {
-         console.log(result);
+      if (result !== undefined){
          this.cadastrar(result)
       }
     });
@@ -86,7 +85,7 @@ export class GerenciarColaboradoresComponent implements OnInit{
   cadastrar(form:any){
     const cadastrarColaboradorDTO:cadastrarColaboradorDTO = {
       nome: form.nome,
-      cpf: form.CPF,
+      CPF: form.CPF,
       cargoId: form.cargoId
     }
 

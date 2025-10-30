@@ -35,7 +35,7 @@ export interface colaborador {
 
 export interface cadastrarColaboradorDTO {
   nome: string,
-  cpf: string,
+  CPF: string,
   cargoId: number
 }
 
