@@ -13,10 +13,17 @@ public class SetorController : ControllerBase
         _setorService = setorService;
     }
 
-     [HttpGet]
-    public async Task<ActionResult<ResponseBase<PaginacaoDTO<SetorDto>>>> BuscarTodos([FromQuery] int pageSize, int pageNumber)
+    [HttpGet]
+    public async Task<ActionResult<ResponseBase<List<SetorDto>>>> BuscarTodos()
     {
-        ResponseBase<PaginacaoDTO<SetorDto>> response = await _setorService.BuscarTodos(pageSize,pageNumber);
+        ResponseBase<List<SetorDto>> response = await _setorService.BuscarTodos();
+        return Ok(response);
+    }
+
+    [HttpGet("paginado")]
+    public async Task<ActionResult<ResponseBase<PaginacaoDTO<SetorDto>>>> BuscarTodosPaginado([FromQuery] int pageSize, int pageNumber)
+    {
+        ResponseBase<PaginacaoDTO<SetorDto>> response = await _setorService.BuscarTodosPaginado(pageSize,pageNumber);
         return Ok(response);
     }
 

@@ -1,6 +1,7 @@
 public interface ISetorService
 {   
-    Task<ResponseBase<PaginacaoDTO<SetorDto>>> BuscarTodos(int pageSize, int pageNumber);
+    Task<ResponseBase<List<SetorDto>>> BuscarTodos();
+    Task<ResponseBase<PaginacaoDTO<SetorDto>>> BuscarTodosPaginado(int pageSize, int pageNumber);
 
     Task<ResponseBase<SetorDto>> Cadastrar(CadastrarSetorDto dto);
 

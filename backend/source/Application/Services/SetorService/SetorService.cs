@@ -10,15 +10,29 @@ public class SetorService : ISetorService
     {
         _setorRepository = setorRepository;
     }
-    
-    public async Task<ResponseBase<PaginacaoDTO<SetorDto>>> BuscarTodos(int pageSize, int pageNumber)
+    public async Task<ResponseBase<List<SetorDto>>> BuscarTodos(){
+
+        List<SetorDto> setores = await _setorRepository.BuscarTodos();
+
+        if(setores is null)
+        {
+            throw new NaoEncontradoException("Nenhum setor cadastrado.");
+        }
+
+        return new ResponseBase<List<SetorDto>>
+        {
+            Dados = setores,
+            Message = "Setores listados com sucesso!"
+        };
+    }
+    public async Task<ResponseBase<PaginacaoDTO<SetorDto>>> BuscarTodosPaginado(int pageSize, int pageNumber)
     {
         if (pageSize < 0 || pageNumber < 0)
         {
             throw new ParametroInvalidoException("O tamanho e o numero da pagina devem ser maior que zero!");
         }
 
-        PaginacaoDTO<SetorDto> setores = await _setorRepository.BuscarTodos(pageSize, pageNumber);
+        PaginacaoDTO<SetorDto> setores = await _setorRepository.BuscarTodosPaginado(pageSize, pageNumber);
 
         if(setores is null)
         {

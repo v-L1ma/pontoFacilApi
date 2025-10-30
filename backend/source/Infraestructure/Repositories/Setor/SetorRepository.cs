@@ -36,7 +36,17 @@ public class SetorRepository : ISetorRepository
         } : null;
     }
 
-    public async Task<PaginacaoDTO<SetorDto>> BuscarTodos(int pageSize, int pageNumber)
+     public async Task<List<SetorDto>> BuscarTodos()
+    {
+        List<SetorDto> setoresBanco = await _context.Setores
+                                        .OrderBy(s => s.Nome)
+                                        .Select(s => new SetorDto { Id = s.Id, Nome = s.Nome })
+                                        .ToListAsync();
+
+        return setoresBanco;
+    }
+
+    public async Task<PaginacaoDTO<SetorDto>> BuscarTodosPaginado(int pageSize, int pageNumber)
     {
         List<SetorDto> setoresBanco = await _context.Setores
                                         .OrderBy(s => s.Nome)

@@ -1,6 +1,7 @@
 public interface ISetorRepository
 {
-    Task<PaginacaoDTO<SetorDto>> BuscarTodos(int pageSize, int pageNumber);
+    Task<List<SetorDto>> BuscarTodos();
+    Task<PaginacaoDTO<SetorDto>> BuscarTodosPaginado(int pageSize, int pageNumber);
     SetorDto? BuscarPorId(int id);
     SetorDto? BuscarPorNome(string nome);
     Task<SetorDto> Cadastrar(CadastrarSetorDto dto);
