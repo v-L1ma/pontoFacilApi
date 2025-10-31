@@ -115,7 +115,7 @@ Principais Controllers:
 
 ```bash
 ### Acessar a pasta do backend
-cd pontoFacilApi
+cd backend
 
 ### Restaurar dependências
 dotnet restore
@@ -137,7 +137,7 @@ O Swagger estará disponível em:
 
 ```bash
 ### Acessar a pasta do frontend
-cd ponto-facil-frontend
+cd frontend
 
 ### Instalar dependências
 npm install
