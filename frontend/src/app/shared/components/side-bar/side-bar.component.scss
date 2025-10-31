@@ -1,0 +1,224 @@
+@use '../../../core/variables.scss';
+@use '@angular/material' as mat;
+
+header,.menu__mobile{
+    display: none;
+}
+
+.menu__desktop__aberto {
+    position: sticky;
+    display: flex;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    width: 20vw;
+    background: linear-gradient(90deg, variables.$primary 0%, variables.$secondary 100%);
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    transition: width 0.3s;
+
+    .logo{
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        gap: .5rem;
+
+        h1{
+            font-size: 1.2rem;
+        }
+
+        img{
+            height: 2rem;
+            width: 2rem;
+            background-color: white;
+            border-radius: .5rem;
+        }
+    }
+
+    .fechar{
+        margin-bottom: 1rem;
+        background-color: transparent;
+    }
+
+    .item{
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: 1rem;
+
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+
+    .menu__opcoes{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dados__conta{
+        display: flex;
+        flex-direction: column;
+        border: 1px solid variables.$light_gray;
+        border-radius: 1rem;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+}
+
+.menu__desktop__fechado {
+    position: sticky;
+    display: flex;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    width: 5rem;
+    background: linear-gradient(90deg, variables.$primary 0%, variables.$secondary 100%);
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    transition: width 0.3s;
+    
+    .logo{
+        display: none;
+    }
+
+    .item{
+        width: 100%;
+        display: flex;
+        gap: 0rem;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 1rem 0;
+        border-radius: 1rem;
+
+        p{
+            display: none;
+        }
+
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+    .fechar{
+        margin-bottom: 1rem;
+        background-color: transparent;
+    }
+
+    .menu__opcoes{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dados__conta{
+        display: flex;
+        flex-direction: column;
+        border: none;
+        border-radius: 1rem;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 0;
+    }
+}
+
+@media screen and (max-width:1000px){
+    header{
+        display: flex;
+        position: fixed;
+        z-index: 5;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        padding: 1rem;
+        border-bottom: 1px solid variables.$light_gray;
+        background-color: rgb(255, 255, 255);
+    }
+    .botao__menu__mobile{
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+
+        .menu__icone{
+            font-size: 2rem;
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+
+    .menu__mobile {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
+        width: 60%;
+            background: linear-gradient(90deg, variables.$primary 0%, variables.$secondary 100%);
+        padding: 2rem;
+        color: white;
+        font-size: 1rem;
+        animation: slideIn .3s ease-out forwards;
+
+        .item{
+            width: 100%;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 1rem;
+
+            &:hover{
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        .fechar{
+            margin-bottom: 1rem;
+            background-color: transparent;
+        }
+
+        .menu__opcoes{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dados__conta{
+            display: flex;
+            flex-direction: column;
+            border: 1px solid variables.$light_gray;
+            border-radius: 1rem;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+    }
+
+    .menu__desktop__aberto, .menu__desktop__fechado{
+        display: none;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
