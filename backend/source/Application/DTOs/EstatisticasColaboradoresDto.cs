@@ -6,4 +6,5 @@ public class EstatisticasColaboradoresDto
     public int ColaboradoresDemitidos { get; set; }
     public DadosGraficoDto ColaboradorDepartamento { get; set; }
     public DadosGraficoDto ColaboradoresTotalTempo { get; set; }
+    public DadosGraficoDto ColaboradoresDemitidoMes { get; set; }
 }

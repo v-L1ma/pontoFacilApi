@@ -60,6 +60,7 @@ export interface ColaboradoresStats {
   colaboradoresDemitidos: number;
   colaboradorDepartamento: ChartData;
   colaboradoresTotalTempo: ChartData;
+  colaboradoresDemitidoMes: ChartData;
 }
 
 export interface Cargo{

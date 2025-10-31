@@ -29,26 +29,47 @@ export class VerficadorForcaSenhaComponent {
         apenasMinusculas.test(senha) &&
         numeros.test(senha) &&
         especiais.test(senha) && 
-        senha.length>=3
+        senha.length>=5
     ){
       this.forcaDaSenha.set('forte');
       return;
     }
-    
-    if(letrasMaiusculasEMinusculas.test(senha) && 
-        apenasMinusculas.test(senha) &&
-        senha.length>=3){
+
+    if(letrasMaiusculasEMinusculas.test(senha) && apenasMinusculas.test(senha) ||
+      letrasMaiusculasEMinusculas.test(senha) && numeros.test(senha) ||
+      letrasMaiusculasEMinusculas.test(senha) && especiais.test(senha) ||
+      apenasMinusculas.test(senha) && numeros.test(senha) ||
+      apenasMinusculas.test(senha) && especiais.test(senha) ||
+      numeros.test(senha) && especiais.test(senha) && senha.length>=3
+    ){
       this.forcaDaSenha.set('media');
       return;
     }
-    
+
     if(apenasMinusculas.test(senha) &&
+        senha.length>=3){
+      this.forcaDaSenha.set('fraca');
+      return;
+    }
+
+    if(letrasMaiusculasEMinusculas.test(senha) &&
+        senha.length>=3){
+      this.forcaDaSenha.set('fraca');
+      return;
+    }
+
+    if(especiais.test(senha) &&
+        senha.length>=3){
+      this.forcaDaSenha.set('fraca');
+      return;
+    }
+
+    if(numeros.test(senha) &&
         senha.length>=3){
       this.forcaDaSenha.set('fraca');
       return;
     }
     
     this.forcaDaSenha.set('');
-    
   }
 }

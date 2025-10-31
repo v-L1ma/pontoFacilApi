@@ -48,7 +48,14 @@ export class DashboardComponent implements OnInit{
       labels:["10/2025"],
       dataset:{
         data:[0],
-        label:"Colaboradores"
+        label:"Admitidos"
+      }
+    },
+    colaboradoresDemitidoMes:{
+      labels:["10/2025"],
+      dataset:{
+        data:[0],
+        label:"Demitidos"
       }
     },
   };
@@ -80,6 +87,12 @@ export class DashboardComponent implements OnInit{
             data: this.data.colaboradoresTotalTempo.dataset.data,
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          },{
+            label: this.data.colaboradoresDemitidoMes.dataset.label,
+            data: this.data.colaboradoresDemitidoMes.dataset.data,
+            fill: false,
+            borderColor: 'rgba(201, 57, 57, 1)',
             tension: 0.1
           }]
         }));

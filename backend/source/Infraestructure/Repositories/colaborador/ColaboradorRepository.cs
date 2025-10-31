@@ -130,6 +130,7 @@ public class ColaboradorRepository : IColaboradorRepository
         if (colaboradorBanco != null)
         {
             colaboradorBanco.Status = StatusEnum.INATIVO.ToString();
+            colaboradorBanco.dataExclusao = DateTime.UtcNow;
             _context.Update(colaboradorBanco);
         }
         await _context.SaveChangesAsync();
@@ -181,22 +182,44 @@ public class ColaboradorRepository : IColaboradorRepository
     int colaboradoresAtivos = colaboradoresBanco.Where(c=> c.Status==StatusEnum.ATIVO.ToString()).Count();
     int colaboradoresDemitidos = colaboradoresBanco.Where(c=> c.Status==StatusEnum.INATIVO.ToString()).Count();
     int novosColaboradoresMes = colaboradoresBanco.Where(c => c.dataCriacao.Month == DateTime.UtcNow.Month).Count();
-    
+
 
     var mesesEAnos = colaboradoresBanco
         .Select(c => new { c.dataCriacao.Year, c.dataCriacao.Month })
         .Distinct()
         .OrderBy(c => c.Year)
         .ThenBy(c => c.Month)
-        .Select(c => $"{c.Month:D2}/{c.Year}")
+        .ToArray();
+        
+    var mesesFormatados = mesesEAnos
+        .Select(m => $"{m.Month:D2}/{m.Year}")
         .ToArray();
 
     var totalColaboradoresPorMesEAno = colaboradoresBanco
-        .GroupBy(c => new { c.dataCriacao.Year, c.dataCriacao.Month }) 
+        .GroupBy(c => new { c.dataCriacao.Year, c.dataCriacao.Month })
         .OrderBy(g => g.Key.Year)
         .ThenBy(g => g.Key.Month)
-        .Select(g => g.Count()) 
+        .Select(g => g.Count())
         .ToArray();
+
+    var colaboradoresDemitidoMes = colaboradoresBanco
+        .Where(c => c.Status == StatusEnum.INATIVO.ToString())
+        .GroupBy(c => new { c.dataExclusao?.Year, c.dataExclusao?.Month })
+        .OrderBy(g => g.Key.Year)
+        .ThenBy(g => g.Key.Month)
+        .Select(g => new {
+            g.Key.Year,
+            g.Key.Month,
+            Total = g.Count()
+        })
+        .ToArray();
+
+        var totalcolaboradoresDemitidoMes = mesesEAnos
+                                    .Select(m =>
+                                    {
+                                        var encontrado = colaboradoresDemitidoMes.FirstOrDefault(d => d.Year == m.Year && d.Month == m.Month);
+                                        return encontrado != null ? encontrado.Total : 0;
+                                    }).ToArray();
 
     string?[] departamentos = colaboradoresBanco
         .Where(c => c.Status == StatusEnum.ATIVO.ToString())
@@ -234,11 +257,20 @@ public class ColaboradorRepository : IColaboradorRepository
         NovosColaboradoresMes = novosColaboradoresMes,
         ColaboradoresTotalTempo = new DadosGraficoDto
         {
-            Labels=mesesEAnos,
+            Labels=mesesFormatados,
             Dataset = new DataSet
             {
-                Label= "Colaboradores",
+                Label= "Admitidos",
                 Data= totalColaboradoresPorMesEAno 
+            }
+        },
+        ColaboradoresDemitidoMes = new DadosGraficoDto
+        {
+            Labels=mesesFormatados,
+            Dataset = new DataSet
+            {
+                Label= "Demitidos",
+                Data= totalcolaboradoresDemitidoMes 
             }
         },
     };

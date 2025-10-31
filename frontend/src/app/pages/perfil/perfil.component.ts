@@ -134,7 +134,7 @@ export class PerfilComponent {
     const dialogRef = this.dialog.open(ModalConfirmarComponent, {
       data: {
         tituloModal: 'Deseja realmente excluir sua conta?', 
-        descricaoModal:'Preencha o seu e-mail e senha para confirmar a exclusão da conta',
+        descricaoModal:'Essa é uma ação permanente e não poderá ser desfeita.',
       },
     });
 
