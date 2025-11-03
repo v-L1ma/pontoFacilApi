@@ -23,7 +23,7 @@ header,.menu__mobile{
     .logo{
         display: flex;
         align-items: center;
-        padding: 1rem;
+        padding: 0 0 1rem 1rem;
         gap: .5rem;
 
         h1{
@@ -89,7 +89,18 @@ header,.menu__mobile{
     transition: width 0.3s;
     
     .logo{
-        display: none;
+        padding: 0 0 1rem 0;
+        display: flex;
+        justify-content: center;
+        img{
+            height: 2rem;
+            width: 2rem;
+            background-color: white;
+            border-radius: .5rem;
+        }
+        h1{
+            display: none;
+        }
     }
 
     .item{

@@ -32,7 +32,11 @@
             }
 
             <button class="enviar" [disabled]="loginForm.invalid" mat-flat-button type="submit">
-                Entrar
+                @if (isLoading()) {
+                    <app-loading color="branco"></app-loading>
+                } @else {
+                    Entrar
+                }
             </button>
         </form>
         <p class="cadastro">Não tem uma conta? <a routerLink="/cadastro">Cadastre-se gratuitamente</a></p>

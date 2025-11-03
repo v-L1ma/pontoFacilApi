@@ -6,7 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBannerLayoutComponent } from '../../shared/components/form-banner-layout/form-banner-layout.component'; 
-import { AuthService } from '../../shared/services/auth/auth.service'; 
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { LoadingComponent } from "../../shared/components/loading/loading/loading.component"; 
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ import { AuthService } from '../../shared/services/auth/auth.service';
     MatIconModule,
     RouterLink,
     ReactiveFormsModule,
-    FormBannerLayoutComponent
+    FormBannerLayoutComponent,
+    LoadingComponent
 ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -25,6 +27,7 @@ import { AuthService } from '../../shared/services/auth/auth.service';
 export class LoginComponent implements OnInit{
   mostrarSenha = signal(true);
   loginForm!: FormGroup;
+  isLoading = signal<boolean>(false);
 
   constructor(
     private fb: FormBuilder,
@@ -41,13 +44,16 @@ export class LoginComponent implements OnInit{
 
   enviar(){
     const {email, senha} = this.loginForm.value;
+    this.isLoading.set(true);
     this.authService.autenticar(email,senha).subscribe({
       next:(response)=>{
         // console.log(response);
-        this.router.navigateByUrl('/portal')
+        this.router.navigateByUrl('/portal');
+        this.isLoading.set(false);
       },
       error:(error)=>{
         // console.log(error);
+        this.isLoading.set(false);
       }
     });
   }
