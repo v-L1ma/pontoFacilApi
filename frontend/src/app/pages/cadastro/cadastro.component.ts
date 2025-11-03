@@ -4,13 +4,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBannerLayoutComponent } from '../../shared/components/form-banner-layout/form-banner-layout.component'; 
 import { compararSenhaValidator } from '../../shared/validators/compararSenha.validator';
 import { AuthService } from '../../shared/services/auth/auth.service'; 
 import { cadastrarUsuarioDTO } from '../../shared/types/types';
-import { VerficadorForcaSenhaComponent } from '../../shared/components/verficador-forca-senha/verficador-forca-senha.component'; 
+import { VerficadorForcaSenhaComponent } from '../../shared/components/verficador-forca-senha/verficador-forca-senha.component';
+import { LoadingComponent } from "../../shared/components/loading/loading/loading.component"; 
 
 
 @Component({
@@ -24,7 +25,8 @@ import { VerficadorForcaSenhaComponent } from '../../shared/components/verficado
     ReactiveFormsModule,
     FormBannerLayoutComponent,
     MatSelectModule,
-    VerficadorForcaSenhaComponent
+    VerficadorForcaSenhaComponent,
+    LoadingComponent
 ],
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.scss'
@@ -35,10 +37,13 @@ export class CadastroComponent {
   cadastroForm!: FormGroup;
   private passwordRegex: string = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*\\-_])[A-Za-z\\d!@#$%^&*\\-_]{8,}$';
   senha=signal<string>('');
+  isLoading = signal<boolean>(false);
+
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ){
     
   }
@@ -65,12 +70,19 @@ export class CadastroComponent {
       RePassword: this.cadastroForm.value.confirmarSenha
     }
 
+    this.isLoading.set(true);
+
     this.authService.cadastrar(cadastrarUsuarioDTO).subscribe({
       next:(response)=>{
-        console.log(response);
+        // console.log(response);
+        this.isLoading.set(false);
+        setTimeout(()=>{
+          this.router.navigate(['login'])
+        },200)
       },
       error:(error)=>{
-        console.log(error);
+        // console.log(error);
+        this.isLoading.set(false);
       },
     });
 

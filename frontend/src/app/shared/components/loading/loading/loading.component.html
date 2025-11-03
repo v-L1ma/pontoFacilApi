@@ -1,4 +1,6 @@
 <div class="wrapper">
-    <mat-spinner diameter="40" ></mat-spinner>
-    <p>Carregando...</p>
+    <mat-spinner diameter="20" [ngClass]="color()=='branco' ? 'branco' : 'verde'"></mat-spinner>
+    @if (mensagem()) {
+        <p>{{mensagem()}}</p>
+    }
 </div>
