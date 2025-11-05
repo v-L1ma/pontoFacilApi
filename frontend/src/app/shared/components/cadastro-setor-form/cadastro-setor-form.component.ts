@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule,  } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { vazioValidator } from '../../validators/vazio.validator';
 
 @Component({
   selector: 'app-cadastro-setor-form',
@@ -29,12 +30,12 @@ export class CadastroSetorFormComponent implements OnInit {
     if(this.formData){
       console.log("LOG NO FORM",this.formData)
       this.cadastroForm = this.fb.group({
-        nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+        nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
       });
       return;
     }
     this.cadastroForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+      nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
     });
   }
 }

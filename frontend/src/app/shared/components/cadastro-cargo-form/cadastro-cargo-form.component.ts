@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { cpfValidator } from '../../validators/CPF.validator'; 
 import { SetoresService } from '../../services/setores/setores.service';
 import { Setor } from '../../types/types';
+import { vazioValidator } from '../../validators/vazio.validator';
 
 @Component({
   selector: 'app-cadastro-cargo-form',
@@ -40,13 +41,13 @@ export class CadastroCargoFormComponent implements OnInit{
     
     if(this.formData){
       this.cadastroForm = this.fb.group({
-        nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+        nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
         setorId: [this.formData.setorId, [Validators.required]]
       });
       return;
     }
     this.cadastroForm = this.fb.group({
-      nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+      nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
       setorId: ['', [Validators.required]]
     });
   }
