@@ -31,7 +31,7 @@
                 <mat-error class="erro">Senha inválida</mat-error>
             }
 
-            <button class="enviar" [disabled]="loginForm.invalid" mat-flat-button type="submit">
+            <button class="enviar" [disabled]="loginForm.invalid || isLoading()" mat-flat-button type="submit">
                 @if (isLoading()) {
                     <app-loading color="branco"></app-loading>
                 } @else {

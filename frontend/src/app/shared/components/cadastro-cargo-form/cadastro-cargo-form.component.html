@@ -4,12 +4,18 @@
         <input formControlName="nome" placeholder="Digite o nome do cargo" matInput type="text" />
     </mat-form-field>
     @if (cadastroForm.get('nome')?.errors?.['minLength'] && cadastroForm.get('nome')?.touched) {
-        <mat-error class="erro">O nome deve ter mais de 5 caracteres</mat-error>
-    }
-    @if (cadastroForm.get('nome')?.errors?.['pattern'] && cadastroForm.get('nome')?.touched) {
+        <mat-error class="erro">O nome deve ter mais de 3 caracteres</mat-error>
+    } 
+    @else if (cadastroForm.get('nome')?.errors?.['pattern'] && cadastroForm.get('nome')?.touched) {
         <mat-error class="erro">O nome não pode conter caracteres especiais</mat-error>
+    } 
+    @else if (cadastroForm.get('nome')?.errors?.['campoVazio'] && cadastroForm.get('nome')?.touched) {
+        <mat-error class="erro">Este campo não pode ser vazio.</mat-error>
     }
-
+    @else if (cadastroForm.get('nome')?.errors && cadastroForm.get('nome')?.touched) {
+        <mat-error class="erro">Insira um nome válido.</mat-error>
+    }
+    
     <mat-form-field class="inputField" appearance="outline">
         <mat-label>Setor</mat-label>
         <mat-select formControlName="setorId">

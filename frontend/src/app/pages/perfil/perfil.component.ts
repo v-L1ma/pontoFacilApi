@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { ModalConfirmarComponent } from '../../shared/components/modal-confirmar/modal-confirmar.component'; 
 import { MatDialog } from '@angular/material/dialog';
 import { VerficadorForcaSenhaComponent } from '../../shared/components/verficador-forca-senha/verficador-forca-senha.component';
+import { vazioValidator } from '../../shared/validators/vazio.validator';
 
 @Component({
   selector: 'app-perfil',
@@ -68,12 +69,12 @@ export class PerfilComponent {
     })
 
     this.cadastroForm = this.fb.group({
-      nome: [this.usuarioLogado.Username, [Validators.required, Validators.minLength(3), Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+      nome: [this.usuarioLogado.Username, [Validators.required, Validators.minLength(3), Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
       email: [this.usuarioLogado.Email, [Validators.required, Validators.email]],
     });
 
     this.senhaForm = this.fb.group({
-      senhaAtual: ['', [Validators.required, Validators.minLength(3)]],
+      senhaAtual: ['', [Validators.required, Validators.minLength(3), vazioValidator]],
       senhaNova: ['', [Validators.required, Validators.minLength(3), Validators.pattern(this.passwordRegex)]],
       confirmarSenhaNova: ['', [Validators.required]]
     }, { validators:compararSenhaValidator('senhaNova','confirmarSenhaNova')});

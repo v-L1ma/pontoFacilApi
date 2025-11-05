@@ -9,6 +9,7 @@ import { cpfValidator } from '../../validators/CPF.validator';
 import { Cargo, responseBase, Setor } from '../../types/types';
 import { SetoresService } from '../../services/setores/setores.service';
 import { CargoService } from '../../services/cargos/cargo.service';
+import { vazioValidator } from '../../validators/vazio.validator';
 
 @Component({
   selector: 'app-cadastro-colaborador-form',
@@ -41,7 +42,7 @@ export class CadastroColaboradorFormComponent implements OnInit{
 
     if(this.formData){     
       this.cadastroForm = this.fb.group({
-      nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+      nome: [this.formData.nome, [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
       CPF: [this.formData.CPF, [Validators.required, cpfValidator]],
       setorId: [this.formData.setorId, [Validators.required]],
       cargoId: [this.formData.cargoId, [Validators.required]]
@@ -49,7 +50,7 @@ export class CadastroColaboradorFormComponent implements OnInit{
       this.buscarCargos(this.formData.setorId)
     } else{
       this.cadastroForm = this.fb.group({
-        nome: ['', [Validators.required, Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u)]],
+        nome: ['', [Validators.required,Validators.minLength(3),Validators.pattern(/^[\p{L}\s'-]+$/u),vazioValidator]],
         CPF: ['', [Validators.required, cpfValidator]],
         setorId: ['', [Validators.required]],
         cargoId: ['', [Validators.required]]
