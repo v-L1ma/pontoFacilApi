@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { TabelaProdutos } from "../../shared/components/tabela/tabela.component"; 
 import { SetoresService } from '../../shared/services/setores/setores.service';
 import { CadastroSetorFormComponent } from '../../shared/components/cadastro-setor-form/cadastro-setor-form.component';
+import { ModalConfirmarComponent } from '../../shared/components/modal-confirmar/modal-confirmar.component';
 
 @Component({
   selector: 'app-gerenciar-setores',
@@ -118,10 +119,22 @@ export class GerenciarSetoresComponent implements OnInit {
   }
 
   excluir(id:string){
-    const idConvertido = Number(id)
-    this.setoresService.excluir(idConvertido).subscribe((response:responseBase)=>{
-      this.buscarSetores();
-    });
+    const dialogRef = this.dialog.open(ModalConfirmarComponent,{
+          data:{
+            tituloModal: 'Deseja excluir um setor?', 
+            descricaoModal:'Essa ação é irreversivel, ao excluir um setor os dados dele serão excluídos permanentemente.'
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe((result:boolean)=>{
+          if(result==true){
+            const idConvertido = Number(id)
+            this.setoresService.excluir(idConvertido).subscribe((response:responseBase)=>{
+              this.buscarSetores();
+            });
+          }
+          return;
+        })
   }
 
 }

@@ -14,6 +14,7 @@ import { TabelaProdutos } from "../../shared/components/tabela/tabela.component"
 import { CargoService } from '../../shared/services/cargos/cargo.service';
 import { CadastroColaboradorFormComponent } from '../../shared/components/cadastro-colaborador-form/cadastro-colaborador-form.component';
 import { CadastroCargoFormComponent } from '../../shared/components/cadastro-cargo-form/cadastro-cargo-form.component';
+import { ModalConfirmarComponent } from '../../shared/components/modal-confirmar/modal-confirmar.component';
 
 
 @Component({
@@ -106,10 +107,23 @@ export class GerenciarCargosComponent {
   }
 
   excluir(id:string){
-    const idConvertido = Number(id);
-    this.cargosService.excluir(idConvertido).subscribe((response:responseBase)=>{
-      this.BuscarCargos();
-    })
+
+    const dialogRef = this.dialog.open(ModalConfirmarComponent,{
+          data:{
+            tituloModal: 'Deseja excluir um cargo?', 
+            descricaoModal:'Essa ação é irreversivel, ao excluir um cargo os dados dele serão excluídos permanentemente.'
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe((result:boolean)=>{
+          if(result==true){
+              const idConvertido = Number(id);
+              this.cargosService.excluir(idConvertido).subscribe((response:responseBase)=>{
+                this.BuscarCargos();
+              });
+          }
+          return;
+        })
   }
 
   buscarPeloNome(){

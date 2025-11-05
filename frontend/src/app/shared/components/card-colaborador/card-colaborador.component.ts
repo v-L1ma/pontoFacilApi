@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalFormComponent } from '../modal-form-layout/modal-form.component';
 import { CpfPipe } from '../../pipes/Cpf.pipe';
 import { CadastroColaboradorFormComponent } from '../cadastro-colaborador-form/cadastro-colaborador-form.component';
+import { ModalConfirmarComponent } from '../modal-confirmar/modal-confirmar.component';
 
 @Component({
   selector: 'app-card-colaborador',
@@ -57,15 +58,27 @@ export class CardColaboradorComponent implements OnInit{
   }
 
   excluir(id:string){
-    this.colaboradoresService.excluirColaborador(id).subscribe({
-      next:(response)=>{
-        console.log(response)
-        this.acaoExecutada.emit()
-      },
-      error:(error)=>{
-        console.log(error)
+    const dialogRef = this.dialog.open(ModalConfirmarComponent,{
+      data:{
+        tituloModal: 'Deseja excluir um colaborador?', 
+        descricaoModal:'Essa ação é irreversivel, ao excluir um colaborador os dados dele serão excluídos permanentemente.'
       }
     });
+
+    dialogRef.afterClosed().subscribe((result:boolean)=>{
+      if(result==true){
+        this.colaboradoresService.excluirColaborador(id).subscribe({
+          next:(response)=>{
+            console.log(response)
+            this.acaoExecutada.emit()
+          },
+          error:(error)=>{
+            console.log(error)
+          }
+        });
+      }
+      return;
+    })
   }
 
   openEditDialog(): void {
